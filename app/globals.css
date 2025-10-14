@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+
+    --background: 36 40% 96%;
+    --foreground: 30 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 30 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 25% 15%;
+
+    --primary: 28 35% 45%;
+    --primary-foreground: 36 40% 96%;
+
+    --secondary: 140 25% 30%;
+    --secondary-foreground: 36 40% 96%;
+
+    --muted: 36 30% 90%;
+    --muted-foreground: 30 20% 40%;
+
+    --accent: 140 25% 30%;
+    --accent-foreground: 36 40% 96%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 36 25% 85%;
+    --input: 36 25% 85%;
+    --ring: 28 35% 45%;
+
+    --radius: 0.75rem;
+
+    /* Custom Wooders tokens */
+    --wood-light: 28 45% 70%;
+    --wood-medium: 28 35% 45%;
+    --wood-dark: 28 30% 30%;
+    --forest: 140 25% 30%;
+    --forest-light: 140 20% 45%;
+    --cream: 36 40% 96%;
+    --charcoal: 0 0% 15%;
+
+    --gradient-wood: linear-gradient(135deg, hsl(28 45% 70%), hsl(28 35% 45%));
+    --gradient-forest: linear-gradient(135deg, hsl(140 25% 30%), hsl(140 30% 20%));
+    --gradient-hero: linear-gradient(180deg, hsl(36 40% 96% / 0.7), hsl(28 35% 45% / 0.1));
+
+    --shadow-soft: 0 4px 20px hsl(28 35% 45% / 0.1);
+    --shadow-medium: 0 8px 30px hsl(28 35% 45% / 0.15);
+    --shadow-strong: 0 12px 40px hsl(28 35% 45% / 0.2);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .dark {
+    /* Wooders Dark Theme - Deep forest night */
+    --background: 140 30% 8%;
+    --foreground: 36 40% 95%;
+
+    --card: 140 25% 12%;
+    --card-foreground: 36 40% 95%;
+
+    --popover: 140 25% 12%;
+    --popover-foreground: 36 40% 95%;
+
+    --primary: 28 45% 60%;
+    --primary-foreground: 140 30% 8%;
+
+    --secondary: 140 20% 20%;
+    --secondary-foreground: 36 40% 95%;
+
+    --muted: 140 20% 18%;
+    --muted-foreground: 36 20% 70%;
+
+    --accent: 28 45% 60%;
+    --accent-foreground: 140 30% 8%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 140 15% 20%;
+    --input: 140 15% 20%;
+    --ring: 28 45% 60%;
+
+    /* Dark theme custom tokens */
+    --wood-light: 28 45% 60%;
+    --wood-medium: 28 40% 50%;
+    --wood-dark: 28 35% 35%;
+    --forest: 140 25% 30%;
+    --forest-light: 140 20% 45%;
+    --cream: 36 30% 85%;
+    --charcoal: 0 0% 10%;
+
+    --gradient-wood: linear-gradient(135deg, hsl(28 45% 60%), hsl(28 35% 40%));
+    --gradient-forest: linear-gradient(135deg, hsl(140 25% 30%), hsl(140 30% 15%));
+    --gradient-hero: linear-gradient(180deg, hsl(140 30% 8% / 0.9), hsl(28 35% 20% / 0.3));
+
+    --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.3);
+    --shadow-medium: 0 8px 30px hsl(0 0% 0% / 0.4);
+    --shadow-strong: 0 12px 40px hsl(0 0% 0% / 0.5);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; 
+  }
+}
