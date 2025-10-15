@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { CategoryCard } from "./CategoryCard";
 import { Category } from "@/types/category";
 import type { Hero as HeroType } from "@/types/hero";
@@ -82,16 +83,18 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                   >
                     {hero.images.map((img: string, idx: number) => (
                       <div key={idx} className="flex-shrink-0 w-full h-full snap-center relative">
-                        <img
+                        <Image
                           src={img}
                           alt={`${hero?.title ?? 'hero'}-${idx}`}
-                          className="w-full h-full object-cover"
-                          style={{ maxWidth: '100%', maxHeight: '100%' }}
+                          fill
+                          className="object-cover"
                         />
                          <div className="bg-white/10 backdrop-blur-md absolute bottom-0 left-0 right-0 p-2 flex justify-center">
-                          <img
+                          <Image
                             src="/images/logo.png"
                             alt="Wooders Logo"
+                            width={40}
+                            height={40}
                             className="h-10 w-auto opacity-95 drop-shadow-lg"
                           />
                         </div>
@@ -120,18 +123,21 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
               </div>
             ) : (
               <>
-                <img
+                <Image
                   src={'/images/hero-bg.jpg'}
                   alt={hero?.title ?? 'Handcrafted wooden furniture'}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-hero" />
                                   {/* Blur gradient and logo overlay for fallback */}
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/80" />
                 <div className="bg-white/20 backdrop-blur-md absolute bottom-0 left-0 right-0 p-6 flex justify-center rounded-t-lg">
-                  <img
+                  <Image
                     src="/images/logo.png"
                     alt="Wooders Logo"
+                    width={40}
+                    height={40}
                     className="h-10 w-auto opacity-95 drop-shadow-lg"
                   />
                 </div>
@@ -222,18 +228,20 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                     >
                       {hero.images.map((img: string, idx: number) => (
                         <div key={idx} className="flex-shrink-0 w-full h-full snap-center relative">
-                          <img
+                          <Image
                             src={img}
                             alt={`${hero?.title ?? 'hero'}-${idx}`}
-                            className="w-full h-full object-cover"
-                            style={{ maxWidth: '100%', maxHeight: '100%' }}
+                            fill
+                            className="object-cover"
                           />
                         {/* Blur gradient and logo overlay */}
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80" />
                           <div className="bg-white/10 backdrop-blur-md absolute bottom-0 left-0 right-0 p-2 flex justify-center">
-                            <img
+                            <Image
                               src="/images/logo.png"
                               alt="Wooders Logo"
+                              width={40}
+                              height={40}
                               className="h-10 w-auto opacity-95 drop-shadow-lg"
                             />
                           </div>
@@ -262,18 +270,21 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                 </div>
               ) : (
                 <>
-                  <img
+                  <Image
                     src={'/images/hero-bg.jpg'}
                     alt={hero?.title ?? 'Handcrafted wooden furniture'}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-hero" />
                 {/* Blur gradient and logo overlay for fallback */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80" />
                   <div className="bg-white/10 backdrop-blur-md absolute bottom-0 left-0 right-0 p-6 flex justify-center">
-                    <img
+                    <Image
                       src="/images/logo.png"
                       alt="Wooders Logo"
+                      width={40}
+                      height={40}
                       className="h-10 w-auto opacity-95 drop-shadow-lg"
                     />
                   </div>
