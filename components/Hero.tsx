@@ -96,6 +96,7 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                             width={40}
                             height={40}
                             className="h-10 w-auto opacity-95 drop-shadow-lg"
+                            unoptimized
                           />
                         </div>
                       </div>
@@ -139,6 +140,7 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                     width={40}
                     height={40}
                     className="h-10 w-auto opacity-95 drop-shadow-lg"
+                    unoptimized
                   />
                 </div>
               </>
@@ -243,6 +245,7 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                               width={40}
                               height={40}
                               className="h-10 w-auto opacity-95 drop-shadow-lg"
+                              unoptimized
                             />
                           </div>
                         </div>
@@ -286,6 +289,7 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                       width={40}
                       height={40}
                       className="h-10 w-auto opacity-95 drop-shadow-lg"
+                      unoptimized
                     />
                   </div>
                 </>
