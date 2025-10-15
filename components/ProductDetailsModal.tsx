@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Product } from "@/types/product";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface ProductDetailsModalProps {
   isOpen: boolean;
@@ -49,10 +50,11 @@ export const ProductDetailsModal = ({
             transition={{ duration: 0.3 }}
             className="relative aspect-square rounded-lg overflow-hidden bg-muted"
           >
-            <img
+            <Image
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           </motion.div>
 

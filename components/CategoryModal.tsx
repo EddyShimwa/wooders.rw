@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Category } from "@/types/category"
 import { Product } from "@/types/product"
 import { Button } from "@/components/ui/button"
-import { Heart, ShoppingCart, ChevronLeft, ChevronRight, X } from "lucide-react"
+import { Heart, ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 

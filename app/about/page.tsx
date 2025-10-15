@@ -2,6 +2,7 @@
 
 import { Header } from '@/components/Header'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 export default function About() {
   return (
@@ -51,7 +52,7 @@ export default function About() {
               
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Thank you for supporting handmade, sustainable craftsmanship. When you choose Wooders, 
-                you're not just buying furniture – you're bringing home a piece of art, a touch of nature, 
+                you&apos;re not just buying furniture – you&apos;re bringing home a piece of art, a touch of nature, 
                 and a commitment to quality that will last for generations.
               </p>
             </motion.div>
@@ -63,9 +64,11 @@ export default function About() {
               className="relative"
             >
               <div className="relative rounded-2xl overflow-hidden shadow-elegant">
-                <img
+                <Image
                   src="/images/about-workshop.jpg"
                   alt="Wooders workshop and craftsmanship"
+                  width={800}
+                  height={600}
                   className="w-full h-auto object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />

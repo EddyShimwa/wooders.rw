@@ -1,10 +1,11 @@
 'use client'
 
-import { Heart, ShoppingCart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Product } from "@/types/product";
+import Image from "next/image";
 
 interface ProductCardProps {
   product: Product;
@@ -14,16 +15,6 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, isInWishlist, onToggleWishlist, onProductClick }: ProductCardProps) => {
-  const toPlainText = (node: any): string => {
-    if (!node) return ''
-    if (typeof node === 'string') return node
-    if (node.nodeType === 'text') return node.value || ''
-    if (Array.isArray(node)) return node.map(toPlainText).join('')
-    if (node.content) return node.content.map(toPlainText).join('')
-    return ''
-  }
-
-  const descriptionText = toPlainText(product.description as any)
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -36,10 +27,11 @@ export const ProductCard = ({ product, isInWishlist, onToggleWishlist, onProduct
     >
       <Card className="h-full flex flex-col overflow-hidden border-border shadow-soft hover:shadow-medium transition-smooth">
         <div className="relative aspect-square overflow-hidden bg-muted">
-          <img
+          <Image
             src={product.image}
             alt={product.name}
-            className="w-full h-[50%] object-cover transition-transform duration-500 hover:scale-110"
+            fill
+            className="object-cover transition-transform duration-500 hover:scale-110"
           />
           <Button
             variant="ghost"
@@ -58,7 +50,7 @@ export const ProductCard = ({ product, isInWishlist, onToggleWishlist, onProduct
 
         <CardHeader>
           <CardTitle className="text-xl font-semibold">{product.name}</CardTitle>
-          <CardDescription className="line-clamp-2">{descriptionText}</CardDescription>
+          <CardDescription className="line-clamp-2">{product.description}</CardDescription>
         </CardHeader>
 
         <CardContent className="flex-1">

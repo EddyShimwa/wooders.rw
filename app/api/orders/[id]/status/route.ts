@@ -40,7 +40,7 @@ export async function PATCH(
       message: 'Order status updated successfully', 
       data: order 
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof AdminAuthError) {
       return NextResponse.json(
         {
@@ -51,11 +51,12 @@ export async function PATCH(
       );
     }
 
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return NextResponse.json(
       { 
         success: false, 
         message: 'Failed to update order status', 
-        error: error.message 
+        error: errorMessage 
       },
       { status: 400 }
     );

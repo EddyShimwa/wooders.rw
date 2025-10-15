@@ -70,10 +70,11 @@ export default function AdminOrders() {
       toast.success('Order status updated')
       queryClient.invalidateQueries({ queryKey: ['orders'] })
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = error instanceof Error ? error.message : 'Please try again.';
       toast.error('Failed to update order status', {
-        description: error instanceof Error ? error.message : 'Please try again.',
-      })
+        description: errorMessage,
+      });
     },
   })
 
@@ -83,10 +84,11 @@ export default function AdminOrders() {
       toast.success('Order deleted')
       queryClient.invalidateQueries({ queryKey: ['orders'] })
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = error instanceof Error ? error.message : 'Please try again.';
       toast.error('Failed to delete order', {
-        description: error instanceof Error ? error.message : 'Please try again.',
-      })
+        description: errorMessage,
+      });
     },
   })
 
@@ -97,10 +99,11 @@ export default function AdminOrders() {
       toast.success('Logged out')
       window.location.href = '/admin/login'
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = error instanceof Error ? error.message : 'Please try again.';
       toast.error('Failed to logout', {
-        description: error instanceof Error ? error.message : 'Please try again.',
-      })
+        description: errorMessage,
+      });
     },
   })
 

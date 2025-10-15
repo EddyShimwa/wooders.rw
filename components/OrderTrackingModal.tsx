@@ -22,8 +22,6 @@ interface OrderTrackingModalProps {
   onClose: () => void;
 }
 
-type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
-
 export const OrderTrackingModal = ({ isOpen, onClose }: OrderTrackingModalProps) => {
   const [orderId, setOrderId] = useState("");
   const [order, setOrder] = useState<Order | null>(null);

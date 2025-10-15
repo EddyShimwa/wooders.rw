@@ -4,9 +4,9 @@ import { Heart, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 interface HeaderProps {
   onOrderTrackingClick: () => void;
@@ -15,21 +15,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }: HeaderProps) => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
   const pathname = usePathname();
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <motion.header
@@ -40,17 +26,19 @@ export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }:
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className=" w-auto"
-          >
-            <img
-              src="/images/logo.png"
-              alt="Wooders - Wooden Crafts"
-              className="h-8 sm:h-12 w-auto"
-            />
-          </motion.div>
+                      <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className=" w-auto"
+            >
+              <Image
+                src="/images/logo.png"
+                alt="Wooders - Wooden Crafts"
+                width={48}
+                height={48}
+                className="h-8 sm:h-12 w-auto"
+              />
+            </motion.div>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

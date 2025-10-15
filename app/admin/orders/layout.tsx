@@ -13,7 +13,7 @@ export default async function AdminOrdersLayout({ children }: { children: ReactN
 
   try {
     verifyAdminToken(token);
-  } catch (error) {
+  } catch {
     redirect('/admin/login');
   }
 

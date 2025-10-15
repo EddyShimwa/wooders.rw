@@ -56,24 +56,6 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
     }
   };
 
-  const goToSlide = (slideIndex: number) => {
-    setCurrentSlide(slideIndex);
-    const slideWidth = mobileCarouselRef.current?.offsetWidth || desktopCarouselRef.current?.offsetWidth || 0;
-
-    if (mobileCarouselRef.current) {
-      mobileCarouselRef.current.scrollTo({
-        left: slideIndex * slideWidth,
-        behavior: 'smooth'
-      });
-    }
-    if (desktopCarouselRef.current) {
-      desktopCarouselRef.current.scrollTo({
-        left: slideIndex * slideWidth,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <section className="relative min-h-screen overflow-hidden bg-background">
       <div className="container mx-auto px-4 pt-24 pb-12">

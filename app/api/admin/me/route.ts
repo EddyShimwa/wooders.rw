@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
         name: admin.name,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof AdminAuthError) {
       return NextResponse.json(
         {
@@ -26,11 +26,12 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return NextResponse.json(
       {
         success: false,
         message: 'Failed to fetch admin profile',
-        error: error.message,
+        error: errorMessage,
       },
       { status: 500 }
     );

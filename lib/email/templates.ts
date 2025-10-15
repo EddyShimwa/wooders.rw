@@ -2,12 +2,12 @@ import { Order } from '@/lib/db/models/Order';
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case 'pending': return '#f59e0b'; 
-    case 'processing': return '#3b82f6'; 
-    case 'shipped': return '#8b5cf6'; 
-    case 'delivered': return '#10b981'; 
+    case 'pending': return '#f59e0b';
+    case 'processing': return '#3b82f6';
+    case 'shipped': return '#8b5cf6';
+    case 'delivered': return '#10b981';
     case 'cancelled': return '#ef4444';
-    default: return '#6b7280'; 
+    default: return '#6b7280';
   }
 };
 
@@ -23,7 +23,7 @@ const getStatusText = (status: string) => {
 };
 
 export const generateOrderConfirmationEmail = (order: InstanceType<typeof Order>) => {
-  const itemsHtml = order.items.map((item: any) => `
+  const itemsHtml = order.items.map((item) => `
     <tr>
       <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">
         <strong>${item.name}</strong>

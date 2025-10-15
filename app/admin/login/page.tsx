@@ -24,9 +24,10 @@ export default function AdminLoginPage() {
       toast.success(`Welcome back, ${admin.name}!`);
       router.replace('/admin/orders');
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = error instanceof Error ? error.message : 'Please try again.';
       toast.error('Login failed', {
-        description: error instanceof Error ? error.message : 'Please try again.',
+        description: errorMessage,
       });
     },
   });

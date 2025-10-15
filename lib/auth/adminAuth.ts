@@ -52,7 +52,7 @@ export async function authenticateAdminRequest(request: NextRequest) {
 
   try {
     payload = verifyAdminToken(token);
-  } catch (error) {
+  } catch {
     throw new AdminAuthError('Invalid authentication token');
   }
 

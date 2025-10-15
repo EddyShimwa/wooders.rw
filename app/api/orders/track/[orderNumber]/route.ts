@@ -26,12 +26,13 @@ export async function GET(
       success: true, 
       data: order 
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return NextResponse.json(
       { 
         success: false, 
         message: 'Failed to fetch order', 
-        error: error.message 
+        error: errorMessage 
       },
       { status: 500 }
     );

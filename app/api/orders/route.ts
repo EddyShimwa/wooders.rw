@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
       success: true, 
       data: orders 
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof AdminAuthError) {
       return NextResponse.json(
         {
@@ -26,11 +26,12 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return NextResponse.json(
       { 
         success: false, 
         message: 'Failed to fetch orders', 
-        error: error.message 
+        error: errorMessage 
       },
       { status: 500 }
     );
@@ -57,12 +58,13 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return NextResponse.json(
       { 
         success: false, 
         message: 'Failed to create order', 
-        error: error.message 
+        error: errorMessage 
       },
       { status: 400 }
     );

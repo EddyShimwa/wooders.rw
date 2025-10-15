@@ -66,12 +66,13 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return NextResponse.json(
       {
         success: false,
         message: 'Failed to authenticate',
-        error: error.message,
+        error: errorMessage,
       },
       { status: 500 }
     );

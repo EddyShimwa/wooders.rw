@@ -11,6 +11,7 @@ import {
 import { Product } from "@/types/product";
 import { Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface WishlistModalProps {
   isOpen: boolean;
@@ -45,9 +46,11 @@ export const WishlistModal = ({ isOpen, onClose, wishlistProducts, onRemove, onO
                 transition={{ delay: index * 0.1 }}
                 className="flex gap-4 p-4 border rounded-lg hover:shadow-soft transition-smooth"
               >
-                <img
+                <Image
                   src={product.image}
                   alt={product.name}
+                  width={96}
+                  height={96}
                   className="w-24 h-24 object-cover rounded-lg"
                 />
                 

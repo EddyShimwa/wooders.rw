@@ -77,7 +77,7 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
   <DialogHeader>
           <DialogTitle>Order: {product.name}</DialogTitle>
           <DialogDescription>
-            Fill in your details and we'll get back to you to complete your order.
+            Fill in your details and we&apos;ll get back to you to complete your order.
           </DialogDescription>
         </DialogHeader>
 

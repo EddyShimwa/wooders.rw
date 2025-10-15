@@ -28,7 +28,7 @@ export async function DELETE(
       success: true, 
       message: 'Order deleted successfully' 
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (error instanceof AdminAuthError) {
       return NextResponse.json(
         {
@@ -39,11 +39,12 @@ export async function DELETE(
       );
     }
 
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return NextResponse.json(
       { 
         success: false, 
         message: 'Failed to delete order', 
-        error: error.message 
+        error: errorMessage 
       },
       { status: 500 }
     );

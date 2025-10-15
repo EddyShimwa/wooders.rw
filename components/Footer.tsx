@@ -1,7 +1,8 @@
 "use client"
 
-import { Heart, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -11,9 +12,11 @@ export function Footer() {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center justify-center md:justify-start gap-2">
-              <img
+              <Image
                 src="/images/logo.png"
                 alt="Wooders"
+                width={32}
+                height={32}
                 className="h-8 w-auto"
               />
 
