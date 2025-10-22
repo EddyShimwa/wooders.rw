@@ -36,6 +36,8 @@ export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }:
                 alt="Wooders - Wooden Crafts"
                 width={48}
                 height={48}
+                unoptimized
+                priority
                 className="h-8 sm:h-12 w-auto"
               />
             </motion.div>

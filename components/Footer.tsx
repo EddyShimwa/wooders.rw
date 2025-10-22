@@ -17,6 +17,7 @@ export function Footer() {
                 alt="Wooders"
                 width={32}
                 height={32}
+                unoptimized
                 className="h-8 w-auto"
               />
 
