@@ -142,7 +142,7 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
               <p className="text-sm font-medium">Order Summary</p>
               <p className="text-sm text-muted-foreground mt-1">{product.name}</p>
               <p className="text-sm text-muted-foreground">Quantity: {formData.quantity}</p>
-              <p className="text-lg font-bold text-primary mt-2">${(product.price * formData.quantity).toFixed(2)}</p>
+              <p className="text-lg font-bold text-primary mt-2">RWF {(product.price * formData.quantity).toFixed(2)}</p>
             </div>
           </div>
 

@@ -77,6 +77,11 @@ export const CategoryModal = ({
                     fill
                     className="object-cover"
                   />
+
+                  {/* Name overlay */}
+                  <div className="absolute left-0 right-0 bottom-0 px-3 py-2 bg-gradient-to-t from-black/60 to-transparent">
+                    <p className="text-sm font-medium text-white line-clamp-2">{product.name}</p>
+                  </div>
                 </div>
               ))}
             </div>

@@ -85,7 +85,7 @@ export const OrderTrackingModal = ({ isOpen, onClose }: OrderTrackingModalProps)
             />
           </div>
 
-          <Button type="submit" className="w-full bg-gradient-wood" disabled={trackMutation.isPending}>
+          <Button type="submit" className="w-full bg-primary" disabled={trackMutation.isPending}>
             {trackMutation.isPending ? "Tracking..." : "Track Order"}
           </Button>
           {error && <p className="text-sm text-destructive text-center">{error}</p>}

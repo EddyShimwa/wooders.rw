@@ -26,7 +26,7 @@ export const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="hover:bg-wood/10 transition-smooth"
+      className="hover:bg-primary transition-smooth rounded-full"
       aria-label="Toggle theme"
     >
       {theme === "light" ? (

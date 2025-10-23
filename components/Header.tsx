@@ -81,7 +81,7 @@ export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }:
           <Button
             variant="outline"
             onClick={onOrderTrackingClick}
-            className="border-wood hover:bg-wood/10 transition-smooth"
+            className="border-wood hover:bg-primary transition-smooth"
           >
             <Package className="h-4 w-4 mr-2" />
             Track Order

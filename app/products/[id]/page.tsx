@@ -89,7 +89,7 @@ export default function ProductDetailsPage() {
 
   if (!product) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen py-24">
         <Header
           onOrderTrackingClick={() => setIsTrackingModalOpen(true)}
           onWishlistClick={() => setIsWishlistModalOpen(true)}
@@ -109,7 +109,7 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen py-16">
       <Header
         onOrderTrackingClick={() => setIsTrackingModalOpen(true)}
         onWishlistClick={() => setIsWishlistModalOpen(true)}
