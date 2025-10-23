@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
-import { OrderModal } from '@/components/OrderModal'
 import { OrderTrackingModal } from '@/components/OrderTrackingModal'
 import { WishlistModal } from '@/components/WishlistModal'
 import { CategoryModal } from '@/components/CategoryModal'
@@ -36,10 +36,9 @@ const fetchHero = async () => {
 }
 
 export default function Home() {
+  const router = useRouter()
   const [wishlist, setWishlist] = useState<string[]>([])
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
   const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(false)
   const [isWishlistModalOpen, setIsWishlistModalOpen] = useState(false)
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false)
@@ -92,10 +91,8 @@ export default function Home() {
     )
   }
 
-  const handleOrder = (product: Product) => {
-    setSelectedProduct(product)
-    setIsCategoryModalOpen(false)
-    setIsOrderModalOpen(true)
+  const handleProductClick = (product: Product) => {
+    router.push(`/products/${product.id}`)
   }
 
   const handleCategoryClick = (category: Category) => {
@@ -127,15 +124,7 @@ export default function Home() {
         category={selectedCategory}
         isOpen={isCategoryModalOpen}
         onClose={() => setIsCategoryModalOpen(false)}
-        wishlist={wishlist}
-        onToggleWishlist={toggleWishlist}
-        onOrder={handleOrder}
-      />
-
-      <OrderModal
-        isOpen={isOrderModalOpen}
-        onClose={() => setIsOrderModalOpen(false)}
-        product={selectedProduct}
+        onOrder={handleProductClick}
       />
 
       <OrderTrackingModal
@@ -148,7 +137,7 @@ export default function Home() {
         onClose={() => setIsWishlistModalOpen(false)}
         wishlistProducts={wishlistProducts}
         onRemove={toggleWishlist}
-        onOrder={handleOrder}
+        onOrder={handleProductClick}
       />
     </div>
   )

@@ -48,15 +48,15 @@ export const ProductCard = ({ product, isInWishlist, onToggleWishlist, onProduct
           </Button>
         </div>
 
-        <CardHeader>
+        {/* <CardHeader>
           <CardTitle className="text-xl font-semibold">{product.name}</CardTitle>
           <CardDescription className="line-clamp-2">{product.description}</CardDescription>
         </CardHeader>
 
         <CardContent className="flex-1">
-          <p className="text-2xl font-bold text-primary">${product.price}</p>
+          <p className="text-2xl font-bold text-primary">RWF{product.price}</p>
           <p className="text-sm text-muted-foreground mt-1">{product.category}</p>
-        </CardContent>
+        </CardContent> */}
       </Card>
     </motion.div>
   );

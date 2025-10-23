@@ -72,7 +72,7 @@ export const ProductDetailsModal = ({
                 <h3 className="text-sm font-medium text-muted-foreground mb-2">
                   Price
                 </h3>
-                <p className="text-4xl font-bold text-primary">${product.price}</p>
+                <p className="text-4xl font-bold text-primary">RWF {product.price}</p>
               </div>
             </div>
 

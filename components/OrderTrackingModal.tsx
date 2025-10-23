@@ -65,7 +65,7 @@ export const OrderTrackingModal = ({ isOpen, onClose }: OrderTrackingModalProps)
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
+  <DialogContent className="w-[90vw] max-w-[360px] sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Track Your Order</DialogTitle>
           <DialogDescription>
