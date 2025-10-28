@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
 import Image from "next/image"
 
+
 interface CategoryModalProps {
   category: Category | null
   isOpen: boolean

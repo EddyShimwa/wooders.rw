@@ -1,9 +1,11 @@
-'use client'
+"use client"
 
 import { motion } from "framer-motion"
+import { useState, useEffect, useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Category } from "@/types/category"
 import { Package } from "lucide-react"
+import Image from "next/image"
 
 interface CategoryCardProps {
   category: Category
@@ -11,7 +13,50 @@ interface CategoryCardProps {
   index: number
 }
 
+function CategorySlideshow({ images }: { images: string[] }) {
+  const [idx, setIdx] = useState(0)
+
+  useEffect(() => {
+    if (!images || images.length === 0) return
+    setIdx(0)
+    const id = setInterval(() => {
+      setIdx((i) => (i + 1) % images.length)
+    }, 5000)
+    return () => clearInterval(id)
+  }, [images])
+
+  return (
+    <div
+      className="relative w-full h-full"
+      style={{ minHeight: 0 }}
+    >
+      <div className="relative w-full h-full">
+        {images.map((src, i) => (
+          <div key={i} className={`absolute inset-0 transition-opacity duration-700 ${i === idx ? 'opacity-100' : 'opacity-0'}`}>
+            <Image src={src} alt={`slide-${i}`} fill className="object-cover" />
+          </div>
+        ))}
+      </div>
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={(e) => {
+              e.stopPropagation()
+              setIdx(i)
+            }}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`w-2 h-2 rounded-full ${i === idx ? "bg-white" : "bg-white/40"}`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export const CategoryCard = ({ category, onClick, index }: CategoryCardProps) => {
+  const images = useMemo(() => category.products?.map((p) => p.image) || [], [category.products])
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -23,7 +68,10 @@ export const CategoryCard = ({ category, onClick, index }: CategoryCardProps) =>
     >
       <Card className="h-full overflow-hidden border-border shadow-soft hover:shadow-elegant transition-smooth group">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-          {category.image ? (
+          {/* Slideshow of product images within the category. Falls back to category.image or icon. */}
+          {category.products && category.products.length > 0 ? (
+            <CategorySlideshow images={images} />
+          ) : category.image ? (
             <motion.img
               src={category.image}
               alt={category.name}
