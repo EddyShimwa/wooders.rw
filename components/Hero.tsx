@@ -58,9 +58,7 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
   return (
     <section className="relative min-h-screen overflow-hidden bg-background">
      <div className="container mx-auto px-4 lg:px-4 pt-16 lg:pt-24 pb-8 lg:pb-12">
-  {/* Mobile Layout */}
   <div className="block lg:hidden">
-    {/* Background Carousel with improved height */}
     <div className="relative h-[85vh] rounded-2xl overflow-hidden shadow-2xl">
       {hero?.images && hero.images.length > 0 ? (
         <div
@@ -83,7 +81,6 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                 className="object-cover"
                 priority={idx === 0}
               />
-              {/* Gradient overlay for better text readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
             </div>
           ))}
@@ -101,7 +98,7 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
         </>
       )}
 
-      {/* Content positioned at bottom for better composition */}
+
       <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-8">
         <motion.div
           initial={{ y: 30, opacity: 0 }}
