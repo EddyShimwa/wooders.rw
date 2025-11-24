@@ -9,6 +9,7 @@ import { OrderTrackingModal } from '@/components/OrderTrackingModal'
 import { WishlistModal } from '@/components/WishlistModal'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Heart, ArrowLeft, ShoppingCart, Package, Shield, Truck } from 'lucide-react'
 import { Product } from '@/types/product'
 import { Category } from '@/types/category'
@@ -38,7 +39,7 @@ export default function ProductDetailsPage() {
   const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(false)
   const [isWishlistModalOpen, setIsWishlistModalOpen] = useState(false)
 
-  const { data: categoriesData = [] } = useQuery({
+  const { data: categoriesData = [], isLoading: isCategoriesLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: fetchCategories,
     staleTime: 1000 * 60 * 5,
@@ -87,6 +88,43 @@ export default function ProductDetailsPage() {
   const allProducts = categoriesData.flatMap((c) => c.products || [])
   const product = allProducts.find((p) => p.id === productId)
   const wishlistProducts = allProducts.filter((p) => wishlist.includes(p.id))
+
+  if (isCategoriesLoading) {
+    return (
+      <div className="min-h-screen">
+        <Header
+          onOrderTrackingClick={() => setIsTrackingModalOpen(true)}
+          onWishlistClick={() => setIsWishlistModalOpen(true)}
+          wishlistCount={wishlist.length}
+        />
+        <div className="pt-20 pb-16">
+          <div className="container mx-auto px-4 lg:px-6">
+            <Skeleton className="h-10 w-24 mb-8" />
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+              <Skeleton className="aspect-square rounded-2xl" />
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <Skeleton className="h-8 w-32" />
+                  <Skeleton className="h-12 w-3/4" />
+                  <Skeleton className="h-10 w-40" />
+                </div>
+                <Skeleton className="h-24 w-full" />
+                <div className="grid grid-cols-3 gap-4">
+                  <Skeleton className="h-20" />
+                  <Skeleton className="h-20" />
+                  <Skeleton className="h-20" />
+                </div>
+                <div className="flex gap-4">
+                  <Skeleton className="h-14 flex-1" />
+                  <Skeleton className="h-14 w-14" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   if (!product) {
     return (

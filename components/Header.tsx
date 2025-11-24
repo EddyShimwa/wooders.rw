@@ -62,29 +62,31 @@ export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }:
             <nav className="hidden md:flex items-center gap-8">
               <Link 
                 href="/" 
-                className={`text-sm font-medium transition-colors relative group ${
-                  pathname === "/" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                className={`text-sm font-medium transition-all duration-200 relative group ${
+                  pathname === "/" ? "text-[hsl(var(--wood-dark))] dark:text-[hsl(var(--wood-light))]" : "text-muted-foreground hover:text-[hsl(var(--wood-medium))] dark:hover:text-[hsl(var(--wood-light))]]"
                 }`}
               >
                 Home
                 {pathname === "/" && (
                   <motion.div 
                     layoutId="activeNav"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-foreground"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[hsl(var(--wood-medium))]"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
               </Link>
               <Link 
                 href="/about" 
-                className={`text-sm font-medium transition-colors relative group ${
-                  pathname === "/about" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                className={`text-sm font-medium transition-all duration-200 relative group ${
+                  pathname === "/about" ? "text-[hsl(var(--wood-dark))] dark:text-[hsl(var(--wood-light))]" : "text-muted-foreground hover:text-[hsl(var(--wood-medium))] dark:hover:text-[hsl(var(--wood-light))]]"
                 }`}
               >
                 About
                 {pathname === "/about" && (
                   <motion.div 
                     layoutId="activeNav"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-foreground"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[hsl(var(--wood-medium))]"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
               </Link>
@@ -95,7 +97,7 @@ export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }:
                 variant="ghost"
                 size="icon"
                 onClick={onWishlistClick}
-                className="relative"
+                className="relative hover:bg-[hsl(var(--wood-light))]/10 hover:text-[hsl(var(--wood-medium))] transition-all duration-200"
                 aria-label="Wishlist"
               >
                 <Heart className="h-5 w-5" />
@@ -103,7 +105,7 @@ export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }:
                   <motion.span 
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 bg-foreground text-background text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold"
+                    className="absolute -top-1 -right-1 bg-[hsl(var(--wood-medium))] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold"
                   >
                     {wishlistCount}
                   </motion.span>
@@ -111,13 +113,12 @@ export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }:
               </Button>
 
               <Button
-                variant="ghost"
-                size="icon"
+                variant="outline"
                 onClick={onOrderTrackingClick}
-                className="hidden sm:flex"
-                aria-label="Track Order"
+                className="hidden sm:flex border-[hsl(var(--wood-medium))] text-[hsl(var(--wood-medium))] hover:bg-[hsl(var(--wood-light))]/10 hover:text-[hsl(var(--wood-medium))] transition-all duration-200 gap-2"
               >
-                <Package className="h-5 w-5" />
+                <Package className="h-4 w-4" />
+                <span className="text-sm font-medium">Track Order</span>
               </Button>
 
               <ThemeToggle />
@@ -169,7 +170,7 @@ export const Header = ({ onOrderTrackingClick, onWishlistClick, wishlistCount }:
                   onOrderTrackingClick();
                   setIsMobileMenuOpen(false);
                 }}
-                className="justify-start"
+                className="justify-start border-[hsl(var(--wood-medium))] text-[hsl(var(--wood-medium))] hover:bg-[hsl(var(--wood-light))]/10 transition-all duration-200"
               >
                 <Package className="h-4 w-4 mr-2" />
                 Track Order
