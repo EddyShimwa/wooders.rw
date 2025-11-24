@@ -60,13 +60,14 @@ export const CategoryCard = ({ category, onClick, index }: CategoryCardProps) =>
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -10, scale: 1.02 }}
+      whileHover={{ y: -8 }}
       className="cursor-pointer h-full"
       onClick={() => onClick(category)}
     >
-      <Card className="h-full overflow-hidden border-border shadow-soft hover:shadow-elegant transition-smooth group">
+      <Card className="h-full overflow-hidden border-border hover:shadow-lg transition-all duration-300 group">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
           {/* Slideshow of product images within the category. Falls back to category.image or icon. */}
           {category.products && category.products.length > 0 ? (

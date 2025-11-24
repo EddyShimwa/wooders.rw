@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
+import { motion } from 'framer-motion'
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { OrderTrackingModal } from '@/components/OrderTrackingModal'
@@ -137,32 +138,41 @@ export default function Home() {
         hero={heroData}
       />
 
-      {/* Testimonials Section */}
       {testimonialsData && testimonialsData.length > 0 && (
-        <section className="py-16 bg-muted/50">
-          <div className="container mx-auto px-4 space-y-8">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-bold">What Our Customers Say</h2>
-              <p className="text-muted-foreground">
+        <section className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4 lg:px-6 space-y-12">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center space-y-3"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold">What Our Customers Say</h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Hear from our satisfied customers about their experience with us.
               </p>
-            </div>
+            </motion.div>
 
             <TestimonialsCarousel
               testimonials={testimonialsData}
               isLoading={testimonialsLoading}
             />
 
-            <div className="flex justify-center pt-6">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="flex justify-center pt-6"
+            >
               <Button
                 onClick={() => setIsTestimonialModalOpen(true)}
-                variant="outline"
                 size="lg"
+                className="px-8"
               >
                 <MessageSquare className="mr-2 h-5 w-5" />
                 Share Your Feedback
               </Button>
-            </div>
+            </motion.div>
           </div>
         </section>
       )}

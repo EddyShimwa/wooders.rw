@@ -30,19 +30,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination'
 import { toast } from 'sonner'
 import {
   getAllTestimonials,
@@ -51,8 +41,7 @@ import {
   rejectTestimonial,
 } from '@/lib/api/testimonialService'
 import { Testimonial } from '@/types/testimonial'
-import { Trash2, RefreshCw, Check, X, Eye, QrCode } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { Trash2, RefreshCw, Check, X, Eye, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const TESTIMONIAL_STATUS_COLORS: Record<string, string> = {
   pending: 'bg-yellow-500',
@@ -62,7 +51,6 @@ const TESTIMONIAL_STATUS_COLORS: Record<string, string> = {
 
 export function AdminTestimonialsPage() {
   const queryClient = useQueryClient()
-  const router = useRouter()
   const [testimonialsFilter, setTestimonialsFilter] = useState<string>('all')
   const [viewingTestimonial, setViewingTestimonial] = useState<Testimonial | null>(null)
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false)
@@ -147,13 +135,6 @@ export function AdminTestimonialsPage() {
       items.push(totalPages)
     }
     return items
-  }
-
-  const testimonialStats = {
-    total: testimonials.length,
-    pending: testimonials.filter(t => t.status === 'pending').length,
-    approved: testimonials.filter(t => t.status === 'approved').length,
-    rejected: testimonials.filter(t => t.status === 'rejected').length,
   }
 
   return (
@@ -310,12 +291,10 @@ export function AdminTestimonialsPage() {
                               variant="ghost"
                               size="icon"
                               onClick={() => {
-                                if (window.confirm('Delete this testimonial?')) {
-                                  if (testimonial._id || testimonial.id) {
-                                    deleteTestimonialMutation.mutate(
-                                      (testimonial._id || testimonial.id) as string
-                                    )
-                                  }
+                                if (testimonial._id || testimonial.id) {
+                                  deleteTestimonialMutation.mutate(
+                                    (testimonial._id || testimonial.id) as string
+                                  )
                                 }
                               }}
                               disabled={deleteTestimonialMutation.isPending}
@@ -332,112 +311,86 @@ export function AdminTestimonialsPage() {
                 </Table>
               </div>
 
-              {/* Pagination */}
               {totalPages > 1 && (
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          if (currentPage > 1) setCurrentPage(currentPage - 1)
-                        }}
-                        className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer transition-all duration-200 hover:bg-accent'}
-                      />
-                    </PaginationItem>
-
-                    {generatePaginationItems().map((page, index) => (
-                      <PaginationItem key={index}>
-                        {page === '...' ? (
-                          <PaginationEllipsis />
-                        ) : (
-                          <PaginationLink
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault()
-                              setCurrentPage(page as number)
-                            }}
-                            isActive={page === currentPage}
-                            className="transition-all duration-200"
-                          >
-                            {page}
-                          </PaginationLink>
-                        )}
-                      </PaginationItem>
-                    ))}
-
-                    <PaginationItem>
-                      <PaginationNext
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          if (currentPage < totalPages) setCurrentPage(currentPage + 1)
-                        }}
-                        className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer transition-all duration-200 hover:bg-accent'}
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
+                <div className="flex items-center justify-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  
+                  {generatePaginationItems().map((item, index) => (
+                    <Button
+                      key={index}
+                      variant={item === currentPage ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => typeof item === 'number' && setCurrentPage(item)}
+                      disabled={typeof item === 'string'}
+                      className="min-w-[40px]"
+                    >
+                      {item}
+                    </Button>
+                  ))}
+                  
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                    disabled={currentPage === totalPages}
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
               )}
             </>
           )}
         </CardContent>
       </Card>
 
-      {/* Full Testimonial View Dialog */}
       <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Testimonial Details</DialogTitle>
-            <DialogDescription>View the complete testimonial</DialogDescription>
           </DialogHeader>
           {viewingTestimonial && (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-3">
+                {viewingTestimonial.photo ? (
+                  <Avatar className="h-12 w-12">
+                    <AvatarImage
+                      src={viewingTestimonial.photo}
+                      alt={viewingTestimonial.name}
+                    />
+                    <AvatarFallback>{viewingTestimonial.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <Avatar className="h-12 w-12">
+                    <AvatarFallback>{viewingTestimonial.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                )}
                 <div>
-                  <p className="text-sm text-muted-foreground">Name</p>
-                  <p className="font-medium">{viewingTestimonial.name}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">{viewingTestimonial.email}</p>
+                  <h3 className="font-semibold">{viewingTestimonial.name}</h3>
+                  <p className="text-sm text-muted-foreground">{viewingTestimonial.email}</p>
                 </div>
               </div>
-
               <div>
-                <p className="text-sm text-muted-foreground mb-2">Feedback</p>
-                <p className="text-base leading-relaxed">{viewingTestimonial.feedback}</p>
+                <h4 className="font-medium mb-2">Feedback:</h4>
+                <p className="text-sm leading-relaxed">{viewingTestimonial.feedback}</p>
               </div>
-
-              {viewingTestimonial.photo && (
-                <div>
-                  <p className="text-sm text-muted-foreground mb-2">Photo</p>
-                  <img
-                    src={viewingTestimonial.photo}
-                    alt={viewingTestimonial.name}
-                    className="w-full max-h-64 object-cover rounded-lg"
-                  />
-                </div>
-              )}
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-muted-foreground">Status</p>
-                  <Badge
-                    className={`${TESTIMONIAL_STATUS_COLORS[viewingTestimonial.status]} capitalize text-white mt-1`}
-                  >
-                    {viewingTestimonial.status}
-                  </Badge>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Date</p>
-                  <p className="font-medium">
-                    {viewingTestimonial.createdAt
-                      ? new Date(viewingTestimonial.createdAt).toLocaleDateString()
-                      : 'N/A'}
-                  </p>
-                </div>
+              <div className="flex items-center justify-between">
+                <Badge
+                  className={`${TESTIMONIAL_STATUS_COLORS[viewingTestimonial.status]} capitalize text-white`}
+                >
+                  {viewingTestimonial.status}
+                </Badge>
+                <span className="text-sm text-muted-foreground">
+                  {viewingTestimonial.createdAt
+                    ? new Date(viewingTestimonial.createdAt).toLocaleDateString()
+                    : 'N/A'}
+                </span>
               </div>
             </div>
           )}

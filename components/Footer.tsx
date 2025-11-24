@@ -1,96 +1,100 @@
 "use client"
 
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="bg-background border-t border-border">
-      <div className="container mx-auto px-4 py-8 md:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="space-y-4 text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-2">
+    <footer className="bg-muted/30 border-t border-border">
+      <div className="container mx-auto px-4 lg:px-6 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="space-y-4 md:col-span-2">
+            <div className="flex items-center gap-2">
               <Image
                 src="/images/logo.png"
                 alt="Wooders"
-                width={32}
-                height={32}
+                width={40}
+                height={40}
                 unoptimized
-                className="h-8 w-auto"
+                className="h-10 w-auto"
               />
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed max-w-md">
               Crafting beautiful wooden décor that brings warmth and character to your home.
               Each piece tells a story of craftsmanship and natural beauty.
             </p>
+            <div className="flex gap-3 pt-2">
+              <a href="#" className="h-10 w-10 rounded-full bg-muted flex items-center justify-center hover:bg-foreground hover:text-background transition-colors">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href="#" className="h-10 w-10 rounded-full bg-muted flex items-center justify-center hover:bg-foreground hover:text-background transition-colors">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="#" className="h-10 w-10 rounded-full bg-muted flex items-center justify-center hover:bg-foreground hover:text-background transition-colors">
+                <Twitter className="h-5 w-5" />
+              </a>
+            </div>
           </div>
 
-          {/* Quick Links + Contact (mobile: two columns) */}
-          <div className="grid grid-cols-2 gap-8 md:contents">
-            {/* Quick Links */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-foreground">Quick Links</h3>
-              <nav className="flex flex-col space-y-2">
-                <Link
-                  href="/"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                >
-                  About Us
-                </Link>
-                <Link
-                  href="/admin/orders"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                >
-                  Admin
-                </Link>
-              </nav>
-            </div>
+          <div className="space-y-4">
+            <h3 className="font-semibold text-foreground text-lg">Quick Links</h3>
+            <nav className="flex flex-col space-y-3">
+              <Link
+                href="/"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Home
+              </Link>
+              <Link
+                href="/about"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                About Us
+              </Link>
+              <Link
+                href="/admin/orders"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Admin
+              </Link>
+            </nav>
+          </div>
 
-            {/* Contact Info */}
-            <div className="space-y-4 md:col-span-2">
-              <h3 className="font-semibold text-foreground">Contact</h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                  <Mail className="h-4 w-4 flex-shrink-0" />
-                  <span>info@woodersrwanda.rw</span>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                  <Phone className="h-4 w-4 flex-shrink-0" />
-                  <span>+2507811111111</span>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                  <MapPin className="h-4 w-4 flex-shrink-0" />
-                  <span>Kigali Rwanda</span>
-                </div>
+          <div className="space-y-4">
+            <h3 className="font-semibold text-foreground text-lg">Contact</h3>
+            <div className="space-y-3">
+              <a href="mailto:info@woodersrwanda.rw" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+                <Mail className="h-5 w-5 flex-shrink-0" />
+                <span>info@woodersrwanda.rw</span>
+              </a>
+              <a href="tel:+2507811111111" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+                <Phone className="h-5 w-5 flex-shrink-0" />
+                <span>+250 781 111 1111</span>
+              </a>
+              <div className="flex items-center gap-3 text-muted-foreground">
+                <MapPin className="h-5 w-5 flex-shrink-0" />
+                <span>Kigali, Rwanda</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="border-t border-border mt-8 pt-6">
-          <div className="flex flex-col items-center md:flex-row md:justify-between md:items-center gap-4">
-            <p className="text-muted-foreground text-sm text-center md:text-left">
+        <div className="border-t border-border mt-12 pt-8">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <p className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} Wooders Rwanda. All rights reserved.
             </p>
             
-            <div className="flex flex-wrap gap-4 md:gap-6 text-sm justify-center md:justify-end">
+            <div className="flex flex-wrap gap-6 text-sm">
               <Link href="/privacy" className="hover:text-foreground transition-colors text-muted-foreground">
-                Privacy Policy
+                Privacy
               </Link>
               <Link href="/terms" className="hover:text-foreground transition-colors text-muted-foreground">
-                Terms of Service
+                Terms
               </Link>
               <Link href="/delivery" className="hover:text-foreground transition-colors text-muted-foreground">
-                Shipping Info
+                Shipping
               </Link>
             </div>
           </div>

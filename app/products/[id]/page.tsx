@@ -9,10 +9,11 @@ import { OrderTrackingModal } from '@/components/OrderTrackingModal'
 import { WishlistModal } from '@/components/WishlistModal'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Heart, ArrowLeft, ShoppingCart } from 'lucide-react'
+import { Heart, ArrowLeft, ShoppingCart, Package, Shield, Truck } from 'lucide-react'
 import { Product } from '@/types/product'
 import { Category } from '@/types/category'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 const WISHLIST_STORAGE_KEY = 'wooders_wishlist'
 
@@ -109,76 +110,99 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen py-16">
+    <div className="min-h-screen">
       <Header
         onOrderTrackingClick={() => setIsTrackingModalOpen(true)}
         onWishlistClick={() => setIsWishlistModalOpen(true)}
         wishlistCount={wishlist.length}
       />
 
-      <div className="container mx-auto px-4 py-8">
-        <Button
-          variant="ghost"
-          onClick={() => router.back()}
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
-        </Button>
+      <div className="pt-20 pb-16">
+        <div className="container mx-auto px-4 lg:px-6">
+          <Button
+            variant="ghost"
+            onClick={() => router.back()}
+            className="mb-8 -ml-2"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
+          </Button>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Product Image */}
-          <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-cover"
-            />
-          </div>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="relative aspect-square overflow-hidden rounded-2xl bg-muted shadow-lg"
+            >
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                className="object-cover"
+                priority
+              />
+            </motion.div>
 
-          {/* Product Details */}
-          <div className="space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-              <p className="text-muted-foreground text-lg">{product.category}</p>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="space-y-8"
+            >
+              <div className="space-y-4">
+                <div className="inline-block px-3 py-1 bg-muted rounded-full text-sm font-medium">
+                  {product.category}
+                </div>
+                <h1 className="text-4xl lg:text-5xl font-bold leading-tight">{product.name}</h1>
+                <div className="text-4xl font-bold">
+                  RWF {product.price?.toLocaleString()}
+                </div>
+              </div>
 
-            <div className="text-3xl font-bold text-primary">
-              {product.price} RWF
-            </div>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Description</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
+              <div className="prose prose-gray max-w-none">
+                <p className="text-lg text-muted-foreground leading-relaxed">
                   {product.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
+                </p>
+              </div>
 
-            <div className="flex gap-4">
-              <Button
-                size="lg"
-                onClick={() => handleOrder(product)}
-                className="flex-1"
-              >
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Order Now
-              </Button>
+              <div className="grid grid-cols-3 gap-4 py-6 border-y">
+                <div className="text-center space-y-2">
+                  <Package className="h-6 w-6 mx-auto text-muted-foreground" />
+                  <p className="text-sm font-medium">Handcrafted</p>
+                </div>
+                <div className="text-center space-y-2">
+                  <Shield className="h-6 w-6 mx-auto text-muted-foreground" />
+                  <p className="text-sm font-medium">Quality Assured</p>
+                </div>
+                <div className="text-center space-y-2">
+                  <Truck className="h-6 w-6 mx-auto text-muted-foreground" />
+                  <p className="text-sm font-medium">Fast Delivery</p>
+                </div>
+              </div>
 
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => toggleWishlist(product.id)}
-              >
-                <Heart
-                  className={`h-5 w-5 ${wishlist.includes(product.id) ? "fill-primary text-primary" : ""}`}
-                />
-              </Button>
-            </div>
+              <div className="flex gap-4">
+                <Button
+                  size="lg"
+                  onClick={() => handleOrder(product)}
+                  className="flex-1 h-14 text-base"
+                >
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Order Now
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={() => toggleWishlist(product.id)}
+                  className="h-14 px-6"
+                >
+                  <Heart
+                    className={`h-5 w-5 transition-colors ${wishlist.includes(product.id) ? "fill-red-500 text-red-500" : ""}`}
+                  />
+                </Button>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
