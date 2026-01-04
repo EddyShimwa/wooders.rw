@@ -21,13 +21,10 @@ export default function DeliveryPage() {
           <h2 className="font-semibold text-lg mb-2">Delivery times</h2>
           <p className="text-muted-foreground">Standard delivery: 2-5 business days. Express options available at checkout.</p>
         </section>
-        <section className="mb-6">
-          <h2 className="font-semibold text-lg mb-2">Shipping fees</h2>
-          <p className="text-muted-foreground">Shipping fees are calculated at checkout based on weight and distance.</p>
-        </section>
         <section>
           <h2 className="font-semibold text-lg mb-2">Contact</h2>
-          <p className="text-muted-foreground">Questions? Email info@woodersrwanda.rw</p>
+          <p className="text-muted-foreground">Email: woodersrwanda@gmail.com</p>
+          <p className="text-muted-foreground">Phone: +250 780 609 878</p>
         </section>
       </main>
     </div>

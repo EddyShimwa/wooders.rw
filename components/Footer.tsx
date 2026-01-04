@@ -64,13 +64,13 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground text-lg">Contact</h3>
             <div className="space-y-3">
-              <a href="mailto:info@woodersrwanda.rw" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+              <a href="mailto:woodersrwanda@gmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
                 <Mail className="h-5 w-5 flex-shrink-0" />
-                <span>info@woodersrwanda.rw</span>
+                <span>woodersrwanda@gmail.com</span>
               </a>
-              <a href="tel:+2507811111111" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+              <a href="tel:+250780609878" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
                 <Phone className="h-5 w-5 flex-shrink-0" />
-                <span>+250 781 111 1111</span>
+                <span>+250 780 609 878</span>
               </a>
               <div className="flex items-center gap-3 text-muted-foreground">
                 <MapPin className="h-5 w-5 flex-shrink-0" />

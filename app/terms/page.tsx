@@ -32,7 +32,7 @@ export default function TermsPage() {
 
         <section>
           <h2 className="font-semibold text-lg mb-2">Contact</h2>
-          <p className="text-muted-foreground">If you have questions about these terms, email info@woodersrwanda.rw</p>
+          <p className="text-muted-foreground">If you have questions about these terms, email woodersrwanda@gmail.com</p>
         </section>
       </main>
     </div>

@@ -37,7 +37,7 @@ export default function PrivacyPage() {
 
         <section>
           <h2 className="font-semibold text-lg mb-2">Contact</h2>
-          <p className="text-muted-foreground">If you have questions about our privacy policy, email info@woodersrwanda.rw</p>
+          <p className="text-muted-foreground">If you have questions about our privacy policy, email woodersrwanda@gmail.com</p>
         </section>
       </main>
     </div>
