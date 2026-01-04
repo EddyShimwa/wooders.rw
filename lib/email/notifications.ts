@@ -19,7 +19,6 @@ export const sendOrderConfirmationToAdmin = async (order: InstanceType<typeof im
     console.log(`Order confirmation email sent to admin for order ${order.orderNumber}`);
   } catch (error) {
     console.error('Failed to send order confirmation email to admin:', error);
-    // Don't throw error to avoid breaking order creation
   }
 };
 

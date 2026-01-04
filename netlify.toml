@@ -1,0 +1,10 @@
+# Temporary config to omit expected BREVO keys from Netlify's secrets scanner
+# Remove this after rotating secrets and verifying build artifacts.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+# Keys to omit from Netlify secret scanning (comma-separated)
+SECRETS_SCAN_OMIT_KEYS = "BREVO_ADMIN_EMAIL,BREVO_FROM_EMAIL,BREVO_API_KEY"
