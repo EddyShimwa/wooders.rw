@@ -4,6 +4,7 @@ import { QRCodeGenerator } from '@/components/QRCodeGenerator'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChevronLeft } from 'lucide-react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 export default function QRCodePage() {
@@ -38,9 +39,11 @@ export default function QRCodePage() {
           
           <CardHeader className="text-center space-y-2 sm:space-y-3 p-4 sm:p-6 pb-3 sm:pb-4 pt-1 sm:pt-2">
             <div className="flex justify-center mb-1">
-              <img 
-                src="/images/logo.png" 
-                alt="Wooders Logo" 
+              <Image
+                src="/images/logo.png"
+                alt="Wooders Logo"
+                width={160}
+                height={80}
                 className="h-12 sm:h-16 md:h-20 w-auto object-contain"
               />
             </div>
@@ -48,7 +51,7 @@ export default function QRCodePage() {
               Tell Us Your Story!
             </CardTitle>
             <CardDescription className="text-xs sm:text-sm md:text-base text-muted-foreground">
-              How was your experience? We'd love to hear from you!
+              How was your experience? We would love to hear from you!
             </CardDescription>
           </CardHeader>
           

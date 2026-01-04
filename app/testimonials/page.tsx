@@ -22,10 +22,10 @@ export default function TestimonialPage() {
         </Button>
 
         <Card>
-          <CardHeader className="text-center space-y-2">
+            <CardHeader className="text-center space-y-2">
             <CardTitle className="text-2xl">Share Your Feedback</CardTitle>
             <CardDescription>
-              We'd love to hear about your experience with our products.
+              We would love to hear about your experience with our products.
               Your feedback helps us improve!
             </CardDescription>
           </CardHeader>

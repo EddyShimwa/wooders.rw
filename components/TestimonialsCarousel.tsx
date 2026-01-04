@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import { Testimonial } from '@/types/testimonial'
 import { Card, CardContent } from '@/components/ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback} from '@/components/ui/avatar'
+import Image from 'next/image'
 import { Star } from 'lucide-react'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
@@ -46,10 +47,13 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                   <div>
                     {testimonial.photo && (
                       <div className="mb-4 -mt-6 -mx-6">
-                        <img
+                        <Image
                           src={testimonial.photo}
-                          alt={`${testimonial.name}'s experience`}
+                          alt={`${testimonial.name}\u2019s experience`}
+                          width={800}
+                          height={192}
                           className="w-full h-48 object-contain"
+                          style={{ objectFit: 'contain' }}
                         />
                       </div>
                     )}
@@ -66,7 +70,7 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                       ))}
                     </div>
                     <p className="text-sm text-gray-700 dark:text-gray-300 mb-4 line-clamp-5">
-                      "{testimonial.feedback}"
+                      &ldquo;{testimonial.feedback}&rdquo;
                     </p>
                   </div>
                   <div className="flex items-center gap-3 pt-4 border-t">

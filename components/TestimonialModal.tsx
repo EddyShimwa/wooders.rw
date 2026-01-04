@@ -15,7 +15,7 @@ export function TestimonialModal({ isOpen, onClose }: TestimonialModalProps) {
         <DialogHeader>
           <DialogTitle>Share Your Feedback</DialogTitle>
           <DialogDescription>
-            We'd love to hear about your experience with our products. Your feedback helps us improve!
+            We would love to hear about your experience with our products. Your feedback helps us improve!
           </DialogDescription>
         </DialogHeader>
         <TestimonialForm onSuccess={onClose} isModal={true} />

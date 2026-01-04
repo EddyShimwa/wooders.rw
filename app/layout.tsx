@@ -7,7 +7,6 @@ import { Toaster as Sonner } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { QueryProvider } from './providers'
 import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 

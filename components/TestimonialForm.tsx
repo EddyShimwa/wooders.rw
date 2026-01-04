@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -141,7 +142,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
                   disabled={isSubmitting}
                 />
               </FormControl>
-              <FormDescription>We'll use this to contact you if needed</FormDescription>
+              <FormDescription>We will use this to contact you if needed</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -228,10 +229,13 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
                   </div>
                   {photoPreview && (
                     <div className="relative w-full">
-                      <img
+                      <Image
                         src={photoPreview}
                         alt="Preview"
+                        width={800}
+                        height={256}
                         className="w-full h-64 rounded-lg object-cover border-2 border-border"
+                        style={{ objectFit: 'cover' }}
                       />
                     </div>
                   )}
