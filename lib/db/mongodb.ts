@@ -3,6 +3,9 @@ import { ensureAdminUser } from './initializeAdmin';
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/wooders';
 
+// Debug: show whether MONGODB_URI is available at runtime (don't log the full URI)
+console.log('MONGODB_URI present:', !!process.env.MONGODB_URI);
+
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }

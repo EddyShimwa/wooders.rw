@@ -1,13 +1,24 @@
 import { createClient } from 'contentful';
 
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-});
+function getClient() {
+  const space = process.env.CONTENTFUL_SPACE_ID;
+  const token = process.env.CONTENTFUL_ACCESS_TOKEN;
 
-export default client;
+  if (!space || !token) {
+    console.warn('Contentful env missing', { spacePresent: !!space, accessTokenPresent: !!token });
+    return null;
+  }
+
+  return createClient({
+    space,
+    accessToken: token,
+  });
+}
 
 export async function getProducts() {
+  const client = getClient();
+  if (!client) return [];
+
   const entries = await client.getEntries({
     content_type: 'product',
   });
@@ -42,6 +53,9 @@ export async function getProducts() {
 
 export async function getCategories() {
   try {
+    const client = getClient();
+    if (!client) return [];
+
     const entries = await client.getEntries({
       content_type: 'category',
     })
@@ -84,6 +98,9 @@ function toPlainText(node: unknown): string {
 
 export async function getHero() {
   try {
+    const client = getClient();
+    if (!client) return null;
+
     const entries = await client.getEntries({
       content_type: 'hero',
       limit: 1,
