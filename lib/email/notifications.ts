@@ -3,7 +3,11 @@ import { generateOrderConfirmationEmail, generateOrderStatusUpdateEmail } from '
 
 export const sendOrderConfirmationToAdmin = async (order: InstanceType<typeof import('@/lib/db/models/Order').Order>) => {
   try {
-    const adminEmail = process.env.BREVO_ADMIN_EMAIL || 'shedpray16@gmail.com';
+    const adminEmail = process.env.BREVO_ADMIN_EMAIL;
+    if (!adminEmail) {
+      console.warn('BREVO_ADMIN_EMAIL not configured; skipping admin notification');
+      return;
+    }
     const htmlContent = generateOrderConfirmationEmail(order);
 
     await sendEmail({
