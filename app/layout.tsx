@@ -7,12 +7,13 @@ import { Toaster as Sonner } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { QueryProvider } from './providers'
 import { Footer } from '@/components/Footer'
+import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Wooders - Handcrafted Wood Décor',
-  description: 'Elegant handcrafted wooden décor for your home',
+  title: 'Wooders - Handcrafted Wood Decor',
+  description: 'Elegant handcrafted wooden decor for your home. Order directly on WhatsApp.',
   icons: {
     icon: '/images/favicon.png',
   },
@@ -29,14 +30,14 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
-          enableSystem
+          forcedTheme="light"
           disableTransitionOnChange
         >
           <QueryProvider>
             <TooltipProvider>
-
               {children}
               <Footer />
+              <WhatsAppFloat />
               <Toaster />
               <Sonner />
             </TooltipProvider>

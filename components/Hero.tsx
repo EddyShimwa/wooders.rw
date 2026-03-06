@@ -57,9 +57,9 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                 <Button 
                   size="lg" 
                   onClick={scrollToCategories}
-                  className="bg-[hsl(var(--cream))] text-[hsl(var(--charcoal))] hover:bg-[hsl(var(--wood-light))] hover:text-[hsl(var(--charcoal))] transition-all duration-300 text-base sm:text-lg px-8 sm:px-10 h-12 sm:h-14 shadow-lg"
+                  className="bg-[hsl(var(--cream))] text-[hsl(var(--charcoal))] hover:bg-[hsl(var(--wood-light))] hover:text-[hsl(var(--charcoal))] transition-all duration-300 text-base sm:text-lg px-8 sm:px-10 h-12 sm:h-16 shadow-lg"
                 >
-                  Explore Collection
+                  Explore Collections
                 </Button>
                 <Button 
                   size="lg" 
