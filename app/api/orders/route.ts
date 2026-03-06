@@ -44,8 +44,12 @@ export async function POST(request: NextRequest) {
     await dbConnect();
     const body = await request.json();
     
+    console.log('Creating order with data:', JSON.stringify(body, null, 2));
+    
     const order = new Order(body);
     await order.save();
+    
+    console.log('Order created successfully:', order.orderNumber);
     
     // Send email notification to admin asynchronously
     sendOrderConfirmationToAdmin(order);
@@ -59,7 +63,17 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error: unknown) {
+    console.error('Error creating order:', error);
+    
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
+    console.error('Error details:', {
+      message: errorMessage,
+      stack: errorStack,
+      error: error
+    });
+    
     return NextResponse.json(
       { 
         success: false, 

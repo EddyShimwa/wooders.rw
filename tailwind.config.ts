@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -105,10 +105,30 @@ export default {
             height: "0",
           },
         },
+        "slide-up": {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-33.33%)" },
+        },
+        "slide-down": {
+          "0%": { transform: "translateY(-33.33%)" },
+          "100%": { transform: "translateY(0)" },
+        },
+        "slide-left": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-33.33%)" },
+        },
+        "slide-diagonal": {
+          "0%": { transform: "translate(0, 0)" },
+          "100%": { transform: "translate(-15%, -15%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slide-up": "slide-up 30s linear infinite",
+        "slide-down": "slide-down 30s linear infinite",
+        "slide-left": "slide-left 20s linear infinite",
+        "slide-diagonal": "slide-diagonal 25s linear infinite",
       },
     },
   },
