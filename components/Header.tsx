@@ -71,11 +71,11 @@ export const Header = () => {
                 <Image
                   src="/images/logo.png"
                   alt="Wooders"
-                  width={40}
+                  width={60}
                   height={40}
                   unoptimized
                   priority
-                  className="h-8 lg:h-10 w-auto"
+                  className="h-10 lg:h-14 w-auto"
                 />
               </motion.div>
             </button>
@@ -134,48 +134,79 @@ export const Header = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm md:hidden"
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
             />
+            {/* Sidebar from right */}
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="fixed top-16 left-4 right-4 z-50 bg-background/95 backdrop-blur-xl rounded-2xl border border-border shadow-lg md:hidden overflow-hidden"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+              className={`fixed top-0 right-0 bottom-0 z-50 w-64 backdrop-blur-2xl md:hidden flex flex-col transition-colors duration-300 ${
+                isScrolled
+                  ? 'bg-background/70 border-l border-border/50 text-foreground'
+                  : 'bg-black/20 border-l border-white/15 text-white'
+              }`}
             >
-              <nav className="p-4 flex flex-col gap-1">
-                {NAV_ITEMS.map((item) => (
-                  <button
+              {/* Close button */}
+              <div className="flex items-center justify-between px-5 pt-5 pb-3">
+                <span className={`text-xs font-semibold tracking-[0.15em] uppercase ${isScrolled ? 'text-muted-foreground' : 'text-white/40'}`}>Menu</span>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`h-8 w-8 rounded-full border flex items-center justify-center transition-colors ${
+                    isScrolled
+                      ? 'border-border hover:bg-muted/50'
+                      : 'border-white/20 hover:bg-white/10'
+                  }`}
+                  aria-label="Close menu"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              {/* Nav links */}
+              <nav className="flex-1 px-3 py-2 flex flex-col gap-0.5">
+                {NAV_ITEMS.map((item, i) => (
+                  <motion.button
                     key={item.href}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 * i }}
                     onClick={() => scrollTo(item.href)}
-                    className={`text-left text-base font-medium px-4 py-3 rounded-xl transition-colors ${
+                    className={`text-left text-sm font-medium px-4 py-2.5 rounded-lg transition-all ${
                       activeSection === item.href.replace('#', '')
-                        ? 'bg-[hsl(var(--wood-medium))]/10 text-foreground'
-                        : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                        ? 'bg-[hsl(var(--wood-light))]/20 text-[hsl(var(--wood-light))]'
+                        : isScrolled
+                          ? 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                          : 'text-white/70 hover:bg-white/10 hover:text-white'
                     }`}
                   >
                     {item.label}
-                  </button>
+                  </motion.button>
                 ))}
-                <div className="border-t border-border mt-2 pt-3">
-                  <a
-                    href={getGeneralInquiryLink()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-[#25D366] text-white rounded-xl font-semibold text-base"
-                  >
-                    <svg viewBox="0 0 32 32" className="w-5 h-5 fill-current">
-                      <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16c0 3.5 1.128 6.744 3.046 9.378L1.054 31.29l6.118-1.958A15.9 15.9 0 0016.004 32C24.826 32 32 24.822 32 16S24.826 0 16.004 0zm9.31 22.606c-.39 1.1-1.932 2.012-3.182 2.278-.856.18-1.974.324-5.736-1.232-4.812-1.99-7.912-6.876-8.152-7.194-.23-.318-1.932-2.57-1.932-4.9s1.222-3.476 1.656-3.952c.434-.476.948-.596 1.264-.596.316 0 .632.002.908.016.292.014.682-.11 1.068.814.39.94 1.328 3.238 1.444 3.472.116.234.194.508.038.814-.156.318-.234.508-.468.786-.234.278-.49.62-.702.832-.234.234-.478.488-.206.956.272.468 1.212 2 2.602 3.238 1.784 1.59 3.288 2.082 3.756 2.316.468.234.742.196 1.014-.118.272-.316 1.168-1.36 1.48-1.828.312-.468.624-.39 1.054-.234.434.156 2.726 1.286 3.194 1.52.468.234.78.352.896.546.116.194.116 1.128-.274 2.228z"/>
-                    </svg>
-                    Order on WhatsApp
-                  </a>
-                </div>
               </nav>
+
+              {/* Bottom CTA */}
+              <div className={`px-4 pb-8 pt-3 border-t ${isScrolled ? 'border-border/50' : 'border-white/10'}`}>
+                <a
+                  href={getGeneralInquiryLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-lg font-semibold text-sm transition-colors"
+                >
+                  <svg viewBox="0 0 32 32" className="w-4 h-4 fill-current">
+                    <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16c0 3.5 1.128 6.744 3.046 9.378L1.054 31.29l6.118-1.958A15.9 15.9 0 0016.004 32C24.826 32 32 24.822 32 16S24.826 0 16.004 0zm9.31 22.606c-.39 1.1-1.932 2.012-3.182 2.278-.856.18-1.974.324-5.736-1.232-4.812-1.99-7.912-6.876-8.152-7.194-.23-.318-1.932-2.57-1.932-4.9s1.222-3.476 1.656-3.952c.434-.476.948-.596 1.264-.596.316 0 .632.002.908.016.292.014.682-.11 1.068.814.39.94 1.328 3.238 1.444 3.472.116.234.194.508.038.814-.156.318-.234.508-.468.786-.234.278-.49.62-.702.832-.234.234-.478.488-.206.956.272.468 1.212 2 2.602 3.238 1.784 1.59 3.288 2.082 3.756 2.316.468.234.742.196 1.014-.118.272-.316 1.168-1.36 1.48-1.828.312-.468.624-.39 1.054-.234.434.156 2.726 1.286 3.194 1.52.468.234.78.352.896.546.116.194.116 1.128-.274 2.228z"/>
+                  </svg>
+                  WhatsApp
+                </a>
+              </div>
             </motion.div>
           </>
         )}

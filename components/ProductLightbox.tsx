@@ -111,6 +111,9 @@ export function ProductLightbox({ product, isOpen, onClose, allProducts = [], on
             {/* Product info + WhatsApp CTA */}
             <div className="text-center space-y-3 w-full max-w-lg">
               <h3 className="text-xl sm:text-2xl font-bold text-white">{product.name}</h3>
+              {product.price && (
+                <p className="text-xl font-bold text-white">RWF {product.price.toLocaleString()}</p>
+              )}
               {product.category && (
                 <p className="text-white/60 text-sm">{product.category}</p>
               )}

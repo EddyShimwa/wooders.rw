@@ -113,6 +113,9 @@ export default function ProductDetailsPage() {
                   {product.category}
                 </div>
                 <h1 className="text-4xl lg:text-5xl font-bold leading-tight">{product.name}</h1>
+                {product.price && (
+                  <p className="text-2xl font-bold text-primary">RWF {product.price.toLocaleString()}</p>
+                )}
               </div>
 
               {product.description && (

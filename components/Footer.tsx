@@ -1,98 +1,82 @@
 "use client"
 
-import { Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide-react"
-import Link from "next/link"
+import { Mail, Phone, MapPin, Instagram, ArrowUpRight } from "lucide-react"
 import Image from "next/image"
-import { getGeneralInquiryLink } from "@/lib/whatsapp"
 
 export function Footer() {
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
   return (
-    <footer id="contact" className="bg-muted/30 border-t border-border">
-      <div className="container mx-auto px-4 lg:px-6 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div className="space-y-4 md:col-span-1">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/images/logo.png"
-                alt="Wooders"
-                width={40}
-                height={40}
-                unoptimized
-                className="h-10 w-auto"
-              />
-            </div>
-            <p className="text-muted-foreground leading-relaxed max-w-sm">
-              Crafting beautiful wooden decor that brings warmth and character to your home. Each piece tells a story.
+    <footer id="contact" className="bg-foreground text-background">
+      <div className="container mx-auto px-4 lg:px-6 py-8 md:py-10">
+        {/* Top: logo + nav + contact — all inline on desktop */}
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 md:gap-8 text-center md:text-left">
+          {/* Logo + tagline */}
+          <div className="flex flex-col items-center md:items-start gap-2 shrink-0">
+            <Image
+              src="/images/logo.png"
+              alt="Wooders"
+              width={36}
+              height={36}
+              unoptimized
+              className="h-10 w-auto"
+            />
+            <p className="text-background/50 text-xs max-w-[200px] leading-relaxed">
+              Handcrafted wooden decor. Made in Rwanda.
             </p>
-            <div className="flex gap-3 pt-2">
-              <a href="#" className="h-10 w-10 rounded-full bg-muted flex items-center justify-center hover:bg-foreground hover:text-background transition-colors" aria-label="Instagram">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="h-10 w-10 rounded-full bg-muted flex items-center justify-center hover:bg-foreground hover:text-background transition-colors" aria-label="Facebook">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="h-10 w-10 rounded-full bg-muted flex items-center justify-center hover:bg-foreground hover:text-background transition-colors" aria-label="Twitter">
-                <Twitter className="h-5 w-5" />
-              </a>
-            </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground text-lg">Get in Touch</h3>
-            <div className="space-y-3">
-              <a
-                href={getGeneralInquiryLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <div className="h-9 w-9 rounded-full bg-[#25D366]/10 flex items-center justify-center flex-shrink-0">
-                  <svg viewBox="0 0 32 32" className="w-4 h-4 fill-[#25D366]">
-                    <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16c0 3.5 1.128 6.744 3.046 9.378L1.054 31.29l6.118-1.958A15.9 15.9 0 0016.004 32C24.826 32 32 24.822 32 16S24.826 0 16.004 0zm9.31 22.606c-.39 1.1-1.932 2.012-3.182 2.278-.856.18-1.974.324-5.736-1.232-4.812-1.99-7.912-6.876-8.152-7.194-.23-.318-1.932-2.57-1.932-4.9s1.222-3.476 1.656-3.952c.434-.476.948-.596 1.264-.596.316 0 .632.002.908.016.292.014.682-.11 1.068.814.39.94 1.328 3.238 1.444 3.472.116.234.194.508.038.814-.156.318-.234.508-.468.786-.234.278-.49.62-.702.832-.234.234-.478.488-.206.956.272.468 1.212 2 2.602 3.238 1.784 1.59 3.288 2.082 3.756 2.316.468.234.742.196 1.014-.118.272-.316 1.168-1.36 1.48-1.828.312-.468.624-.39 1.054-.234.434.156 2.726 1.286 3.194 1.52.468.234.78.352.896.546.116.194.116 1.128-.274 2.228z"/>
-                  </svg>
-                </div>
-                <span>Chat on WhatsApp</span>
+          {/* Navigate */}
+          <div className="space-y-2">
+            <h4 className="text-[10px] font-semibold tracking-[0.15em] uppercase text-background/40">Navigate</h4>
+            <nav className="flex gap-3 justify-center md:justify-start">
+              <a href="#collection" className="text-xs text-background/70 hover:text-background transition-colors">Collection</a>
+              <a href="#about" className="text-xs text-background/70 hover:text-background transition-colors">About</a>
+              <a href="#testimonials" className="text-xs text-background/70 hover:text-background transition-colors">Testimonials</a>
+            </nav>
+          </div>
+
+          {/* Contact */}
+          <div className="space-y-2">
+            <h4 className="text-[10px] font-semibold tracking-[0.15em] uppercase text-background/40">Contact</h4>
+            <div className="flex flex-col gap-1.5 items-center md:items-start">
+              <a href="mailto:woodersrwanda@gmail.com" className="text-xs text-background/70 hover:text-background transition-colors flex items-center gap-1.5">
+                <Mail className="h-3 w-3 flex-shrink-0" />
+                woodersrwanda@gmail.com
               </a>
-              <a href="mailto:woodersrwanda@gmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
-                <div className="h-9 w-9 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                  <Mail className="h-4 w-4" />
-                </div>
-                <span>woodersrwanda@gmail.com</span>
+              <a href="tel:+250780609878" className="text-xs text-background/70 hover:text-background transition-colors flex items-center gap-1.5">
+                <Phone className="h-3 w-3 flex-shrink-0" />
+                +250 780 609 878
               </a>
-              <a href="tel:+250780609878" className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
-                <div className="h-9 w-9 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                  <Phone className="h-4 w-4" />
-                </div>
-                <span>+250 780 609 878</span>
-              </a>
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="h-9 w-9 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-                  <MapPin className="h-4 w-4" />
-                </div>
-                <span>Kigali, Rwanda</span>
+              <div className="flex gap-1.5 items-center">
+                <MapPin className="h-3 w-3 flex-shrink-0 text-background/70" />
+                <span className="text-xs text-background/70">Kigali, Rwanda</span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="font-semibold text-foreground text-lg">Quick Links</h3>
-            <nav className="flex flex-col space-y-3">
-              <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                Terms of Service
-              </Link>
-              <Link href="/delivery" className="text-muted-foreground hover:text-foreground transition-colors">
-                Shipping Info
-              </Link>
-            </nav>
+          {/* Social + back to top */}
+          <div className="flex items-center justify-center md:justify-end gap-2 shrink-0">
+            <a href="https://www.instagram.com/wooders_rw?igsh=MTN5Zmo5YTk4bXJvdQ==" target="_blank" rel="noopener noreferrer" className="h-8 w-8 rounded-full border border-background/15 flex items-center justify-center hover:bg-background/10 transition-colors" aria-label="Instagram">
+              <Instagram className="h-3.5 w-3.5" />
+            </a>
+            <button
+              onClick={scrollToTop}
+              className="h-8 w-8 rounded-full border border-background/20 flex items-center justify-center hover:bg-background/10 transition-colors"
+              aria-label="Back to top"
+            >
+              <ArrowUpRight className="h-3.5 w-3.5 -rotate-45" />
+            </button>
           </div>
         </div>
 
-        <div className="border-t border-border mt-12 pt-8">
-          <p className="text-muted-foreground text-sm text-center">
-            &copy; {new Date().getFullYear()} Wooders Rwanda. All rights reserved.
+        {/* Bottom bar */}
+        <div className="border-t border-background/10 mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-background/40 text-[11px]">
+            &copy; {new Date().getFullYear()} Wooders Rwanda
+          </p>
+          <p className="text-background/30 text-[11px]">
+            Handcrafted with care in Kigali
           </p>
         </div>
       </div>

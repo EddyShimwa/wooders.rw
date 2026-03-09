@@ -24,8 +24,8 @@ import { Loader2, Upload, Star } from 'lucide-react'
 const MAX_FEEDBACK_LENGTH = 100
 
 const testimonialFormSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
-  email: z.string().email({ message: 'Please enter a valid email' }),
+  name: z.string().optional(),
+  email: z.string().email({ message: 'Please enter a valid email' }).optional().or(z.literal('')),
   rating: z.number().min(1, { message: 'Please select a rating' }).max(5),
   feedback: z.string()
     .min(10, { message: 'Feedback must be at least 10 characters' })
@@ -119,7 +119,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name *</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input placeholder="Your name" {...field} disabled={isSubmitting} />
               </FormControl>
@@ -133,7 +133,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email *</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
                   type="email"
@@ -167,9 +167,9 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
                       className="transition-transform hover:scale-110 disabled:cursor-not-allowed"
                     >
                       <Star
-                        className={`h-8 w-8 transition-colors ${
+                        className={`h-5 w-5 transition-colors ${
                           star <= (hoveredStar || field.value)
-                            ? 'fill-yellow-400 text-yellow-400'
+                            ? 'fill-[hsl(var(--wood-light))] text-[hsl(var(--wood-light))]'
                             : 'text-gray-300'
                         }`}
                       />
@@ -247,7 +247,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
           )}
         />
 
-        <Button type="submit" disabled={isSubmitting} className="w-full">
+        <Button type="submit" disabled={isSubmitting} className="w-full bg-[hsl(var(--wood-medium))] hover:bg-[hsl(var(--wood-dark))] text-white">
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isSubmitting ? 'Submitting...' : 'Submit Testimonial'}
         </Button>

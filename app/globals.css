@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -42,7 +42,7 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Custom Wooders tokens */
-    --wood-light: 28 45% 70%;
+    --wood-light: 37 70% 55% ;
     --wood-medium: 28 35% 45%;
     --wood-dark: 28 30% 30%;
     --forest: 140 25% 30%;
@@ -76,8 +76,8 @@ All colors MUST be HSL.
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
   }
 
   html {
