@@ -42,7 +42,7 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Custom Wooders tokens */
-    --wood-light: 28 45% 70%;
+    --wood-light: 37 70% 55% ;
     --wood-medium: 28 35% 45%;
     --wood-dark: 28 30% 30%;
     --forest: 140 25% 30%;

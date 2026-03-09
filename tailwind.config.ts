@@ -121,6 +121,10 @@ export default {
           "0%": { transform: "translate(0, 0)" },
           "100%": { transform: "translate(-15%, -15%)" },
         },
+        shimmer: {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -128,7 +132,8 @@ export default {
         "slide-up": "slide-up 30s linear infinite",
         "slide-down": "slide-down 30s linear infinite",
         "slide-left": "slide-left 20s linear infinite",
-        "slide-diagonal": "slide-diagonal 25s linear infinite",
+        "slide-diagonal": "slide-diagonal 40s ease-in-out infinite",
+        shimmer: "shimmer 2s ease-in-out infinite",
       },
     },
   },

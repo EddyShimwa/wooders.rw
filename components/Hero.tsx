@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { CategoryCard } from "./CategoryCard";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Category } from "@/types/category";
@@ -103,16 +102,6 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {categories.map((category, index) => (
-            <CategoryCard
-              key={category.id}
-              category={category}
-              onClick={onCategoryClick}
-              index={index}
-            />
-          ))}
-        </div>
 
         {categories.length === 0 && (
           <motion.div

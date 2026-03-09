@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Testimonial } from '@/types/testimonial'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import Image from 'next/image'
-import { Star, Quote, X } from 'lucide-react'
+import { Star, Quote, X, ImageIcon } from 'lucide-react'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -47,78 +47,67 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
     <>
       <div className="w-full">
         <Carousel
-          opts={{ align: 'start', loop: true }}
+          opts={{ align: 'center', loop: true }}
           className="w-full"
         >
-          <CarouselContent className="-ml-3">
+          <CarouselContent className="-ml-4">
             {testimonials.map((testimonial) => (
               <CarouselItem
                 key={testimonial._id || testimonial.id}
-                className="pl-3 basis-[85%] sm:basis-1/2 lg:basis-1/3"
+                className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 my-4"
               >
-                <div
-                  className="group relative h-full p-5 rounded-2xl border border-border/60 bg-muted/30 hover:bg-muted/50 hover:shadow-md transition-all duration-200 cursor-pointer"
-                  onClick={() => setSelected(testimonial)}
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="h-full p-6 sm:p-8 rounded-3xl bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
                 >
-                  {/* Quote icon */}
-                  <Quote className="h-5 w-5 text-[hsl(var(--wood-light))] mb-3 -scale-x-100" />
+                  {/* Avatar + Name + Role */}
+                  <div className="flex flex-col items-center text-center">
+                    <Avatar className="h-10 w-10 mb-4 ring-4 ring-[hsl(var(--wood-light))]/20">
+                      <AvatarFallback className="text-xl bg-[hsl(var(--wood-light))]/20 text-[hsl(var(--wood-dark))] font-bold">
+                        {testimonial.name.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <h3 className="font-bold text-lg text-foreground">{testimonial.name}</h3>
+                  </div>
 
-                  {/* Photo */}
-                  {testimonial.photo && (
-                    <div className="mb-3 rounded-xl overflow-hidden">
-                      <Image
-                        src={testimonial.photo}
-                        alt={`${testimonial.name}\u2019s experience`}
-                        width={400}
-                        height={200}
-                        className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                  {/* Stars */}
+                  <div className="flex justify-center gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-3 w-4 ${
+                          i < (testimonial.rating || 5)
+                            ? 'fill-amber-400 text-amber-400'
+                            : 'text-gray-300'
+                        }`}
                       />
-                    </div>
-                  )}
+                    ))}
+                  </div>
 
                   {/* Feedback */}
-                  <p className="text-sm leading-relaxed text-foreground/80 line-clamp-4 mb-4">
-                    {testimonial.feedback}
+                  <p className="text-xs sm:text-base leading-relaxed text-foreground/80 text-center line-clamp-4 mb-5">
+                    &ldquo;{testimonial.feedback}&rdquo;
                   </p>
 
-                  {/* Footer: avatar + name + stars */}
-                  <div className="flex items-center justify-between gap-3 pt-3 border-t border-border/40">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <Avatar className="h-8 w-8 flex-shrink-0">
-                        <AvatarFallback className="text-xs bg-[hsl(var(--wood-medium))]/15 text-[hsl(var(--wood-dark))] font-semibold">
-                          {testimonial.name.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="min-w-0">
-                        <p className="font-medium text-sm truncate">{testimonial.name}</p>
-                        {testimonial.createdAt && (
-                          <p className="text-[11px] text-muted-foreground">
-                            {new Date(testimonial.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-0.5 flex-shrink-0">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-3 w-3 ${
-                            i < (testimonial.rating || 5)
-                              ? 'fill-amber-400 text-amber-400'
-                              : 'text-border'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                  {/* View Image Button */}
+                  {testimonial.photo && (
+                    <button
+                      onClick={() => setSelected(testimonial)}
+                      className="w-full py-2.5 px-4 rounded-lg bg-[hsl(var(--wood-light))]/10 hover:bg-[hsl(var(--wood-light))]/20 text-[hsl(var(--wood-dark))] font-medium text-sm flex items-center justify-center gap-2 transition-colors"
+                    >
+                      <ImageIcon className="h-4 w-4" />
+                      View Product Photo
+                    </button>
+                  )}
+                </motion.div>
               </CarouselItem>
             ))}
           </CarouselContent>
           {testimonials.length > 1 && (
             <>
-              <CarouselPrevious className="-left-3 h-8 w-8" />
-              <CarouselNext className="-right-3 h-8 w-8" />
+              <CarouselPrevious className="-left-12 h-10 w-10 hidden sm:flex" />
+              <CarouselNext className="-right-12 h-10 w-10 hidden sm:flex" />
             </>
           )}
         </Carousel>
