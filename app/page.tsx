@@ -422,7 +422,7 @@ export default function Home() {
 
       {/* ===== ABOUT SECTION ===== */}
       <section id="about" className="relative py-20 lg:py-28 overflow-hidden bg-white">
-        {/* Diagonal sliding background images — brick layout */}
+
         <div className="absolute inset-0 overflow-hidden bg-white">
           <div className="absolute -inset-x-[50%] -inset-y-[30%] animate-slide-diagonal">
             <div className="flex flex-col gap-1.5 md:gap-2 rotate-[-15deg] origin-center">
@@ -470,15 +470,15 @@ export default function Home() {
             >
               <div>
                 <p className="text-sm tracking-[0.2em] uppercase text-white/60 mb-3 font-medium">Our Story</p>
-                <h2 className="text-3xl md:text-5xl font-bold leading-tight text-white">
+                <h2 className="text-2xl md:text-4xl font-bold leading-tight text-white">
                   Crafted with Passion,{' '}
                   <span className="text-[hsl(var(--wood-light))]">Built to Last</span>
                 </h2>
               </div>
-              <p className="text-lg text-white/80 leading-relaxed">
+              <p className="text-base text-white/80 leading-relaxed">
                 At <span className="font-semibold text-white">Wooders</span>, we transform sustainably sourced wood into beautiful pieces that bring warmth and character to your home. Each creation is a blend of traditional craftsmanship and modern design.
               </p>
-              <p className="text-lg text-white/80 leading-relaxed">
+              <p className="text-base text-white/80 leading-relaxed">
                 From elegant mirrors to functional shelves, every item tells a story of nature, patience, and artistic vision. We celebrate every wood grain and live edge as part of what makes each piece truly one-of-a-kind.
               </p>
             </motion.div>
