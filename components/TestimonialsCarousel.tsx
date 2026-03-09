@@ -77,8 +77,8 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                       <Star
                         key={i}
                         className={`h-3 w-4 ${
-                          i < (testimonial.rating || 5)
-                            ? 'fill-amber-400 text-amber-400'
+                          Number(testimonial.rating) > i
+                            ? 'fill-[hsl(var(--wood-light))] text-[hsl(var(--wood-light))]'
                             : 'text-gray-300'
                         }`}
                       />
@@ -163,8 +163,8 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                     <Star
                       key={i}
                       className={`h-4 w-4 ${
-                        i < (selected.rating || 5)
-                          ? 'fill-amber-400 text-amber-400'
+                        Number(selected.rating) > i
+                          ? 'fill-[hsl(var(--wood-light))] text-[hsl(var(--wood-light))]'
                           : 'text-border'
                       }`}
                     />

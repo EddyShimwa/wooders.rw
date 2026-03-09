@@ -18,6 +18,7 @@ export async function GET() {
         name: t.name,
         email: t.email,
         feedback: t.feedback,
+        rating: t.rating,
         photo: t.photo,
         status: t.status,
         createdAt: t.createdAt,
@@ -39,9 +40,9 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     const { name, email, feedback, rating, photo } = body;
-    if (!name || !email || !feedback || !rating) {
+    if (!feedback || !rating) {
       return NextResponse.json(
-        { success: false, message: 'Name, email, feedback, and rating are required' },
+        { success: false, message: 'Feedback and rating are required' },
         { status: 400 }
       );
     }
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
       feedback,
       rating,
       photo: photo || undefined, 
-      status: 'pending'
+      status: 'approved',
     });
 
     return NextResponse.json(
@@ -72,6 +73,7 @@ export async function POST(request: NextRequest) {
           name: testimonial.name,
           email: testimonial.email,
           feedback: testimonial.feedback,
+          rating: testimonial.rating,
           photo: testimonial.photo,
           status: testimonial.status,
           createdAt: testimonial.createdAt,

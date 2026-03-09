@@ -91,9 +91,8 @@ export default function Home() {
       <Header />
 
       {/* ===== HERO SECTION ===== */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
-        {/* Diagonal sliding background images — brick layout */}
-        <div className="absolute inset-0 overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden]">
+        <div className="absolute inset-0 overflow-hidden bg-black))]">
           <div className="absolute -inset-x-[50%] -inset-y-[30%] animate-slide-diagonal">
             <div className="flex flex-col gap-1.5 md:gap-2 rotate-[-15deg] origin-center">
               {allProducts.length > 0
@@ -108,7 +107,7 @@ export default function Home() {
                         {rowProducts.map((product, colIdx) => (
                           <div
                             key={`diag-${rowIdx}-${colIdx}`}
-                            className="relative aspect-[3/4] w-[20vw] md:w-[14vw] lg:w-[11vw] flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden"
+                            className="relative aspect-[3/4] w-[28vw] md:w-[18vw] lg:w-[14vw] flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden"
                           >
                             <Image
                               src={product.image}
@@ -131,7 +130,7 @@ export default function Home() {
                       {Array.from({ length: 12 }).map((_, colIdx) => (
                         <div
                           key={`skel-${rowIdx}-${colIdx}`}
-                          className="aspect-[3/4] w-[20vw] md:w-[14vw] lg:w-[11vw] flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden bg-neutral-900"
+                          className="aspect-[3/4] w-[28vw] md:w-[18vw] lg:w-[14vw] flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden bg-neutral-900"
                         >
                           <div
                             className="h-full w-full animate-shimmer bg-gradient-to-r from-neutral-900 via-neutral-700/40 to-neutral-900 bg-[length:200%_100%]"
@@ -290,10 +289,10 @@ export default function Home() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3 mb-6 sm:mb-8">
             {/* Search */}
             <div className="relative flex-1 max-w-full sm:max-w-xs">
-              <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
+              <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 " />
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="🔍 Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-8 sm:pl-9 pr-7 sm:pr-8 py-1.5 sm:py-2 text-xs sm:text-sm rounded-full border border-border bg-background/80 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-[hsl(var(--wood-light))]/30 focus:border-[hsl(var(--wood-light))] transition-all placeholder:text-muted-foreground/60"
@@ -422,9 +421,9 @@ export default function Home() {
       </section>
 
       {/* ===== ABOUT SECTION ===== */}
-      <section id="about" className="relative py-20 lg:py-28 overflow-hidden">
+      <section id="about" className="relative py-20 lg:py-28 overflow-hidden bg-white">
         {/* Diagonal sliding background images — brick layout */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden bg-white">
           <div className="absolute -inset-x-[50%] -inset-y-[30%] animate-slide-diagonal">
             <div className="flex flex-col gap-1.5 md:gap-2 rotate-[-15deg] origin-center">
               {allProducts.length > 0 &&
@@ -439,7 +438,7 @@ export default function Home() {
                       {rowProducts.map((product, colIdx) => (
                         <div
                           key={`about-diag-${rowIdx}-${colIdx}`}
-                          className="relative aspect-[3/4] w-[20vw] md:w-[14vw] lg:w-[11vw] flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden"
+                          className="relative aspect-[3/4] w-[28vw] md:w-[18vw] lg:w-[14vw] flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden"
                         >
                           <Image
                             src={product.image}
@@ -497,8 +496,8 @@ export default function Home() {
             className="flex flex-col justify-center gap-4"
           >
             <div className="flex flex-col text-center space-y-1.5">
-              <p className="text-sm tracking-[0.2em] uppercase text-[hsl(var(--wood-medium))] font-medium">Testimonials</p>
-              <h2 className="text-2xl md:text-3xl font-bold">Loved by Our Customers</h2>
+              <p className="text-sm tracking-[0.2em] uppercase text-[hsl(var(--wood-light))] font-medium">Testimonials</p>
+              <h2 className="text-xl md:text-2xl font-bold">Loved by Our Customers</h2>
             </div>
             <Button
               onClick={() => setIsTestimonialModalOpen(true)}

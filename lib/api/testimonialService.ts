@@ -19,8 +19,8 @@ export const getApprovedTestimonials = async (): Promise<Testimonial[]> => {
 };
 
 export const submitTestimonial = async (payload: {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   rating: number;
   feedback: string;
   photo?: string; 
