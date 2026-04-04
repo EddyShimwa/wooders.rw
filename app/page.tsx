@@ -166,7 +166,6 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/20 backdrop-blur-sm"
             >
-              <Sparkles className="h-3.5 w-3.5 text-white" />
               <span className="text-xs sm:text-sm font-medium text-white tracking-wide">Handcrafted in Rwanda</span>
             </motion.div>
 
@@ -244,7 +243,6 @@ export default function Home() {
               className="flex items-center gap-5 md:gap-6 justify-center pt-3 text-white/70"
             >
               <div className="flex items-center gap-1.5 text-xs md:text-sm">
-                <Sparkles className="h-3.5 w-3.5 md:h-4 md:w-4" />
                 <span>Wooden</span>
               </div>
               <div className="w-px h-3 md:h-4 bg-white/30" />
