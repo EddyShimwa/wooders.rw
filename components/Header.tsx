@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { getGeneralInquiryLink } from "@/lib/whatsapp"
 
 const NAV_ITEMS = [
@@ -18,28 +18,62 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const rafIdRef = useRef<number | null>(null)
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-      const sections = NAV_ITEMS.map(item => item.href.replace('#', ''))
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i])
-        if (el && el.getBoundingClientRect().top <= 120) {
-          setActiveSection(sections[i])
-          return
-        }
-      }
-      setActiveSection('')
+      if (rafIdRef.current !== null) return
+      rafIdRef.current = window.requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 20)
+        rafIdRef.current = null
+      })
     }
+
+    handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (rafIdRef.current !== null) {
+        window.cancelAnimationFrame(rafIdRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const sectionIds = NAV_ITEMS.map((item) => item.href.replace('#', ''))
+    const sectionEls = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null)
+
+    if (sectionEls.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+
+        if (visible[0]) {
+          setActiveSection(visible[0].target.id)
+        }
+      },
+      {
+        root: null,
+        rootMargin: '-35% 0px -45% 0px',
+        threshold: [0.2, 0.4, 0.6],
+      }
+    )
+
+    sectionEls.forEach((el) => observer.observe(el))
+
+    return () => observer.disconnect()
   }, [])
 
   const scrollTo = useCallback((href: string) => {
     const id = href.replace('#', '')
     const el = document.getElementById(id)
     if (el) {
-      const offset = 80
+      const offset = 100
       const y = el.getBoundingClientRect().top + window.scrollY - offset
       window.scrollTo({ top: y, behavior: 'smooth' })
     }
@@ -51,48 +85,47 @@ export const Header = () => {
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-sm'
-            : 'bg-transparent'
+            ? 'bg-background/70 backdrop-blur-xl border-b border-border/40 py-3 shadow-[0_2px_20px_-10px_rgba(0,0,0,0.1)]'
+            : 'bg-transparent py-5'
         }`}
       >
-        <div className="container mx-auto px-4 lg:px-6">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="container mx-auto px-6 lg:px-10">
+          <div className="flex items-center justify-between">
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center gap-2"
+              className="relative z-10 group"
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <Image
                   src="/images/logo.png"
                   alt="Wooders"
-                  width={60}
-                  height={40}
-                  unoptimized
+                  width={70}
+                  height={50}
                   priority
-                  className="h-10 lg:h-14 w-auto"
+                  className={`h-10 lg:h-12 w-auto transition-all duration-500 ${isScrolled ? '' : 'brightness-0 invert'}`}
                 />
               </motion.div>
             </button>
 
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 p-1">
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.href}
                   onClick={() => scrollTo(item.href)}
-                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
+                  className={`relative px-6 py-2 text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 rounded-full ${
                     activeSection === item.href.replace('#', '')
                       ? isScrolled
-                        ? 'bg-[hsl(var(--wood-medium))]/10 text-[hsl(var(--wood-dark))]'
-                        : 'bg-white/20 text-white'
+                        ? 'bg-wood-dark text-white shadow-lg shadow-wood-dark/10'
+                        : 'bg-white text-wood-dark shadow-xl'
                       : isScrolled
-                        ? 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                        ? 'text-muted-foreground hover:text-foreground'
+                        : 'text-white/70 hover:text-white'
                   }`}
                 >
                   {item.label}
@@ -100,31 +133,28 @@ export const Header = () => {
               ))}
             </nav>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
               <a
                 href={getGeneralInquiryLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                className={`hidden lg:flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-black tracking-widest uppercase transition-all duration-500 hover:scale-105 active:scale-95 ${
                   isScrolled
-                    ? 'bg-[#25D366] text-white hover:bg-[#20BD5A]'
-                    : 'bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 border border-white/20'
+                    ? 'bg-wood-light text-white shadow-lg shadow-wood-light/20 hover:bg-wood-medium'
+                    : 'bg-white text-wood-dark shadow-2xl hover:bg-cream'
                 }`}
               >
-                <svg viewBox="0 0 32 32" className="w-4 h-4 fill-current">
-                  <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16c0 3.5 1.128 6.744 3.046 9.378L1.054 31.29l6.118-1.958A15.9 15.9 0 0016.004 32C24.826 32 32 24.822 32 16S24.826 0 16.004 0zm9.31 22.606c-.39 1.1-1.932 2.012-3.182 2.278-.856.18-1.974.324-5.736-1.232-4.812-1.99-7.912-6.876-8.152-7.194-.23-.318-1.932-2.57-1.932-4.9s1.222-3.476 1.656-3.952c.434-.476.948-.596 1.264-.596.316 0 .632.002.908.016.292.014.682-.11 1.068.814.39.94 1.328 3.238 1.444 3.472.116.234.194.508.038.814-.156.318-.234.508-.468.786-.234.278-.49.62-.702.832-.234.234-.478.488-.206.956.272.468 1.212 2 2.602 3.238 1.784 1.59 3.288 2.082 3.756 2.316.468.234.742.196 1.014-.118.272-.316 1.168-1.36 1.48-1.828.312-.468.624-.39 1.054-.234.434.156 2.726 1.286 3.194 1.52.468.234.78.352.896.546.116.194.116 1.128-.274 2.228z"/>
-                </svg>
-                Order Now
+                Order Bespoke
               </a>
 
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`md:hidden ${!isScrolled ? 'text-white hover:bg-white/10' : ''}`}
+                className={`md:hidden rounded-2xl ${!isScrolled ? 'text-white hover:bg-white/10' : 'bg-muted/50'}`}
                 aria-label="Menu"
               >
-                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
             </div>
           </div>
@@ -134,78 +164,49 @@ export const Header = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-[60] bg-wood-dark/90 backdrop-blur-md md:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
-            />
-            {/* Sidebar from right */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-              className={`fixed top-0 right-0 bottom-0 z-50 w-64 backdrop-blur-2xl md:hidden flex flex-col transition-colors duration-300 ${
-                isScrolled
-                  ? 'bg-background/70 border-l border-border/50 text-foreground'
-                  : 'bg-black/20 border-l border-white/15 text-white'
-              }`}
             >
-              {/* Close button */}
-              <div className="flex items-center justify-between px-5 pt-5 pb-3">
-                <span className={`text-xs font-semibold tracking-[0.15em] uppercase ${isScrolled ? 'text-muted-foreground' : 'text-white/40'}`}>Menu</span>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`h-8 w-8 rounded-full border flex items-center justify-center transition-colors ${
-                    isScrolled
-                      ? 'border-border hover:bg-muted/50'
-                      : 'border-white/20 hover:bg-white/10'
-                  }`}
-                  aria-label="Close menu"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-
-              {/* Nav links */}
-              <nav className="flex-1 px-3 py-2 flex flex-col gap-0.5">
+              <div className="flex flex-col items-center justify-center h-full gap-8">
                 {NAV_ITEMS.map((item, i) => (
                   <motion.button
                     key={item.href}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 * i }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ delay: 0.1 * i, duration: 0.5 }}
                     onClick={() => scrollTo(item.href)}
-                    className={`text-left text-sm font-medium px-4 py-2.5 rounded-lg transition-all ${
-                      activeSection === item.href.replace('#', '')
-                        ? 'bg-[hsl(var(--wood-light))]/20 text-[hsl(var(--wood-light))]'
-                        : isScrolled
-                          ? 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
-                          : 'text-white/70 hover:bg-white/10 hover:text-white'
-                    }`}
+                    className="text-3xl font-black text-white tracking-tighter hover:text-wood-light transition-colors"
                   >
                     {item.label}
                   </motion.button>
                 ))}
-              </nav>
-
-              {/* Bottom CTA */}
-              <div className={`px-4 pb-8 pt-3 border-t ${isScrolled ? 'border-border/50' : 'border-white/10'}`}>
-                <a
-                  href={getGeneralInquiryLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-lg font-semibold text-sm transition-colors"
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="pt-8"
                 >
-                  <svg viewBox="0 0 32 32" className="w-4 h-4 fill-current">
-                    <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16c0 3.5 1.128 6.744 3.046 9.378L1.054 31.29l6.118-1.958A15.9 15.9 0 0016.004 32C24.826 32 32 24.822 32 16S24.826 0 16.004 0zm9.31 22.606c-.39 1.1-1.932 2.012-3.182 2.278-.856.18-1.974.324-5.736-1.232-4.812-1.99-7.912-6.876-8.152-7.194-.23-.318-1.932-2.57-1.932-4.9s1.222-3.476 1.656-3.952c.434-.476.948-.596 1.264-.596.316 0 .632.002.908.016.292.014.682-.11 1.068.814.39.94 1.328 3.238 1.444 3.472.116.234.194.508.038.814-.156.318-.234.508-.468.786-.234.278-.49.62-.702.832-.234.234-.478.488-.206.956.272.468 1.212 2 2.602 3.238 1.784 1.59 3.288 2.082 3.756 2.316.468.234.742.196 1.014-.118.272-.316 1.168-1.36 1.48-1.828.312-.468.624-.39 1.054-.234.434.156 2.726 1.286 3.194 1.52.468.234.78.352.896.546.116.194.116 1.128-.274 2.228z"/>
-                  </svg>
-                  WhatsApp
-                </a>
+                  <a
+                    href={getGeneralInquiryLink()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-10 py-5 bg-wood-light text-white rounded-2xl font-black tracking-widest uppercase shadow-2xl shadow-wood-light/20"
+                  >
+                    Contact Us
+                  </a>
+                </motion.div>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
+                >
+                  <X className="h-10 w-10" />
+                </button>
               </div>
             </motion.div>
           </>

@@ -7,77 +7,89 @@ export function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
-    <footer id="contact" className="bg-foreground text-background">
-      <div className="container mx-auto px-4 lg:px-6 py-8 md:py-10">
-        {/* Top: logo + nav + contact — all inline on desktop */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 md:gap-8 text-center md:text-left">
-          {/* Logo + tagline */}
-          <div className="flex flex-col items-center md:items-start gap-2 shrink-0">
+    <footer id="contact" className="bg-wood-dark text-white overflow-hidden relative">
+      {/* Decorative background element */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-wood-light/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+      
+      <div className="container mx-auto px-6 lg:px-10 py-16 lg:py-24 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          {/* Logo + Brand */}
+          <div className="space-y-6">
             <Image
               src="/images/logo.png"
               alt="Wooders"
-              width={36}
-              height={36}
-              unoptimized
-              className="h-10 w-auto"
+              width={80}
+              height={60}
+              className="h-12 w-auto brightness-0 invert"
             />
-            <p className="text-background/50 text-xs max-w-[200px] leading-relaxed">
-              Handcrafted wooden decor. Made in Rwanda.
+            <p className="text-white/50 text-sm leading-relaxed max-w-xs font-medium">
+              Preserving the natural soul of the forest through artisanal craftsmanship and contemporary Rwandan design.
             </p>
+            <div className="flex items-center gap-3">
+              <a href="https://www.instagram.com/wooders_rw?igsh=MTN5Zmo5YTk4bXJvdQ==" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-wood-light hover:border-wood-light transition-all duration-300 group" aria-label="Instagram">
+                <Instagram className="h-4 w-4 group-hover:scale-110 transition-transform" />
+              </a>
+            </div>
           </div>
 
-          {/* Navigate */}
-          <div className="space-y-2">
-            <h4 className="text-[10px] font-semibold tracking-[0.15em] uppercase text-background/40">Navigate</h4>
-            <nav className="flex gap-3 justify-center md:justify-start">
-              <a href="#collection" className="text-xs text-background/70 hover:text-background transition-colors">Collection</a>
-              <a href="#about" className="text-xs text-background/70 hover:text-background transition-colors">About</a>
-              <a href="#testimonials" className="text-xs text-background/70 hover:text-background transition-colors">Testimonials</a>
+          {/* Quick Links */}
+          <div className="space-y-6">
+            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
+            <nav className="flex flex-col gap-4">
+              <a href="#collection" className="text-sm font-bold text-white/70 hover:text-white transition-colors">The Collections</a>
+              <a href="#about" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Our Philosophy</a>
+              <a href="#testimonials" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Collector Stories</a>
             </nav>
           </div>
 
-          {/* Contact */}
-          <div className="space-y-2">
-            <h4 className="text-[10px] font-semibold tracking-[0.15em] uppercase text-background/40">Contact</h4>
-            <div className="flex flex-col gap-1.5 items-center md:items-start">
-              <a href="mailto:woodersrwanda@gmail.com" className="text-xs text-background/70 hover:text-background transition-colors flex items-center gap-1.5">
-                <Mail className="h-3 w-3 flex-shrink-0" />
+          {/* Contact Information */}
+          <div className="space-y-6">
+            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Concierge</h4>
+            <div className="flex flex-col gap-4">
+              <a href="mailto:woodersrwanda@gmail.com" className="group flex items-center gap-3 text-sm font-bold text-white/70 hover:text-white transition-colors">
+                <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
+                  <Mail className="h-3.5 w-3.5" />
+                </div>
                 woodersrwanda@gmail.com
               </a>
-              <a href="tel:+250780609878" className="text-xs text-background/70 hover:text-background transition-colors flex items-center gap-1.5">
-                <Phone className="h-3 w-3 flex-shrink-0" />
+              <a href="tel:+250780609878" className="group flex items-center gap-3 text-sm font-bold text-white/70 hover:text-white transition-colors">
+                <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
+                  <Phone className="h-3.5 w-3.5" />
+                </div>
                 +250 780 609 878
               </a>
-              <div className="flex gap-1.5 items-center">
-                <MapPin className="h-3 w-3 flex-shrink-0 text-background/70" />
-                <span className="text-xs text-background/70">Kigali, Rwanda</span>
+              <div className="flex items-center gap-3 text-sm font-bold text-white/70">
+                <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center">
+                  <MapPin className="h-3.5 w-3.5" />
+                </div>
+                Kigali, Rwanda
               </div>
             </div>
           </div>
 
-          {/* Social + back to top */}
-          <div className="flex items-center justify-center md:justify-end gap-2 shrink-0">
-            <a href="https://www.instagram.com/wooders_rw?igsh=MTN5Zmo5YTk4bXJvdQ==" target="_blank" rel="noopener noreferrer" className="h-8 w-8 rounded-full border border-background/15 flex items-center justify-center hover:bg-background/10 transition-colors" aria-label="Instagram">
-              <Instagram className="h-3.5 w-3.5" />
-            </a>
+          {/* Newsletter / Call to Action */}
+          <div className="space-y-6">
+            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Elevate Your Home</h4>
+            <p className="text-sm text-white/50 font-medium">Ready to bring nature&apos;s artistry into your space?</p>
             <button
               onClick={scrollToTop}
-              className="h-8 w-8 rounded-full border border-background/20 flex items-center justify-center hover:bg-background/10 transition-colors"
-              aria-label="Back to top"
+              className="flex items-center gap-2 group text-sm font-black tracking-widest uppercase text-wood-light hover:text-white transition-colors"
             >
-              <ArrowUpRight className="h-3.5 w-3.5 -rotate-45" />
+              Back to Excellence
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </button>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-background/10 mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-background/40 text-[11px]">
-            &copy; {new Date().getFullYear()} Wooders Rwanda
+        {/* Bottom Bar */}
+        <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-white/30 text-[11px] font-bold tracking-widest uppercase">
+            &copy; {new Date().getFullYear()} Wooders Rwanda. Handcrafted with Passion.
           </p>
-          <p className="text-background/30 text-[11px]">
-            Handcrafted with care in Kigali
-          </p>
+          <div className="flex items-center gap-8 text-white/20 text-[10px] font-black tracking-[0.2em] uppercase">
+            <span>Privately Sourced</span>
+            <span>Artisan Made</span>
+          </div>
         </div>
       </div>
     </footer>

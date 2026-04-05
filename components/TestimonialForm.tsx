@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,12 +18,13 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
 import { submitTestimonial, fileToBase64 } from '@/lib/api/testimonialService'
-import { Loader2, Upload, Star } from 'lucide-react'
+import { Loader2, Upload, Star, X } from 'lucide-react'
+import { motion } from 'framer-motion'
 
-const MAX_FEEDBACK_LENGTH = 100
+const MAX_FEEDBACK_LENGTH = 500
 
 const testimonialFormSchema = z.object({
-  name: z.string().optional(),
+  name: z.string().min(2, { message: 'Name must be at least 2 characters' }).optional().or(z.literal('')),
   email: z.string().email({ message: 'Please enter a valid email' }).optional().or(z.literal('')),
   rating: z.number().min(1, { message: 'Please select a rating' }).max(5),
   feedback: z.string()
@@ -66,22 +66,20 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
       }
 
       await submitTestimonial({
-        name: values.name,
-        email: values.email,
+        name: values.name || 'Anonymous Collector',
+        email: values.email || '',
         rating: values.rating,
         feedback: values.feedback,
         photo: photoBase64,
       })
 
-      toast.success('Thank you! Your testimonial has been submitted for review.')
+      toast.success('Thank you! Your story has been shared.')
       form.reset()
       setPhotoPreview(null)
       onSuccess?.()
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to submit testimonial'
-      toast.error('Failed to submit testimonial', {
-        description: errorMessage,
-      })
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit'
+      toast.error('Submission failed', { description: errorMessage })
     } finally {
       setIsSubmitting(false)
     }
@@ -90,72 +88,69 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error('File size must be less than 5MB')
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error('File size must be less than 10MB')
         return
       }
-      if (!file.type.startsWith('image/')) {
-        toast.error('Please select an image file')
-        return
-      }
-
       form.setValue('photo', file)
-
-      // Create preview
       const reader = new FileReader()
-      reader.onload = (e) => {
-        setPhotoPreview(e.target?.result as string)
-      }
+      reader.onload = (e) => setPhotoPreview(e.target?.result as string)
       reader.readAsDataURL(file)
     }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Your name" {...field} disabled={isSubmitting} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Your Name</FormLabel>
+                <FormControl>
+                  <Input 
+                    placeholder="Enter name (or leave anonymous)" 
+                    {...field} 
+                    disabled={isSubmitting} 
+                    className="rounded-xl border-border/50 focus:border-wood-light focus:ring-wood-light/10 h-12"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="your.email@example.com"
-                  {...field}
-                  disabled={isSubmitting}
-                />
-              </FormControl>
-              <FormDescription>We will use this to contact you if needed</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Email Address</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="name@example.com"
+                    {...field}
+                    disabled={isSubmitting}
+                    className="rounded-xl border-border/50 focus:border-wood-light focus:ring-wood-light/10 h-12"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
           name="rating"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Rating *</FormLabel>
+            <FormItem className="space-y-4">
+              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60 text-center block">Rate Your Experience</FormLabel>
               <FormControl>
-                <div className="flex gap-2">
+                <div className="flex justify-center gap-4">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
@@ -164,20 +159,19 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
                       onClick={() => field.onChange(star)}
                       onMouseEnter={() => setHoveredStar(star)}
                       onMouseLeave={() => setHoveredStar(null)}
-                      className="transition-transform hover:scale-110 disabled:cursor-not-allowed"
+                      className="transition-all hover:scale-125 group active:scale-90"
                     >
                       <Star
-                        className={`h-5 w-5 transition-colors ${
+                        className={`h-8 w-8 transition-all duration-300 ${
                           star <= (hoveredStar || field.value)
-                            ? 'fill-[hsl(var(--wood-light))] text-[hsl(var(--wood-light))]'
-                            : 'text-gray-300'
+                            ? 'fill-wood-light text-wood-light filter drop-shadow-[0_0_8px_rgba(var(--wood-light-rgb),0.3)]'
+                            : 'text-border group-hover:text-wood-light/40'
                         }`}
                       />
                     </button>
                   ))}
                 </div>
               </FormControl>
-              <FormDescription>How would you rate your experience?</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -188,19 +182,18 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
           name="feedback"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Your Feedback *</FormLabel>
+              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Your Story</FormLabel>
               <FormControl>
-                <div className="space-y-2">
+                <div className="relative">
                   <Textarea
-                    placeholder="Share your experience with us. What did you love about our products?"
-                    rows={5}
+                    placeholder="Describe the craftsmanship, the feeling in your space..."
+                    rows={6}
                     {...field}
                     disabled={isSubmitting}
-                    maxLength={MAX_FEEDBACK_LENGTH}
+                    className="rounded-2xl border-border/50 focus:border-wood-light focus:ring-wood-light/10 p-5 font-serif italic text-lg leading-relaxed"
                   />
-                  <div className="flex justify-between items-center text-xs text-muted-foreground">
-                    <span>Minimum 10 characters</span>
-                    <span>{field.value?.length || 0}/{MAX_FEEDBACK_LENGTH}</span>
+                  <div className="absolute bottom-4 right-4 text-[10px] font-bold text-muted-foreground/40 tracking-widest uppercase">
+                    {field.value?.length || 0} / {MAX_FEEDBACK_LENGTH}
                   </div>
                 </div>
               </FormControl>
@@ -214,42 +207,64 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
           name="photo"
           render={() => (
             <FormItem>
-              <FormLabel>Photo (Optional)</FormLabel>
+              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Share a Masterpiece (Optional)</FormLabel>
               <FormControl>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
+                <div className="space-y-4">
+                  <div className="relative group">
                     <Input
                       type="file"
                       accept="image/*"
                       onChange={handlePhotoChange}
                       disabled={isSubmitting}
-                      className="flex-1"
+                      className="hidden"
+                      id="photo-upload"
                     />
-                    <Upload className="h-5 w-5 text-muted-foreground" />
+                    <label 
+                      htmlFor="photo-upload"
+                      className="flex flex-col items-center justify-center w-full h-32 rounded-2xl border-2 border-dashed border-border/50 bg-muted/20 cursor-pointer group-hover:bg-muted/30 group-hover:border-wood-light/30 transition-all duration-500"
+                    >
+                      <Upload className="h-6 w-6 text-muted-foreground mb-2 group-hover:text-wood-light transition-colors" />
+                      <span className="text-xs font-bold text-muted-foreground group-hover:text-wood-dark">Click to upload product photo</span>
+                    </label>
                   </div>
                   {photoPreview && (
-                    <div className="relative w-full">
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="relative w-full aspect-video rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white"
+                    >
                       <Image
                         src={photoPreview}
                         alt="Preview"
-                        width={800}
-                        height={256}
-                        className="w-full h-64 rounded-lg object-cover border-2 border-border"
-                        style={{ objectFit: 'cover' }}
+                        fill
+                        className="object-cover"
                       />
-                    </div>
+                      <button 
+                        type="button"
+                        onClick={() => { setPhotoPreview(null); form.setValue('photo', undefined) }}
+                        className="absolute top-4 right-4 h-10 w-10 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
+                      >
+                        <X className="h-5 w-5" />
+                      </button>
+                    </motion.div>
                   )}
                 </div>
               </FormControl>
-              <FormDescription>Share a photo of your experience with our products (Max 5MB)</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" disabled={isSubmitting} className="w-full bg-[hsl(var(--wood-medium))] hover:bg-[hsl(var(--wood-dark))] text-white">
-          {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isSubmitting ? 'Submitting...' : 'Submit Testimonial'}
+        <Button 
+          type="submit" 
+          disabled={isSubmitting} 
+          className="w-full h-16 rounded-2xl bg-wood-dark hover:bg-wood-medium text-white font-black tracking-[0.2em] uppercase shadow-2xl shadow-wood-dark/20 transition-all duration-500 hover:scale-[1.02] active:scale-95"
+        >
+          {isSubmitting ? (
+            <Loader2 className="h-6 w-6 animate-spin" />
+          ) : (
+            'Publish Your Story'
+          )}
         </Button>
       </form>
     </Form>
