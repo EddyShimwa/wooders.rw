@@ -37,66 +37,56 @@ const TestimonialCard = memo(({
       onClick={() => testimonial.photo && onSelect(testimonial)}
       className={`relative group cursor-pointer ${
         isLarge ? 'md:col-span-2 md:row-span-2' : 'col-span-1'
-      } rounded-[3rem] bg-background/60 backdrop-blur-md border border-border/40 p-10 flex flex-col justify-between overflow-hidden shadow-sm hover:sculpted transition-all duration-700 ease-out`}
+      } p-8 flex flex-col justify-between transition-all duration-700 ease-out border-l border-wood-dark/10 hover:border-wood-light pl-10`}
     >
-      {/* Decorative wood grain background (simulated) */}
-      <div className="absolute top-0 right-0 w-40 h-40 bg-wood-light/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-wood-light/10 transition-colors duration-700" />
-      
       <div className="relative z-10 space-y-8">
-        {/* Header: Stars & Name */}
-        <div className="flex items-start justify-between">
-          <div className="flex gap-1.5">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`h-4 w-4 ${
-                  testimonial.rating > i
-                    ? 'fill-wood-light text-wood-light drop-shadow-[0_0_8px_rgba(var(--wood-light-rgb),0.2)]'
-                    : 'text-border'
-                }`}
-              />
-            ))}
-          </div>
-          <Quote className="h-10 w-10 text-wood-light/10 group-hover:text-wood-light/20 transition-colors duration-700" />
+        <div className="flex gap-1.5">
+          {[...Array(5)].map((_, i) => (
+            <Star
+              key={i}
+              className={`h-4 w-4 ${
+                testimonial.rating > i
+                  ? 'fill-wood-dark text-wood-dark'
+                  : 'text-wood-dark/10'
+              }`}
+            />
+          ))}
         </div>
 
-        {/* Feedback */}
         <p className={`font-serif italic text-wood-dark leading-relaxed tracking-tight ${
-          isLarge ? 'text-2xl md:text-3xl' : 'text-xl'
+          isLarge ? 'text-3xl md:text-4xl' : 'text-xl'
         }`}>
           &ldquo;{testimonial.feedback}&rdquo;
         </p>
 
-        {/* Author */}
-        <div className="flex items-center gap-5 pt-6 border-t border-wood-light/5">
-          <Avatar className="h-14 w-14 border-2 border-wood-light/10 group-hover:border-wood-light/30 transition-all duration-700 sculpted">
-            <AvatarFallback className="bg-wood-light/5 text-wood-dark font-black text-sm tracking-tighter">
+        <div className="flex items-center gap-5 pt-6">
+          <Avatar className="h-12 w-12 border border-wood-dark/10 group-hover:border-wood-light/50 transition-all duration-700">
+            <AvatarFallback className="bg-transparent text-wood-dark font-black text-sm tracking-tighter">
               {testimonial.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="font-black text-sm tracking-[0.2em] uppercase text-wood-dark">{testimonial.name}</span>
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-wood-medium/40 mt-1">Verified Collector</span>
+            <span className="font-black text-xs tracking-[0.3em] uppercase text-wood-dark">{testimonial.name}</span>
+            <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-wood-dark/40 mt-1">Verified Collector</span>
           </div>
         </div>
       </div>
 
-      {/* Product Image Preview if exists */}
       {testimonial.photo && (
-        <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none">
+        <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-5 transition-opacity duration-700 pointer-events-none rounded-[2rem] overflow-hidden">
           <Image
             src={testimonial.photo}
             alt=""
             fill
-            className="object-cover scale-110 group-hover:scale-100 transition-transform duration-1000"
+            className="object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 grayscale"
           />
         </div>
       )}
 
       {testimonial.photo && (
-        <div className="absolute bottom-6 right-6 z-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-          <div className="bg-wood-light text-white p-2.5 rounded-xl shadow-xl">
-             <ImageIcon className="h-5 w-5" />
+        <div className="absolute bottom-8 right-8 z-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+          <div className="text-wood-dark flex items-center gap-2 text-[10px] font-black tracking-[0.2em] uppercase border-b border-wood-dark pb-1">
+             <ImageIcon className="h-4 w-4" /> View Image
           </div>
         </div>
       )}

@@ -122,3 +122,7 @@ As a multidisciplinary team of experts (UX Research, Growth, Trend Analysis, and
 *   **Sculptural Bookends:** Heavy, abstractly carved blocks to hold up literature or vinyl records.
 *   **Luxury Tabletop Games:** High-end, hand-carved versions of Mancala (Igisoro), Chess, or Tic-Tac-Toe.
 *   **Yoga Props:** Beautifully finished wooden yoga blocks.
+
+### 🎥 E. Brand Video / Masterclass Demo
+*   **Why:** We designed a beautiful, premium UI placeholder for a masterclass demo, but no actual video is available yet.
+*   **Upgrade:** Produce a high-quality video showing the woodworking process. Once complete, restore the "Watch Film" button to the Hero and the interactive Demo UI to the About section.
