@@ -38,13 +38,7 @@ const TestimonialsCarousel = dynamic(
   () => import('@/components/TestimonialsCarousel').then((mod) => mod.TestimonialsCarousel),
   {
     ssr: false,
-    loading: () => (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={`testimonial-loading-${i}`} className="h-64 rounded-[2.5rem] bg-muted/50 animate-pulse" />
-        ))}
-      </div>
-    ),
+    loading: () => null, // Let the component handle its own loading state!
   }
 )
 
@@ -134,9 +128,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-
-      {/* ===== HERO SECTION ===== */}
-      {/* ===== HERO SECTION ===== */}
       <section className="relative min-h-screen flex items-center overflow-hidden]">
         <div className="absolute inset-0 overflow-hidden bg-black))]">
           <div className="absolute -inset-x-[50%] -inset-y-[30%] animate-slide-diagonal">
@@ -553,61 +544,40 @@ export default function Home() {
       {/* ===== TESTIMONIALS SECTION ===== */}
       <section
         id="testimonials"
-        className="py-24 lg:py-40 bg-[#faf9f6] relative overflow-hidden content-auto-section"
+        className="py-12 lg:py-18 bg-[#faf9f6] relative overflow-hidden content-auto-section"
       >
         {/* Subtle decorative elements */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-wood-light/20 to-transparent" />
-
         <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
-            <div className="max-w-2xl">
-              <p className="text-wood-light font-bold tracking-[0.2em] uppercase text-sm mb-4">
-                The Wall of Love
-              </p>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none">
-                Collector <br />
-                <span className="text-wood-medium/30 font-serif italic text-5xl md:text-7xl">
-                  Stories
-                </span>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 max-w-7xl mx-auto text-center md:text-left">
+            <div className='flex '>
+              <h2 className="text-xl md:text-2xl mr-2 font-black tracking-tighter leading-none text-wood-dark">
+                Our trusted
+              </h2>
+              <h2 className="text-xl md:text-2xl font-black tracking-tighter leading-none text-wood-dark">
+               Clients
               </h2>
             </div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 onClick={() => setIsTestimonialModalOpen(true)}
-                className="rounded-2xl px-8 py-6 bg-wood-dark text-white font-bold text-sm tracking-widest uppercase shadow-xl shadow-wood-dark/10 hover:bg-wood-medium transition-all duration-300"
+                className="rounded-2xl px-6 py-3 bg-wood-dark text-white font-bold text-sm tracking-widest uppercase shadow-xl shadow-wood-dark/10 hover:bg-wood-medium transition-all duration-300 h-auto"
               >
                 Share Your Experience
               </Button>
             </motion.div>
           </div>
 
-          {shouldLoadTestimonials && testimonialsData.length > 0 && (
+          {shouldLoadTestimonials ? (
             <TestimonialsCarousel
               testimonials={testimonialsData}
               isLoading={testimonialsLoading}
             />
-          )}
-
-          {shouldLoadTestimonials &&
-            testimonialsData.length === 0 &&
-            !testimonialsLoading && (
-              <div className="text-center py-20 bg-white rounded-[3rem] border border-dashed border-border">
-                <WoodRouterIcon className="h-12 w-12 mx-auto mb-4 text-wood-light/20" />
-                <p className="text-wood-dark/50 font-medium">
-                  No stories shared yet. Be the first to tell yours.
-                </p>
-              </div>
-            )}
-
-          {!shouldLoadTestimonials && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div
-                  key={`testimonial-idle-${i}`}
-                  className="h-52 rounded-[2rem] bg-white/60 animate-pulse"
-                />
-              ))}
-            </div>
+          ) : (
+            <TestimonialsCarousel
+              testimonials={[]}
+              isLoading={true}
+            />
           )}
         </div>
       </section>

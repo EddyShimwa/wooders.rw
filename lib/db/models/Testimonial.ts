@@ -5,6 +5,7 @@ export interface ITestimonial extends Document {
   email?: string;
   feedback: string;
   rating: number;
+  product?: string;
   photo?: string;
   status: 'pending' | 'approved' | 'rejected';
   createdAt: Date;
@@ -17,6 +18,7 @@ const testimonialSchema = new Schema<ITestimonial>(
     email: { type: String },
     feedback: { type: String, required: true },
     rating: { type: Number, required: true, min: 1, max: 5 },
+    product: { type: String },
     photo: { type: String }, 
     status: {
       type: String,
