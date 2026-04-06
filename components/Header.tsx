@@ -18,9 +18,12 @@ const NAV_ITEMS = [
 export const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const hasSolidHeader = !isHomePage || isScrolled;
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -100,7 +103,7 @@ export const Header = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
+          hasSolidHeader
             ? "bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-sm"
             : "bg-transparent"
         }`}
@@ -131,10 +134,10 @@ export const Header = () => {
                   onClick={() => handleNavClick(item.href)}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
                     isItemActive(item.href)
-                      ? isScrolled
+                      ? hasSolidHeader
                         ? "bg-[hsl(var(--wood-medium))]/10 text-[hsl(var(--wood-dark))]"
                         : "bg-white/20 text-white"
-                      : isScrolled
+                      : hasSolidHeader
                         ? "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                         : "text-white/80 hover:text-white hover:bg-white/10"
                   }`}
@@ -150,7 +153,7 @@ export const Header = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
-                  isScrolled
+                  hasSolidHeader
                     ? "bg-[#25D366] text-white hover:bg-[#20BD5A]"
                     : "bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 border border-white/20"
                 }`}
@@ -165,7 +168,7 @@ export const Header = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`md:hidden ${!isScrolled ? "text-white hover:bg-white/10" : ""}`}
+                className={`md:hidden ${!hasSolidHeader ? "text-white hover:bg-white/10" : ""}`}
                 aria-label="Menu"
               >
                 {isMobileMenuOpen ? (
@@ -198,7 +201,7 @@ export const Header = () => {
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 300 }}
               className={`fixed top-0 right-0 bottom-0 z-50 w-64 backdrop-blur-2xl md:hidden flex flex-col transition-colors duration-300 ${
-                isScrolled
+                hasSolidHeader
                   ? "bg-background/70 border-l border-border/50 text-foreground"
                   : "bg-black/20 border-l border-white/15 text-white"
               }`}
@@ -206,14 +209,14 @@ export const Header = () => {
               {/* Close button */}
               <div className="flex items-center justify-between px-5 pt-5 pb-3">
                 <span
-                  className={`text-xs font-semibold tracking-[0.15em] uppercase ${isScrolled ? "text-muted-foreground" : "text-white/40"}`}
+                  className={`text-xs font-semibold tracking-[0.15em] uppercase ${hasSolidHeader ? "text-muted-foreground" : "text-white/40"}`}
                 >
                   Menu
                 </span>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`h-8 w-8 rounded-full border flex items-center justify-center transition-colors ${
-                    isScrolled
+                    hasSolidHeader
                       ? "border-border hover:bg-muted/50"
                       : "border-white/20 hover:bg-white/10"
                   }`}
@@ -235,7 +238,7 @@ export const Header = () => {
                     className={`text-left text-sm font-medium px-4 py-2.5 rounded-lg transition-all ${
                       isItemActive(item.href)
                         ? "bg-[hsl(var(--wood-light))]/20 text-[hsl(var(--wood-light))]"
-                        : isScrolled
+                        : hasSolidHeader
                           ? "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                           : "text-white/70 hover:bg-white/10 hover:text-white"
                     }`}
@@ -247,7 +250,7 @@ export const Header = () => {
 
               {/* Bottom CTA */}
               <div
-                className={`px-4 pb-8 pt-3 border-t ${isScrolled ? "border-border/50" : "border-white/10"}`}
+                className={`px-4 pb-8 pt-3 border-t ${hasSolidHeader ? "border-border/50" : "border-white/10"}`}
               >
                 <a
                   href={getGeneralInquiryLink()}
