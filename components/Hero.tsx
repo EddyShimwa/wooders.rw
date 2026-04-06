@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Category } from "@/types/category";
@@ -8,11 +7,10 @@ import { ChevronDown } from "lucide-react";
 
 interface HeroProps {
   categories: Category[];
-  onCategoryClick: (category: Category) => void;
   hero?: HeroType | null;
 }
 
-export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
+export const Hero = ({ categories, hero }: HeroProps) => {
   const scrollToCategories = () => {
     document.getElementById('categories')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -45,11 +43,11 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
               className="text-center space-y-6 max-w-4xl mx-auto"
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight">
-                {hero?.title ?? 'Crafted with Nature'}
+                {hero?.title ?? 'Custom Woodwork for Homes and Businesses'}
               </h1>
 
               <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl mx-auto">
-                {hero?.subtitle ?? 'Handcrafted wooden furniture and décor that brings warmth and artistry to your space'}
+                {hero?.subtitle ?? 'Handcrafted wooden furniture and decor made in Rwanda.'}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 sm:pt-6">
@@ -58,7 +56,7 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
                   onClick={scrollToCategories}
                   className="bg-[hsl(var(--cream))] text-[hsl(var(--charcoal))] hover:bg-[hsl(var(--wood-light))] hover:text-[hsl(var(--charcoal))] transition-all duration-300 text-base sm:text-lg px-8 sm:px-10 h-12 sm:h-16 shadow-lg"
                 >
-                  Explore Collections
+                  Browse Collection
                 </Button>
                 <Button 
                   size="lg" 
@@ -95,10 +93,10 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
           className="mb-16 text-center"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-            Explore Our Collections
+            Browse Our Collection
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover handcrafted wooden pieces for every space
+            Discover handcrafted wooden pieces for homes and businesses
           </p>
         </motion.div>
 
@@ -109,7 +107,7 @@ export const Hero = ({ categories, onCategoryClick, hero }: HeroProps) => {
             animate={{ opacity: 1 }}
             className="text-center py-12 text-muted-foreground"
           >
-            <p className="text-lg">No categories available yet. Check back soon!</p>
+            <p className="text-lg">No categories are available yet. Please check back soon.</p>
           </motion.div>
         )}
       </div>

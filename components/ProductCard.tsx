@@ -33,6 +33,7 @@ export const ProductCard = memo(({ product, isInWishlist, onToggleWishlist, onPr
             e.stopPropagation();
             onToggleWishlist(product.id);
           }}
+          aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
           className="absolute top-6 right-6 z-10 p-3 bg-white/5 backdrop-blur-xl hover:bg-white/20 border border-white/10 transition-all duration-500 rounded-full opacity-0 group-hover:opacity-100 -translate-y-4 group-hover:translate-y-0"
         >
           <Heart className={`h-4 w-4 transition-all duration-500 ${isInWishlist ? "fill-red-500 text-red-500" : "text-white"}`} />
@@ -40,7 +41,7 @@ export const ProductCard = memo(({ product, isInWishlist, onToggleWishlist, onPr
 
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out scale-90 group-hover:scale-100">
            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-2xl text-white py-3 px-6 rounded-full text-xs font-bold tracking-[0.2em] uppercase border border-white/20 shadow-2xl">
-              View Details <ArrowUpRight className="h-4 w-4" />
+              View Product <ArrowUpRight className="h-4 w-4" />
            </div>
         </div>
       </div>

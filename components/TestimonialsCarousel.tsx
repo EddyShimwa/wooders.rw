@@ -67,7 +67,7 @@ const TestimonialCard = memo(({
           </Avatar>
           <div className="flex flex-col">
             <span className="font-black text-xs tracking-[0.3em] uppercase text-wood-dark">{testimonial.name}</span>
-            <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-wood-dark/40 mt-1">Verified Collector</span>
+            <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-wood-dark/40 mt-1">Verified Customer</span>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@ const TestimonialCard = memo(({
       {testimonial.photo && (
         <div className="absolute bottom-8 right-8 z-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
           <div className="text-wood-dark flex items-center gap-2 text-[10px] font-black tracking-[0.2em] uppercase border-b border-wood-dark pb-1">
-             <ImageIcon className="h-4 w-4" /> View Image
+             <ImageIcon className="h-4 w-4" /> View photo
           </div>
         </div>
       )}
@@ -167,8 +167,8 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-8 left-8 text-white">
-                   <p className="text-sm font-bold tracking-[0.2em] uppercase opacity-70 mb-2">Customer Shared Image</p>
-                   <p className="text-3xl font-black tracking-tighter">Verified Wooders Excellence</p>
+                   <p className="text-sm font-bold tracking-[0.2em] uppercase opacity-70 mb-2">Customer Photo</p>
+                   <p className="text-3xl font-black tracking-tighter">Real Wooders Project</p>
                 </div>
               </div>
 
@@ -203,7 +203,7 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                   <div>
                     <p className="text-lg font-black tracking-widest uppercase text-wood-dark">{selected.name}</p>
                     <div className="flex items-center gap-3 text-xs font-bold tracking-widest uppercase text-wood-medium/60 mt-1">
-                       <span className="flex items-center gap-1.5"><Calendar className="h-3 w-3" />Collector since 2024</span>
+                       <span className="flex items-center gap-1.5"><Calendar className="h-3 w-3" />Verified customer</span>
                     </div>
                   </div>
                 </div>
