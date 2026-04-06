@@ -108,7 +108,7 @@ export default function Home() {
   })
 
   const allProducts = useMemo(() => categoriesData.flatMap((c) => c.products || []), [categoriesData])
-  const featuredProducts = useMemo(() => allProducts.slice(0, 6), [allProducts])
+  const featuredProducts = useMemo(() => allProducts.slice(0, 8), [allProducts])
 
   const wishlistSet = useMemo(() => new Set(wishlist), [wishlist])
 
@@ -395,12 +395,9 @@ export default function Home() {
           </div>
 
           {/* Product grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-24 pt-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-16">
             {featuredProducts.map((product, i) => (
-              <div
-                key={product.id}
-                className={`${i % 3 === 1 ? "lg:mt-32" : i % 3 === 2 ? "lg:mt-16" : ""}`}
-              >
+              <div key={product.id} className={`${i % 2 === 1 ? 'lg:translate-y-12' : ''}`}>
                 <ProductCard
                   product={product}
                   isInWishlist={wishlistSet.has(product.id)}

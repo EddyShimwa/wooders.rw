@@ -142,12 +142,9 @@ export default function Collection() {
           </div>
 
           {/* Product grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-24 pt-16">
-            {filteredProducts.map((product, i) => (
-              <div 
-                key={product.id} 
-                className={`${i % 3 === 1 ? 'lg:mt-32' : i % 3 === 2 ? 'lg:mt-16' : ''}`}
-              >
+          <div className="columns-1 sm:columns-2 lg:columns-4 gap-8 pt-16">
+            {filteredProducts.map((product) => (
+              <div key={product.id} className="break-inside-avoid mb-8">
                 <ProductCard
                   product={product}
                   isInWishlist={wishlistSet.has(product.id)}

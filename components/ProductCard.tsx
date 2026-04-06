@@ -18,7 +18,7 @@ export const ProductCard = memo(({ product, isInWishlist, onToggleWishlist, onPr
       className="group cursor-pointer relative flex flex-col gap-6"
       onClick={() => onProductClick(product)}
     >
-      <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[2rem] bg-muted/20">
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-muted/20">
         <Image
           src={product.image}
           alt={product.name}

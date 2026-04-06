@@ -98,6 +98,19 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
 
   const activeTestimonial = testimonials[activeIndex]
 
+  const n = testimonials.length;
+  let visibleIndices: number[] = [];
+  if (n <= 4) {
+    visibleIndices = Array.from({ length: n }, (_, i) => i);
+  } else {
+    visibleIndices = [
+      (activeIndex - 1 + n) % n,
+      activeIndex,
+      (activeIndex + 1) % n,
+      (activeIndex + 2) % n
+    ];
+  }
+
   return (
     <div className="flex flex-col md:flex-row gap-12 lg:gap-24 max-w-7xl mx-auto items-center py-12 px-6 md:px-12">
       {/* Left: Timeline */}
@@ -110,15 +123,16 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
         </div>
 
         <div className="relative z-10 space-y-12 py-8">
-          {testimonials.map((testimonial, idx) => {
-            const isActive = idx === activeIndex
-            const progress = testimonials.length > 1 ? idx / (testimonials.length - 1) : 0.5;
+          {visibleIndices.map((actualIdx, visualIdx) => {
+            const testimonial = testimonials[actualIdx];
+            const isActive = actualIdx === activeIndex;
+            const progress = visibleIndices.length > 1 ? visualIdx / (visibleIndices.length - 1) : 0.5;
             const curveOffset = -240 * progress * (1 - progress);
 
             return (
               <div
-                key={testimonial._id || testimonial.id}
-                onClick={() => setActiveIndex(idx)}
+                key={testimonial._id || testimonial.id || actualIdx}
+                onClick={() => setActiveIndex(actualIdx)}
                 style={{ transform: `translateX(${curveOffset}px)` }}
                 className="flex items-center gap-6 cursor-pointer group transition-all duration-300"
               >
