@@ -2,6 +2,7 @@
 
 import { Mail, Phone, MapPin, Instagram, ArrowUpRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 export function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -36,9 +37,9 @@ export function Footer() {
           <div className="space-y-6">
             <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
             <nav className="flex flex-col gap-4">
-              <a href="#collection" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Collection</a>
-              <a href="#about" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Our Craft</a>
-              <a href="#testimonials" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Customer Reviews</a>
+              <Link href="/collection" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Collection</Link>
+              <Link href="/#about" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Our Craft</Link>
+              <Link href="/#testimonials" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Customer Reviews</Link>
             </nav>
           </div>
 

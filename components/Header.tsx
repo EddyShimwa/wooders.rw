@@ -6,22 +6,32 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { getGeneralInquiryLink } from "@/lib/whatsapp";
+import { usePathname, useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
-  { label: "Collection", href: "#collection" },
-  { label: "Our Craft", href: "#about" },
-  { label: "Reviews", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Collection", href: "/collection" },
+  { label: "Our Craft", href: "/#about" },
+  { label: "Reviews", href: "/#testimonials" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export const Header = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-      const sections = NAV_ITEMS.map((item) => item.href.replace("#", ""));
+      if (pathname !== "/") {
+        setActiveSection("");
+        return;
+      }
+
+      const sections = NAV_ITEMS
+        .filter((item) => item.href.startsWith("/#"))
+        .map((item) => item.href.replace("/#", ""));
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
         if (el && el.getBoundingClientRect().top <= 120) {
@@ -32,19 +42,56 @@ export const Header = () => {
       setActiveSection("");
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
-  const scrollTo = useCallback((href: string) => {
-    const id = href.replace("#", "");
-    const el = document.getElementById(id);
-    if (el) {
-      const offset = 80;
-      const y = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top: y, behavior: "smooth" });
+  const handleNavClick = useCallback(
+    (href: string) => {
+      if (href.startsWith("/#")) {
+        const id = href.replace("/#", "");
+
+        if (pathname === "/") {
+          const el = document.getElementById(id);
+          if (el) {
+            const offset = 80;
+            const y = el.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        } else {
+          router.push(href);
+        }
+      } else {
+        router.push(href);
+      }
+
+      setIsMobileMenuOpen(false);
+    },
+    [pathname, router]
+  );
+
+  const isItemActive = useCallback(
+    (href: string) => {
+      if (href === "/collection") {
+        return pathname === "/collection";
+      }
+
+      if (pathname !== "/" || !href.startsWith("/#")) {
+        return false;
+      }
+
+      return activeSection === href.replace("/#", "");
+    },
+    [activeSection, pathname]
+  );
+
+  const handleLogoClick = useCallback(() => {
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      router.push("/");
     }
-    setIsMobileMenuOpen(false);
-  }, []);
+  }, [pathname, router]);
 
   return (
     <>
@@ -60,10 +107,7 @@ export const Header = () => {
       >
         <div className="container mx-auto px-4 lg:px-6">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex items-center gap-2"
-            >
+            <button onClick={handleLogoClick} className="flex items-center gap-2">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -84,9 +128,9 @@ export const Header = () => {
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.href}
-                  onClick={() => scrollTo(item.href)}
+                  onClick={() => handleNavClick(item.href)}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-                    activeSection === item.href.replace("#", "")
+                    isItemActive(item.href)
                       ? isScrolled
                         ? "bg-[hsl(var(--wood-medium))]/10 text-[hsl(var(--wood-dark))]"
                         : "bg-white/20 text-white"
@@ -187,9 +231,9 @@ export const Header = () => {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.05 * i }}
-                    onClick={() => scrollTo(item.href)}
+                    onClick={() => handleNavClick(item.href)}
                     className={`text-left text-sm font-medium px-4 py-2.5 rounded-lg transition-all ${
-                      activeSection === item.href.replace("#", "")
+                      isItemActive(item.href)
                         ? "bg-[hsl(var(--wood-light))]/20 text-[hsl(var(--wood-light))]"
                         : isScrolled
                           ? "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
