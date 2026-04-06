@@ -12,22 +12,18 @@ import { Category } from '@/types/category'
 import { Testimonial } from '@/types/testimonial'
 import { getApprovedTestimonials } from '@/lib/api/testimonialService'
 import { getGeneralInquiryLink } from '@/lib/whatsapp'
-import { MessageSquare, ChevronDown, Package, Shield, Truck, Search, X, Leaf, Play, SearchIcon } from 'lucide-react'
+import { ChevronDown, Shield, Play, SearchIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
   WoodenLogIcon,
   HandPlaneIcon,
   DropOilIcon,
-  ChiselIcon,
   HandSawIcon,
   WoodRouterIcon,
   JointerIcon,
   DrillIcon,
 } from '@/components/icons/WoodworkingIcons'
-
-const HERO_GALLERY_ROWS = 12
-const HERO_GALLERY_COLS = 12
 
 const TestimonialModal = dynamic(
   () => import('@/components/TestimonialModal').then((mod) => mod.TestimonialModal),
@@ -112,7 +108,6 @@ export default function Home() {
   })
 
   const allProducts = useMemo(() => categoriesData.flatMap((c) => c.products || []), [categoriesData])
-  const heroGalleryProducts = useMemo(() => allProducts.slice(0, 8), [allProducts])
   const featuredProducts = useMemo(() => allProducts.slice(0, 6), [allProducts])
 
   const wishlistSet = useMemo(() => new Set(wishlist), [wishlist])
@@ -244,9 +239,10 @@ export default function Home() {
                   </span>
                 )) ?? (
                 <>
-                  Turning Wood{" "}
-                  <span className="text-[hsl(var(--wood-medium))]">Into</span>{" "}
-                  Home Stories
+                  Custom Woodwork for{" "}
+                  <span className="text-[hsl(var(--wood-medium))]">
+                    Homes and Businesses
+                  </span>
                 </>
               )}
             </motion.h1>
@@ -262,7 +258,7 @@ export default function Home() {
               className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-sm md:max-w-xl mx-auto"
             >
               {heroData?.subtitle ??
-                "Handcrafted wooden furniture and décor that brings warmth and artistry to your space."}
+                "Handcrafted wooden furniture and decor, made in Rwanda."}
             </motion.p>
 
             <motion.div
@@ -288,7 +284,7 @@ export default function Home() {
               >
                 <span className="text-[hsl(var(--wood-light))] relative z-10 flex items-center gap-2">
                   <SearchIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 opacity-80" />
-                  Explore
+                  Browse Collection
                 </span>
               </motion.button>
               <a
@@ -309,7 +305,7 @@ export default function Home() {
                     >
                       <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16c0 3.5 1.128 6.744 3.046 9.378L1.054 31.29l6.118-1.958A15.9 15.9 0 0016.004 32C24.826 32 32 24.822 32 16S24.826 0 16.004 0zm9.31 22.606c-.39 1.1-1.932 2.012-3.182 2.278-.856.18-1.974.324-5.736-1.232-4.812-1.99-7.912-6.876-8.152-7.194-.23-.318-1.932-2.57-1.932-4.9s1.222-3.476 1.656-3.952c.434-.476.948-.596 1.264-.596.316 0 .632.002.908.016.292.014.682-.11 1.068.814.39.94 1.328 3.238 1.444 3.472.116.234.194.508.038.814-.156.318-.234.508-.468.786-.234.278-.49.62-.702.832-.234.234-.478.488-.206.956.272.468 1.212 2 2.602 3.238 1.784 1.59 3.288 2.082 3.756 2.316.468.234.742.196 1.014-.118.272-.316 1.168-1.36 1.48-1.828.312-.468.624-.39 1.054-.234.434.156 2.726 1.286 3.194 1.52.468.234.78.352.896.546.116.194.116 1.128-.274 2.228z" />
                     </svg>
-                    Chat
+                    Chat on WhatsApp
                   </span>
                 </motion.button>
               </a>
@@ -322,12 +318,12 @@ export default function Home() {
               className="flex items-center gap-5 md:gap-6 justify-center pt-3 text-white/70"
             >
               <div className="flex items-center gap-1.5 text-xs md:text-sm">
-                <span>Wooden</span>
+                <span>Made in Rwanda</span>
               </div>
               <div className="w-px h-3 md:h-4 bg-white/30" />
               <div className="flex items-center gap-1.5 text-xs md:text-sm">
                 <Shield className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                <span>Quality</span>
+                <span>Quality Craft</span>
               </div>
             </motion.div>
           </motion.div>
@@ -365,17 +361,17 @@ export default function Home() {
               className="max-w-xl"
             >
               <p className="text-wood-light font-black tracking-[0.3em] uppercase text-[10px] mb-4">
-                Curated Selection
+                Featured Pieces
               </p>
               <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.85] mb-8">
-                Masterpiece <br />
+                Featured <br />
                 <span className="text-wood-medium/20 font-serif italic">
-                  Gallery
+                  Collection
                 </span>
               </h2>
               <p className="text-muted-foreground text-xl leading-relaxed font-medium">
-                A selection from our archive of over 500 hand-tooled pieces.
-                Every cut is a dialogue between the artisan and the grain.
+                Explore a curated set of our handcrafted wood products. Built
+                for homes, offices, and hospitality spaces in Rwanda.
               </p>
             </motion.div>
 
@@ -390,7 +386,7 @@ export default function Home() {
                 href="/collection"
                 className="group flex items-center gap-4 text-[10px] font-black tracking-[0.2em] uppercase text-wood-dark border-b border-wood-dark/20 hover:border-wood-dark pb-2 transition-all duration-500"
               >
-                Explore Full Archives
+                View Full Collection
                 <div className="h-6 w-6 rounded-full border border-wood-dark/20 flex items-center justify-center group-hover:bg-wood-dark group-hover:text-white transition-all duration-500">
                   <Play className="h-2 w-2" />
                 </div>
@@ -420,7 +416,7 @@ export default function Home() {
               href="/collection"
               className="inline-flex items-center gap-3 px-10 py-5 rounded-[2rem] bg-background border border-wood-dark/10 hover:border-wood-dark/30 hover:shadow-2xl hover:shadow-wood-dark/5 transition-all duration-700 text-xs font-black tracking-[0.2em] uppercase text-wood-dark"
             >
-              View All 500+ Masterpieces
+              View All Products
             </Link>
           </div>
         </div>
@@ -434,17 +430,17 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-20">
           <div className="flex flex-col items-center justify-center text-center mb-24">
             <p className="text-wood-light font-black tracking-[0.4em] uppercase text-[10px] mb-6">
-              The Wooders Ethos
+              Our Craft
             </p>
             <h2 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[0.85] text-wood-dark max-w-4xl">
-              Witness{" "}
+              How We{" "}
               <span className="italic font-serif text-wood-medium/80">
-                The Craft
+                Build
               </span>
             </h2>
             <p className="mt-8 text-xl text-wood-dark/60 leading-relaxed font-medium max-w-2xl">
-              Step into our studio. Watch raw timber transform into heirloom art
-              through meticulous Rwandan joinery.
+              From raw timber to final finish, every piece is made with care by
+              local artisans in Rwanda.
             </p>
           </div>
 
@@ -470,11 +466,11 @@ export default function Home() {
                 <WoodenLogIcon className="w-8 h-8" />
               </div>
               <h4 className="text-[10px] font-black tracking-[0.3em] uppercase text-wood-dark">
-                Sustainably Sourced
+                Sustainably Sourced Wood
               </h4>
               <p className="text-sm text-wood-dark/60 font-medium">
-                Every log is ethically harvested, ensuring the forest thrives
-                alongside our craft.
+                We choose responsibly sourced timber so quality and
+                sustainability go hand in hand.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 group">
@@ -482,11 +478,11 @@ export default function Home() {
                 <HandSawIcon className="w-8 h-8" />
               </div>
               <h4 className="text-[10px] font-black tracking-[0.3em] uppercase text-wood-dark">
-                Precision Cut
+                Precision Cutting
               </h4>
               <p className="text-sm text-wood-dark/60 font-medium">
-                We respect the grain. Every cut is measured and executed with
-                masterful precision.
+                Every cut is measured to match the wood grain and keep the
+                piece strong and clean.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 group">
@@ -494,11 +490,11 @@ export default function Home() {
                 <HandPlaneIcon className="w-8 h-8" />
               </div>
               <h4 className="text-[10px] font-black tracking-[0.3em] uppercase text-wood-dark">
-                Hand-Tooled
+                Hand-Finished Details
               </h4>
               <p className="text-sm text-wood-dark/60 font-medium">
-                We avoid mass production. Planes, chisels, and patience shape
-                our signature edges.
+                Our team shapes and finishes each piece by hand for a refined,
+                unique result.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 group">
@@ -506,11 +502,11 @@ export default function Home() {
                 <JointerIcon className="w-8 h-8" />
               </div>
               <h4 className="text-[10px] font-black tracking-[0.3em] uppercase text-wood-dark">
-                Seamless Joinery
+                Strong Joinery
               </h4>
               <p className="text-sm text-wood-dark/60 font-medium">
-                Traditional mortise and tenon techniques ensure pieces last for
-                generations.
+                Traditional joinery methods help every product stay durable for
+                years.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 group">
@@ -518,11 +514,11 @@ export default function Home() {
                 <DrillIcon className="w-8 h-8" />
               </div>
               <h4 className="text-[10px] font-black tracking-[0.3em] uppercase text-wood-dark">
-                Solid Assembly
+                Built to Last
               </h4>
               <p className="text-sm text-wood-dark/60 font-medium">
-                Reinforced core structures provide unshakeable stability without
-                compromising design.
+                Reinforced construction keeps your furniture stable in daily
+                use.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 group">
@@ -530,11 +526,11 @@ export default function Home() {
                 <DropOilIcon className="w-8 h-8" />
               </div>
               <h4 className="text-[10px] font-black tracking-[0.3em] uppercase text-wood-dark">
-                Organic Oils
+                Natural Oil Finish
               </h4>
               <p className="text-sm text-wood-dark/60 font-medium">
-                Finished with natural blends that let the wood breathe and age
-                gracefully.
+                We finish with natural oils that protect the surface while
+                preserving the wood texture.
               </p>
             </div>
           </div>
@@ -563,7 +559,7 @@ export default function Home() {
                 onClick={() => setIsTestimonialModalOpen(true)}
                 className="rounded-2xl px-6 py-3 bg-wood-dark text-white font-bold text-sm tracking-widest uppercase shadow-xl shadow-wood-dark/10 hover:bg-wood-medium transition-all duration-300 h-auto"
               >
-                Share Your Experience
+                Share a Review
               </Button>
             </motion.div>
           </div>

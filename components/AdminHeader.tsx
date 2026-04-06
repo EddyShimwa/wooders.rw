@@ -23,12 +23,12 @@ export function AdminHeader({ adminName = 'Admin' }: AdminHeaderProps) {
     mutationFn: logoutAdmin,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['admin', 'me'] })
-      toast.success('Logged out')
+      toast.success('Signed out successfully.')
       window.location.href = '/admin/login'
     },
     onError: (error: unknown) => {
       const errorMessage = error instanceof Error ? error.message : 'Please try again.'
-      toast.error('Failed to logout', {
+      toast.error('Could not sign out', {
         description: errorMessage,
       })
     },
@@ -54,7 +54,7 @@ export function AdminHeader({ adminName = 'Admin' }: AdminHeaderProps) {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-3xl font-bold">Welcome back, {adminName}</h1>
-            <p className="text-sm text-muted-foreground mt-1">Manage orders and testimonials</p>
+            <p className="text-sm text-muted-foreground mt-1">Manage orders and customer reviews</p>
           </div>
           <div className="flex items-center gap-2">
             <Button

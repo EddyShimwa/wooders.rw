@@ -24,12 +24,12 @@ import { motion } from 'framer-motion'
 const MAX_FEEDBACK_LENGTH = 500
 
 const testimonialFormSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters' }).optional().or(z.literal('')),
-  email: z.string().email({ message: 'Please enter a valid email' }).optional().or(z.literal('')),
-  rating: z.number().min(1, { message: 'Please select a rating' }).max(5),
+  name: z.string().min(2, { message: 'Name should be at least 2 characters.' }).optional().or(z.literal('')),
+  email: z.string().email({ message: 'Enter a valid email address.' }).optional().or(z.literal('')),
+  rating: z.number().min(1, { message: 'Please select a star rating.' }).max(5),
   feedback: z.string()
-    .min(10, { message: 'Feedback must be at least 10 characters' })
-    .max(MAX_FEEDBACK_LENGTH, { message: `Feedback must not exceed ${MAX_FEEDBACK_LENGTH} characters` }),
+    .min(10, { message: 'Please write at least 10 characters.' })
+    .max(MAX_FEEDBACK_LENGTH, { message: `Please keep your review under ${MAX_FEEDBACK_LENGTH} characters.` }),
   photo: z.instanceof(File).optional(),
 })
 
@@ -37,10 +37,9 @@ type TestimonialFormValues = z.infer<typeof testimonialFormSchema>
 
 interface TestimonialFormProps {
   onSuccess?: () => void
-  isModal?: boolean
 }
 
-export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormProps) {
+export function TestimonialForm({ onSuccess }: TestimonialFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [hoveredStar, setHoveredStar] = useState<number | null>(null)
@@ -66,20 +65,22 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
       }
 
       await submitTestimonial({
-        name: values.name || 'Anonymous Collector',
+        name: values.name || 'Anonymous Customer',
         email: values.email || '',
         rating: values.rating,
         feedback: values.feedback,
         photo: photoBase64,
       })
 
-      toast.success('Thank you! Your story has been shared.')
+      toast.success('Thanks for your review!', {
+        description: 'Your feedback was submitted successfully.',
+      })
       form.reset()
       setPhotoPreview(null)
       onSuccess?.()
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to submit'
-      toast.error('Submission failed', { description: errorMessage })
+      const errorMessage = error instanceof Error ? error.message : 'Please try again.'
+      toast.error('Could not submit review', { description: errorMessage })
     } finally {
       setIsSubmitting(false)
     }
@@ -89,7 +90,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
     const file = e.target.files?.[0]
     if (file) {
       if (file.size > 10 * 1024 * 1024) {
-        toast.error('File size must be less than 10MB')
+        toast.error('Image must be smaller than 10MB.')
         return
       }
       form.setValue('photo', file)
@@ -108,10 +109,10 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Your Name</FormLabel>
+                <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Name (Optional)</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter name (or leave anonymous)" 
+                    placeholder="Your name (leave blank to stay anonymous)" 
                     {...field} 
                     disabled={isSubmitting} 
                     className="rounded-xl border-border/50 focus:border-wood-light focus:ring-wood-light/10 h-12"
@@ -127,11 +128,11 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Email Address</FormLabel>
+                <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Email (Optional)</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder="name@example.com (for follow-up only)"
                     {...field}
                     disabled={isSubmitting}
                     className="rounded-xl border-border/50 focus:border-wood-light focus:ring-wood-light/10 h-12"
@@ -148,7 +149,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
           name="rating"
           render={({ field }) => (
             <FormItem className="space-y-4">
-              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60 text-center block">Rate Your Experience</FormLabel>
+              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60 text-center block">Your Rating</FormLabel>
               <FormControl>
                 <div className="flex justify-center gap-4">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -180,13 +181,13 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
         <FormField
           control={form.control}
           name="feedback"
-          render={({ field }) => (
+            render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Your Story</FormLabel>
+              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Your Review</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Textarea
-                    placeholder="Describe the craftsmanship, the feeling in your space..."
+                    placeholder="Tell us about product quality, delivery, and how it looks in your space."
                     rows={6}
                     {...field}
                     disabled={isSubmitting}
@@ -207,7 +208,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
           name="photo"
           render={() => (
             <FormItem>
-              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Share a Masterpiece (Optional)</FormLabel>
+              <FormLabel className="text-[10px] font-black tracking-widest uppercase text-wood-medium/60">Upload a Photo (Optional)</FormLabel>
               <FormControl>
                 <div className="space-y-4">
                   <div className="relative group">
@@ -224,7 +225,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
                       className="flex flex-col items-center justify-center w-full h-32 rounded-2xl border-2 border-dashed border-border/50 bg-muted/20 cursor-pointer group-hover:bg-muted/30 group-hover:border-wood-light/30 transition-all duration-500"
                     >
                       <Upload className="h-6 w-6 text-muted-foreground mb-2 group-hover:text-wood-light transition-colors" />
-                      <span className="text-xs font-bold text-muted-foreground group-hover:text-wood-dark">Click to upload product photo</span>
+                      <span className="text-xs font-bold text-muted-foreground group-hover:text-wood-dark">Click to upload a photo of your product</span>
                     </label>
                   </div>
                   {photoPreview && (
@@ -263,7 +264,7 @@ export function TestimonialForm({ onSuccess, isModal = false }: TestimonialFormP
           {isSubmitting ? (
             <Loader2 className="h-6 w-6 animate-spin" />
           ) : (
-            'Publish Your Story'
+            'Submit Review'
           )}
         </Button>
       </form>

@@ -43,7 +43,7 @@ export function QRCodeGenerator({
         onClick={handleDownload}
         className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
       >
-        Download QR Code
+        Download QR code
       </button>
     </div>
   )

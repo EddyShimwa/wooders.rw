@@ -23,8 +23,8 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
-  title: 'Wooders - Handcrafted Wood Decor',
-  description: 'Elegant handcrafted wooden decor for your home. Order directly on WhatsApp.',
+  title: 'Wooders Rwanda | Handcrafted Wood Products',
+  description: 'Handcrafted wooden furniture and decor made in Rwanda for homes and businesses. Chat with us on WhatsApp to order.',
   icons: {
     icon: '/images/favicon.png',
   },

@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { Header } from '@/components/Header'
 import { ProductCard } from '@/components/ProductCard'
-import { Button } from '@/components/ui/button'
 import { Product } from '@/types/product'
 import { Category } from '@/types/category'
 import { Search, X } from 'lucide-react'
@@ -82,12 +81,12 @@ export default function Collection() {
               transition={{ duration: 1 }}
               className="max-w-xl"
             >
-              <p className="text-wood-light font-black tracking-[0.3em] uppercase text-[10px] mb-4">Complete Archives</p>
+              <p className="text-wood-light font-black tracking-[0.3em] uppercase text-[10px] mb-4">Full Collection</p>
               <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.85] mb-8 text-wood-dark">
                 The <span className="text-wood-medium/40 font-serif italic">Collection</span>
               </h1>
               <p className="text-muted-foreground text-xl leading-relaxed font-medium">
-                Explore our full catalogue of over 500 handcrafted masterpieces. Filter by collection or search for specific grains and forms.
+                Browse our full range of handcrafted wood products. Filter by category or search by product name.
               </p>
             </motion.div>
 
@@ -102,7 +101,7 @@ export default function Collection() {
                 <Search className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-4 text-wood-dark/50 group-focus-within:text-wood-dark transition-colors" />
                 <input
                   type="text"
-                  placeholder="Find your grain..."
+                  placeholder="Search products or categories..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-8 pr-8 py-2 bg-transparent focus:outline-none font-medium tracking-wide text-wood-dark placeholder:text-wood-dark/30"
@@ -166,13 +165,13 @@ export default function Collection() {
               className="text-center py-40"
             >
               <HandSawIcon className="h-12 w-12 mx-auto mb-6 text-wood-dark/20" />
-              <h3 className="text-3xl font-black tracking-tighter mb-4 text-wood-dark">No Matches Found</h3>
-              <p className="text-wood-dark/50 mb-10 max-w-sm mx-auto font-medium">Your search didn&apos;t yield any results. Try refining your terms.</p>
+              <h3 className="text-3xl font-black tracking-tighter mb-4 text-wood-dark">No Products Found</h3>
+              <p className="text-wood-dark/50 mb-10 max-w-sm mx-auto font-medium">We couldn&apos;t find products matching your filters. Try a different keyword or category.</p>
               <button
                 onClick={() => { setSearchQuery(''); setActiveCategory('All') }}
                 className="text-[10px] font-black tracking-[0.2em] uppercase border-b border-wood-dark pb-1 hover:text-wood-light hover:border-wood-light transition-colors"
               >
-                Clear Filters
+                Reset Filters
               </button>
             </motion.div>
           )}

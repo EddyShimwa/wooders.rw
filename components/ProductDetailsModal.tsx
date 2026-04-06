@@ -72,7 +72,7 @@ export const ProductDetailsModal = ({
                 <h3 className="text-sm font-medium text-muted-foreground mb-2">
                   Price
                 </h3>
-                <p className="text-4xl font-bold text-primary">RWF {product.price}</p>
+                <p className="text-4xl font-bold text-primary">RWF {product.price?.toLocaleString()}</p>
               </div>
             </div>
 
@@ -84,7 +84,7 @@ export const ProductDetailsModal = ({
                 size="lg"
               >
                 <ShoppingCart className="h-5 w-5 mr-2" />
-                Order Now
+                Order on WhatsApp
               </Button>
 
               <Button
@@ -98,7 +98,7 @@ export const ProductDetailsModal = ({
                     isInWishlist ? "fill-primary text-primary" : ""
                   }`}
                 />
-                {isInWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
+                {isInWishlist ? "Remove from wishlist" : "Save to wishlist"}
               </Button>
             </div>
           </div>

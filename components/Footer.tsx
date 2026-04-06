@@ -2,6 +2,7 @@
 
 import { Mail, Phone, MapPin, Instagram, ArrowUpRight } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 export function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -23,7 +24,7 @@ export function Footer() {
               className="h-12 w-auto brightness-0 invert"
             />
             <p className="text-white/50 text-sm leading-relaxed max-w-xs font-medium">
-              Preserving the natural soul of the forest through artisanal craftsmanship and contemporary Rwandan design.
+              Handcrafted wood products for homes and businesses across Rwanda.
             </p>
             <div className="flex items-center gap-3">
               <a href="https://www.instagram.com/wooders_rw?igsh=MTN5Zmo5YTk4bXJvdQ==" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-wood-light hover:border-wood-light transition-all duration-300 group" aria-label="Instagram">
@@ -36,15 +37,15 @@ export function Footer() {
           <div className="space-y-6">
             <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
             <nav className="flex flex-col gap-4">
-              <a href="#collection" className="text-sm font-bold text-white/70 hover:text-white transition-colors">The Collections</a>
-              <a href="#about" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Our Philosophy</a>
-              <a href="#testimonials" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Collector Stories</a>
+              <Link href="/collection" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Collection</Link>
+              <Link href="/#about" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Our Craft</Link>
+              <Link href="/#testimonials" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Customer Reviews</Link>
             </nav>
           </div>
 
           {/* Contact Information */}
           <div className="space-y-6">
-            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Concierge</h4>
+            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Contact</h4>
             <div className="flex flex-col gap-4">
               <a href="mailto:woodersrwanda@gmail.com" className="group flex items-center gap-3 text-sm font-bold text-white/70 hover:text-white transition-colors">
                 <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
@@ -69,13 +70,13 @@ export function Footer() {
 
           {/* Newsletter / Call to Action */}
           <div className="space-y-6">
-            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Elevate Your Home</h4>
-            <p className="text-sm text-white/50 font-medium">Ready to bring nature&apos;s artistry into your space?</p>
+            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Need Help Choosing?</h4>
+            <p className="text-sm text-white/50 font-medium">Message us and we&apos;ll help you pick the right piece for your space.</p>
             <button
               onClick={scrollToTop}
               className="flex items-center gap-2 group text-sm font-black tracking-widest uppercase text-wood-light hover:text-white transition-colors"
             >
-              Back to Excellence
+              Back to top
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </button>
           </div>
@@ -84,11 +85,11 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-white/30 text-[11px] font-bold tracking-widest uppercase">
-            &copy; {new Date().getFullYear()} Wooders Rwanda. Handcrafted with Passion.
+            &copy; {new Date().getFullYear()} Wooders Rwanda. Made by local artisans.
           </p>
           <div className="flex items-center gap-8 text-white/20 text-[10px] font-black tracking-[0.2em] uppercase">
-            <span>Privately Sourced</span>
-            <span>Artisan Made</span>
+            <span>Made in Rwanda</span>
+            <span>Built to Last</span>
           </div>
         </div>
       </div>
