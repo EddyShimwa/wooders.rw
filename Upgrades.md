@@ -133,7 +133,49 @@ Wooders is premium Rwandan craftsmanship with modern purchase confidence.
 - Define clear owners for brand consistency, UX quality, performance, and research.
 - Keep a lightweight brand and UX audit checklist for recurring quality control.
 
-## 8) Success Scorecard
+## 8) Product Expansion Backlog (Rwanda-Market Fit)
+
+Use this as the structured product catalog pipeline for launch planning, content creation, and WhatsApp sales scripts.
+
+### Hospitality / F&B
+- NFC + QR menu stand
+- Reserved signs and table numbers
+- Check presenters and bill folders
+- Condiment caddies
+- Coasters and coaster sets
+- Menu card holders
+- Open/Closed flip signs
+- Product display risers (boutiques, salons)
+- Wi-Fi password blocks (hotels, cafes)
+- Hotel welcome trays
+- Google Review tap blocks
+
+### Personal / Household
+- Picture and photo frames
+- Wall clocks
+- Floating shelves
+- Bathroom accessories (soap dish, toothbrush holder)
+- Kitchen utensil holder and cutlery tray
+- Fruit and bread bowls
+- Candle holders and tray sets
+- Bedside organizer trays
+- Prayer/Bible book stands
+- Key holder wall hooks
+- Jewelry organizer and watch stand
+- Magazine and book rack
+- Laptop lap desk for home use
+- Plant pot stands and risers
+- Wedding gift sets (photo frame + tray combo)
+
+### Business / Institutional
+- Desk nameplates and signage
+- Salon/spa service menu boards
+- Boutique clothing rack accessories (wooden hangers, display arms)
+- School/church award plaques and trophies
+- Event decor rentals (centerpieces, table numbers for weddings)
+- Office reception logo wall letters
+
+## 9) Success Scorecard
 
 Track continuously:
 - Handover Conversion Rate
