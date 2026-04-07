@@ -35,33 +35,33 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
+            <h4 className="text-[9px] font-black tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
             <nav className="flex flex-col gap-4">
-              <Link href="/collection" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Collection</Link>
-              <Link href="/#about" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Our Craft</Link>
-              <Link href="/#testimonials" className="text-sm font-bold text-white/70 hover:text-white transition-colors">Customer Reviews</Link>
+              <Link href="/collection" className="text-[13px] font-bold text-white/70 hover:text-white transition-colors">Collection</Link>
+              <Link href="/#about" className="text-[13px] font-bold text-white/70 hover:text-white transition-colors">About</Link>
+              <Link href="/#testimonials" className="text-[13px] font-bold text-white/70 hover:text-white transition-colors">Customer Reviews</Link>
             </nav>
           </div>
 
           {/* Contact Information */}
           <div className="space-y-6">
-            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Contact</h4>
+            <h4 className="text-[9px] font-black tracking-[0.2em] uppercase text-wood-light">Contact</h4>
             <div className="flex flex-col gap-4">
-              <a href="mailto:woodersrwanda@gmail.com" className="group flex items-center gap-3 text-sm font-bold text-white/70 hover:text-white transition-colors">
-                <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
-                  <Mail className="h-3.5 w-3.5" />
+              <a href="mailto:woodersrwanda@gmail.com" className="group flex items-center gap-3 text-[13px] font-bold text-white/70 hover:text-white transition-colors">
+                <div className="h-7 w-7 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
+                  <Mail className="h-3 w-3" />
                 </div>
                 woodersrwanda@gmail.com
               </a>
-              <a href="tel:+250780609878" className="group flex items-center gap-3 text-sm font-bold text-white/70 hover:text-white transition-colors">
-                <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
-                  <Phone className="h-3.5 w-3.5" />
+              <a href="tel:+250780609878" className="group flex items-center gap-3 text-[13px] font-bold text-white/70 hover:text-white transition-colors">
+                <div className="h-7 w-7 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
+                  <Phone className="h-3 w-3" />
                 </div>
                 +250 780 609 878
               </a>
-              <div className="flex items-center gap-3 text-sm font-bold text-white/70">
-                <div className="h-8 w-8 rounded-lg bg-white/5 flex items-center justify-center">
-                  <MapPin className="h-3.5 w-3.5" />
+              <div className="flex items-center gap-3 text-[13px] font-bold text-white/70">
+                <div className="h-7 w-7 rounded-lg bg-white/5 flex items-center justify-center">
+                  <MapPin className="h-3 w-3" />
                 </div>
                 Kigali, Rwanda
               </div>
@@ -70,14 +70,14 @@ export function Footer() {
 
           {/* Newsletter / Call to Action */}
           <div className="space-y-6">
-            <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-light">Need Help Choosing?</h4>
-            <p className="text-sm text-white/50 font-medium">Message us and we&apos;ll help you pick the right piece for your space.</p>
+            <h4 className="text-[9px] font-black tracking-[0.2em] uppercase text-wood-light">Need Help Choosing?</h4>
+            <p className="text-[13px] text-white/50 font-medium">Message us and we&apos;ll help you pick the right piece for your space.</p>
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-2 group text-sm font-black tracking-widest uppercase text-wood-light hover:text-white transition-colors"
+              className="flex items-center gap-2 group text-[11px] font-black tracking-widest uppercase text-wood-light hover:text-white transition-colors"
             >
               Back to top
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </button>
           </div>
         </div>

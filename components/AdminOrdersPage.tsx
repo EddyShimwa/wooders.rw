@@ -43,6 +43,7 @@ import {
   updateOrderStatus,
 } from '@/lib/api/orderService'
 import { Trash2, RefreshCw } from 'lucide-react'
+import { LoadingLogo } from '@/components/ui/LoadingLogo'
 
 const ORDER_STATUS_OPTIONS: Order['status'][] = [
   'pending',
@@ -151,7 +152,9 @@ export function AdminOrdersPage() {
       </CardHeader>
       <CardContent className="space-y-6">
         {ordersQuery.isLoading ? (
-          <div className="text-center py-8 text-muted-foreground">Loading orders...</div>
+          <div className="flex justify-center py-20">
+            <LoadingLogo text="Retrieving orders..." size={80} />
+          </div>
         ) : orders.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">No orders yet.</div>
         ) : (
@@ -237,9 +240,7 @@ export function AdminOrdersPage() {
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
+                      onClick={() => {
                         if (currentPage > 1) setCurrentPage(currentPage - 1)
                       }}
                       className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer transition-all duration-200 hover:bg-accent'}
@@ -252,9 +253,7 @@ export function AdminOrdersPage() {
                         <PaginationEllipsis />
                       ) : (
                         <PaginationLink
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault()
+                          onClick={() => {
                             setCurrentPage(page as number)
                           }}
                           isActive={page === currentPage}
@@ -268,9 +267,7 @@ export function AdminOrdersPage() {
 
                   <PaginationItem>
                     <PaginationNext
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
+                      onClick={() => {
                         if (currentPage < totalPages) setCurrentPage(currentPage + 1)
                       }}
                       className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer transition-all duration-200 hover:bg-accent'}

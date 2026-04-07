@@ -4,8 +4,8 @@ import { useParams, useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { Header } from '@/components/Header'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
 import { ArrowLeft, Package, Shield, Truck } from 'lucide-react'
+import { LoadingLogo } from '@/components/ui/LoadingLogo'
 import { Category } from '@/types/category'
 import { getProductOrderLink } from '@/lib/whatsapp'
 import Image from 'next/image'
@@ -38,19 +38,8 @@ export default function ProductDetailsPage() {
     return (
       <div className="min-h-screen">
         <Header />
-        <div className="pt-24 pb-16">
-          <div className="container mx-auto px-4 lg:px-6">
-            <Skeleton className="h-10 w-24 mb-8" />
-            <div className="grid lg:grid-cols-2 gap-12">
-              <Skeleton className="aspect-square rounded-2xl" />
-              <div className="space-y-6">
-                <Skeleton className="h-8 w-32" />
-                <Skeleton className="h-12 w-3/4" />
-                <Skeleton className="h-24 w-full" />
-                <Skeleton className="h-14 w-full" />
-              </div>
-            </div>
-          </div>
+        <div className="flex items-center justify-center h-[calc(100vh-80px)]">
+          <LoadingLogo text="Preparing product details..." />
         </div>
       </div>
     )

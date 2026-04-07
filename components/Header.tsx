@@ -10,9 +10,9 @@ import { usePathname, useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
   { label: "Collection", href: "/collection" },
-  { label: "Our Craft", href: "/#about" },
+  { label: "About", href: "/#about" },
   { label: "Reviews", href: "/#testimonials" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/#contact-cta" },
 ];
 
 export const Header = () => {
@@ -118,9 +118,9 @@ export const Header = () => {
                 <Image
                   src="/images/logo.png"
                   alt="Wooders"
-                  width={60}
-                  height={40}
-                  unoptimized
+                  width={120}
+                  height={80}
+                  quality={90}
                   priority
                   className="h-10 lg:h-14 w-auto"
                 />
@@ -132,7 +132,7 @@ export const Header = () => {
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
+                  className={`px-4 py-2 text-[13px] font-bold tracking-tight rounded-full transition-all duration-200 ${
                     isItemActive(item.href)
                       ? hasSolidHeader
                         ? "bg-[hsl(var(--wood-medium))]/10 text-[hsl(var(--wood-dark))]"
@@ -152,7 +152,7 @@ export const Header = () => {
                 href={getGeneralInquiryLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                className={`hidden sm:flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-bold tracking-tight transition-all duration-300 ${
                   hasSolidHeader
                     ? "bg-[#25D366] text-white hover:bg-[#20BD5A]"
                     : "bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 border border-white/20"

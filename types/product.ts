@@ -8,3 +8,10 @@ export interface Product {
   category: string;
   categoryId?: string;
 }
+
+export interface PaginatedResponse<T> {
+  items: T[];
+  total: number;
+  limit: number;
+  skip: number;
+}

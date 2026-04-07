@@ -146,7 +146,13 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                   }`}>
                     {testimonial.photo && (
                       <div className="absolute inset-0 z-0">
-                         <Image src={testimonial.photo} alt={testimonial.name} fill className="object-cover rounded-full" />
+                         <Image 
+                           src={testimonial.photo} 
+                           alt={testimonial.name} 
+                           fill 
+                           className="object-cover rounded-full" 
+                           sizes="48px"
+                         />
                       </div>
                     )}
                     <AvatarFallback className="bg-wood-dark text-white font-bold text-sm">
@@ -242,6 +248,7 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                     alt={`Product from ${activeTestimonial.name}`}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 300px, (max-width: 1024px) 250px, 300px"
                   />
                 </div>
                 {activeTestimonial.product && (
