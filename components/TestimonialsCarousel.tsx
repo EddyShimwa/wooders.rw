@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 import { Testimonial } from '@/types/testimonial'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import Image from 'next/image'
-import { Star, Quote, X, ImageIcon } from 'lucide-react'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { Star, Quote } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 interface TestimonialsCarouselProps {
@@ -15,188 +14,253 @@ interface TestimonialsCarouselProps {
 
 export function TestimonialsCarousel({ testimonials, isLoading = false }: TestimonialsCarouselProps) {
   const [mounted, setMounted] = useState(false)
-  const [selected, setSelected] = useState<Testimonial | null>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // Lock body scroll when modal open
   useEffect(() => {
-    if (selected) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => { document.body.style.overflow = '' }
-  }, [selected])
+    if (!testimonials || testimonials.length <= 1) return
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [testimonials])
 
   if (!mounted) return null
 
   if (isLoading) {
     return (
-      <div className="py-8">
-        <div className="text-center text-sm text-muted-foreground">Loading testimonials...</div>
+      <div className="flex flex-col md:flex-row gap-12 lg:gap-24 max-w-7xl mx-auto items-center py-12 px-6 md:px-12 animate-pulse">
+        {/* Left: Timeline Skeleton */}
+        <div className="relative w-full md:w-1/3 xl:w-1/4 ml-4 md:ml-12">
+          <div className="absolute left-[24px] top-[56px] bottom-[56px] w-[100px] pointer-events-none stroke-muted -translate-x-full -z-10">
+            <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 100 100" fill="none">
+              <path d="M100,0 Q-20,50 100,100" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            </svg>
+          </div>
+          <div className="relative z-10 space-y-12 py-8">
+            {[...Array(3)].map((_, idx) => {
+              const progress = idx / 2;
+              const curveOffset = -240 * progress * (1 - progress);
+              return (
+                <div key={idx} style={{ transform: `translateX(${curveOffset}px)` }} className="flex items-center gap-6">
+                  <div className="h-12 w-12 rounded-full border-2 border-transparent bg-muted shrink-0" />
+                  <div className="space-y-2">
+                    <div className="h-4 w-24 bg-muted rounded" />
+                    <div className="h-3 w-16 bg-muted rounded" />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Right: Featured Testimonial Skeleton */}
+        <div className="w-full md:w-2/3 xl:w-3/4 min-h-[300px] flex items-center relative">
+          <Quote className="absolute -top-8 -left-8 h-24 w-24 text-muted/20 -z-10 rotate-180" />
+          <div className="flex flex-col lg:flex-row gap-12 items-center w-full">
+            <div className="space-y-8 flex-1 w-full">
+              <div className="space-y-4">
+                <div className="h-8 md:h-12 w-full bg-muted rounded-lg" />
+                <div className="h-8 md:h-12 w-5/6 bg-muted rounded-lg" />
+                <div className="h-8 md:h-12 w-4/6 bg-muted rounded-lg" />
+              </div>
+              <div className="pt-8 border-t border-muted/20 flex items-center justify-between">
+                <div className="space-y-2">
+                   <div className="h-4 w-32 bg-muted rounded" />
+                   <div className="h-3 w-24 bg-muted rounded" />
+                </div>
+                <div className="h-10 w-28 bg-muted rounded-full" />
+              </div>
+            </div>
+            <div className="relative w-full max-w-[300px] aspect-square rounded-2xl bg-muted shrink-0" />
+          </div>
+        </div>
       </div>
     )
   }
 
-  if (!testimonials || testimonials.length === 0) return null
+  if (!testimonials || testimonials.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center max-w-2xl mx-auto py-24 px-6 text-center space-y-6">
+        <div className="bg-muted/30 p-6 rounded-full">
+          <Quote className="h-10 w-10 text-muted-foreground/40" />
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-2xl font-serif font-medium text-wood-dark">No reviews yet</h3>
+          <p className="text-muted-foreground text-sm">We are actively gathering beautiful feedback from our customers. Check back soon for their stories!</p>
+        </div>
+      </div>
+    )
+  }
+
+  const activeTestimonial = testimonials[activeIndex]
+
+  const n = testimonials.length;
+  let visibleIndices: number[] = [];
+  if (n <= 4) {
+    visibleIndices = Array.from({ length: n }, (_, i) => i);
+  } else {
+    visibleIndices = [
+      (activeIndex - 1 + n) % n,
+      activeIndex,
+      (activeIndex + 1) % n,
+      (activeIndex + 2) % n
+    ];
+  }
 
   return (
-    <>
-      <div className="w-full">
-        <Carousel
-          opts={{ align: 'center', loop: true }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-4">
-            {testimonials.map((testimonial) => (
-              <CarouselItem
-                key={testimonial._id || testimonial.id}
-                className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3 my-4"
+    <div className="flex flex-col md:flex-row gap-12 lg:gap-24 max-w-7xl mx-auto items-center py-12 px-6 md:px-12">
+      {/* Left: Timeline */}
+      <div className="relative w-full md:w-1/3 xl:w-1/4 ml-4 md:ml-12">
+        {/* Curved Timeline SVG Background */}
+        <div className="absolute left-[24px] top-[56px] bottom-[56px] w-[100px] pointer-events-none stroke-[#6B4423] -translate-x-full -z-10">
+          <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 100 100" fill="none">
+            <path d="M100,0 Q-20,50 100,100" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+          </svg>
+        </div>
+
+        <div className="relative z-10 space-y-12 py-8">
+          {visibleIndices.map((actualIdx, visualIdx) => {
+            const testimonial = testimonials[actualIdx];
+            const isActive = actualIdx === activeIndex;
+            const progress = visibleIndices.length > 1 ? visualIdx / (visibleIndices.length - 1) : 0.5;
+            const curveOffset = -240 * progress * (1 - progress);
+
+            return (
+              <div
+                key={testimonial._id || testimonial.id || actualIdx}
+                onClick={() => setActiveIndex(actualIdx)}
+                style={{ transform: `translateX(${curveOffset}px)` }}
+                className="flex items-center gap-6 cursor-pointer group transition-all duration-300"
               >
-                <motion.div
-                  whileHover={{ y: -8 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="h-full p-6 sm:p-8 rounded-3xl bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
+                <div
+                  className={`relative shrink-0 rounded-full transition-all duration-500 overflow-visible bg-background ${
+                    isActive ? 'scale-110' : 'scale-100 group-hover:scale-105'
+                  }`}
                 >
-                  {/* Avatar + Name + Role */}
-                  <div className="flex flex-col items-center text-center">
-                    <Avatar className="h-10 w-10 mb-4 ring-4 ring-[hsl(var(--wood-light))]/20">
-                      <AvatarFallback className="text-xl bg-[hsl(var(--wood-light))]/20 text-[hsl(var(--wood-dark))] font-bold">
-                        {testimonial.name.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <h3 className="font-bold text-lg text-foreground">{testimonial.name}</h3>
-                  </div>
-
-                  {/* Stars */}
-                  <div className="flex justify-center gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-3 w-4 ${
-                          Number(testimonial.rating) > i
-                            ? 'fill-[hsl(var(--wood-light))] text-[hsl(var(--wood-light))]'
-                            : 'text-gray-300'
-                        }`}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Feedback */}
-                  <p className="text-xs sm:text-base leading-relaxed text-foreground/80 text-center line-clamp-4 mb-5">
-                    &ldquo;{testimonial.feedback}&rdquo;
-                  </p>
-
-                  {/* View Image Button */}
-                  {testimonial.photo && (
-                    <button
-                      onClick={() => setSelected(testimonial)}
-                      className="w-full py-2.5 px-4 rounded-lg bg-[hsl(var(--wood-light))]/10 hover:bg-[hsl(var(--wood-light))]/20 text-[hsl(var(--wood-dark))] font-medium text-sm flex items-center justify-center gap-2 transition-colors"
-                    >
-                      <ImageIcon className="h-4 w-4" />
-                      View Product Photo
-                    </button>
+                  <Avatar className={`h-12 w-12 border-2 transition-all duration-300 shadow-sm relative z-10 ${
+                    isActive ? 'border-green-600 shadow-lg shadow-green-600/20 opacity-100' : 'border-transparent opacity-40 group-hover:opacity-75'
+                  }`}>
+                    {testimonial.photo && (
+                      <div className="absolute inset-0 z-0">
+                         <Image 
+                           src={testimonial.photo} 
+                           alt={testimonial.name} 
+                           fill 
+                           className="object-cover rounded-full" 
+                           sizes="48px"
+                         />
+                      </div>
+                    )}
+                    <AvatarFallback className="bg-wood-dark text-white font-bold text-sm">
+                      {testimonial.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  {isActive && (
+                    <motion.div
+                      layoutId="active-indicator"
+                      className="absolute -inset-1.5 rounded-full border border-green-600/40 -z-10"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
                   )}
-                </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          {testimonials.length > 1 && (
-            <>
-              <CarouselPrevious className="-left-12 h-10 w-10 hidden sm:flex" />
-              <CarouselNext className="-right-12 h-10 w-10 hidden sm:flex" />
-            </>
-          )}
-        </Carousel>
+                </div>
+                
+                <div className={`flex flex-col transform transition-all duration-300 group-hover:translate-x-2 ${
+                  isActive ? 'opacity-100' : 'opacity-40 group-hover:opacity-75'
+                }`}>
+                  <span className="font-bold text-sm tracking-wide text-wood-dark">
+                    {testimonial.name}
+                  </span>
+                  <div className="flex items-center gap-2 mt-1">
+                     <div className="flex gap-0.5">
+                      <Star className="h-3 w-3 fill-green-600 text-green-600" />
+                      <span className="text-xs font-semibold text-green-600/80">{(testimonial.rating || 5).toFixed(1)}</span>
+                     </div>
+                     <span className="text-[10px] text-wood-dark/50 font-medium">
+                       {new Date(testimonial.createdAt || Date.now()).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
+                     </span>
+                  </div>
+                  {testimonial.product && (
+                    <span className="text-[10px] font-semibold text-wood-dark/40 mt-1 truncate max-w-[120px] block">
+                      {testimonial.product} 
+                    </span>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
 
-      {/* Expanded testimonial modal */}
-      <AnimatePresence>
-        {selected && (
+      {/* Right: Featured Testimonial */}
+      <div className="w-full md:w-2/3 xl:w-3/4 min-h-[300px] flex items-center relative">
+        <Quote className="absolute top-12 -left-8 h-18 w-18 text-wood-light/90 -z-10 rotate-180" />
+        
+        <AnimatePresence mode="wait">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            onClick={() => setSelected(null)}
+            key={activeIndex}
+            initial={{ opacity: 0, x: 20, filter: 'blur(4px)' }}
+            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, x: -20, filter: 'blur(4px)' }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="flex flex-col lg:flex-row gap-12 items-center w-full"
           >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-
-            {/* Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              transition={{ duration: 0.2 }}
-              className="relative z-10 w-full max-w-lg bg-background rounded-2xl shadow-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close button */}
-              <button
-                onClick={() => setSelected(null)}
-                className="absolute top-3 right-3 z-20 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white transition-colors"
-              >
-                <X className="h-4 w-4" />
-              </button>
-
-              {/* Photo */}
-              {selected.photo && (
-                <div className="relative w-full aspect-video">
-                  <Image
-                    src={selected.photo}
-                    alt={`${selected.name}\u2019s experience`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 512px) 100vw, 512px"
-                  />
+            <div className="space-y-2 flex-1">
+              <p className="font-serif italic text-xl md:text-2xl lg:text-3xl text-wood-dark leading-tight tracking-tight">
+                &ldquo;{activeTestimonial.feedback}&rdquo;
+              </p>
+              
+              <div className="pt-2 border-t border-wood-light/20 flex items-center justify-between">
+                <div>
+                   <span className="block font-black text-sm tracking-[0.2em] uppercase text-wood-dark">
+                     {activeTestimonial.name}
+                   </span>
+                   {activeTestimonial.product && (
+                     <span className="block text-[10px] font-bold tracking-[0.2em] uppercase text-wood-dark/40 mt-1">
+                       Purchased: {activeTestimonial.product}
+                     </span>
+                   )}
                 </div>
-              )}
-
-              <div className="p-6 space-y-4">
-                {/* Stars */}
-                <div className="flex gap-1">
+                <div className="flex gap-1 bg-wood-light/5 px-4 py-2 rounded-full border border-wood-light/10">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
                       className={`h-4 w-4 ${
-                        Number(selected.rating) > i
-                          ? 'fill-[hsl(var(--wood-light))] text-[hsl(var(--wood-light))]'
-                          : 'text-border'
+                        (activeTestimonial.rating || 5) > i
+                          ? 'fill-green-600 text-green-600'
+                          : 'text-wood-dark/10'
                       }`}
                     />
                   ))}
                 </div>
-
-                {/* Full feedback */}
-                <p className="text-sm sm:text-base leading-relaxed text-foreground/85">
-                  &ldquo;{selected.feedback}&rdquo;
-                </p>
-
-                {/* Author */}
-                <div className="flex items-center gap-3 pt-2 border-t border-border/40">
-                  <Avatar className="h-10 w-10">
-                    <AvatarFallback className="text-sm bg-[hsl(var(--wood-medium))]/15 text-[hsl(var(--wood-dark))] font-semibold">
-                      {selected.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold text-sm">{selected.name}</p>
-                    {selected.createdAt && (
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(selected.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                      </p>
-                    )}
-                  </div>
-                </div>
               </div>
-            </motion.div>
+            </div>
+
+            {activeTestimonial.photo && (
+              <div className="flex flex-col items-center justify-center gap-4 shrink-0 mt-6 lg:mt-0">
+                <div className="relative w-full min-w-[200px] md:min-w-[250px] max-w-[300px] aspect-square rounded-2xl overflow-hidden shadow-xl group">
+                  <Image
+                    src={activeTestimonial.photo}
+                    alt={`Product from ${activeTestimonial.name}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 300px, (max-width: 1024px) 250px, 300px"
+                  />
+                </div>
+                {activeTestimonial.product && (
+                   <span className="text-xs font-bold tracking-[0.2em] uppercase text-wood-dark/60 text-center">
+                     {activeTestimonial.product}
+                   </span>
+                )}
+              </div>
+            )}
           </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+        </AnimatePresence>
+      </div>
+    </div>
   )
 }

@@ -25,7 +25,7 @@ export function WhatsAppFloat() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           className="fixed bottom-6 right-6 z-50 flex items-center bg-[#25D366] text-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 group"
-          aria-label="Chat on WhatsApp"
+          aria-label="Chat with Wooders on WhatsApp"
         >
           <div className="flex items-center justify-center w-11 h-11 rounded-full">
             <svg viewBox="0 0 32 32" className="w-[22px] h-[22px] fill-white">
@@ -33,7 +33,7 @@ export function WhatsAppFloat() {
             </svg>
           </div>
           <span className="pr-3 text-xs font-semibold whitespace-nowrap">
-            Order
+            Chat now
           </span>
         </motion.a>
       )}

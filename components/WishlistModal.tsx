@@ -28,13 +28,13 @@ export const WishlistModal = ({ isOpen, onClose, wishlistProducts, onRemove, onO
         <DialogHeader>
           <DialogTitle>Your Wishlist</DialogTitle>
           <DialogDescription>
-            {wishlistProducts.length} {wishlistProducts.length === 1 ? "item" : "items"} saved
+            {wishlistProducts.length} {wishlistProducts.length === 1 ? "product" : "products"} saved
           </DialogDescription>
         </DialogHeader>
 
         {wishlistProducts.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
-            Your wishlist is empty. Start adding your favorite items!
+            Your wishlist is empty. Save products to compare them later.
           </div>
         ) : (
           <div className="space-y-4">
@@ -60,7 +60,7 @@ export const WishlistModal = ({ isOpen, onClose, wishlistProducts, onRemove, onO
                     {product.description}
                   </p>
                   <p className="text-lg font-bold text-primary mt-2">
-                    ${product.price}
+                    RWF {product.price?.toLocaleString()}
                   </p>
                 </div>
 
@@ -73,12 +73,13 @@ export const WishlistModal = ({ isOpen, onClose, wishlistProducts, onRemove, onO
                     }}
                     className="bg-gradient-wood"
                   >
-                    Order
+                    Order on WhatsApp
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => onRemove(product.id)}
+                    aria-label={`Remove ${product.name} from wishlist`}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

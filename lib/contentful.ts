@@ -1,4 +1,6 @@
-import { createClient } from 'contentful';
+import { createClient, EntryFieldTypes, Asset } from 'contentful';
+import { Product, PaginatedResponse } from '@/types/product';
+import { Category } from '@/types/category';
 
 function getClient() {
   const space = process.env.CONTENTFUL_SPACE_ID;
@@ -15,64 +17,109 @@ function getClient() {
   });
 }
 
-export async function getProducts() {
+export async function getProducts(): Promise<Product[]> {
+  const res = await getPaginatedProducts({ limit: 100 });
+  return res.items;
+}
+
+interface CategoryFields {
+  name: EntryFieldTypes.Symbol;
+  slug: EntryFieldTypes.Symbol;
+  description: EntryFieldTypes.RichText;
+  image: EntryFieldTypes.AssetLink;
+}
+
+interface ProductFields {
+  name: EntryFieldTypes.Symbol;
+  slug: EntryFieldTypes.Symbol;
+  description: EntryFieldTypes.RichText;
+  price: EntryFieldTypes.Number;
+  image: EntryFieldTypes.AssetLink;
+  category: EntryFieldTypes.EntryLink<CategoryFields>;
+}
+
+export async function getPaginatedProducts({ 
+  limit = 12, 
+  skip = 0, 
+  categoryId,
+  query: searchText
+}: { 
+  limit?: number; 
+  skip?: number; 
+  categoryId?: string;
+  query?: string;
+} = {}): Promise<PaginatedResponse<Product>> {
   const client = getClient();
-  if (!client) return [];
+  if (!client) return { items: [], total: 0, limit, skip };
 
-  const entries = await client.getEntries({
+  const query: Record<string, string | number | boolean | undefined> = {
     content_type: 'product',
-  });
+    limit,
+    skip,
+    order: '-sys.createdAt',
+  };
 
-  return entries.items.map((item) => {
-    const fields = item.fields as {
-      name?: string;
-      slug?: string;
-      description?: unknown;
-      price?: number;
-      image?: { fields?: { file?: { url?: string } } };
-      category?: string | { sys?: { id?: string }; fields?: { name?: string } };
-    };
-    const category = fields.category;
-    const categoryId = category && typeof category === 'object' && category.sys?.id ? category.sys.id : null;
-    const categoryName = typeof category === 'string' ? category : (category && typeof category === 'object' && category.fields?.name ? category.fields.name : '');
+  if (categoryId) {
+    query['fields.category.sys.id'] = categoryId;
+  }
+
+  if (searchText) {
+    query.query = searchText;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const entries = await client.getEntries<ProductFields>(query as any);
+
+  const items = entries.items.map((item) => {
+    const fields = item.fields;
+    const categoryEntry = fields.category as unknown as { sys: { id: string }; fields: { name: string } } | undefined;
+    
+    const itemCategoryId = categoryEntry?.sys?.id;
+    const categoryName = categoryEntry?.fields?.name || '';
+
+    const imageAsset = fields.image as unknown as Asset | undefined;
+    const imageUrl = imageAsset?.fields?.file?.url ? `https:${imageAsset.fields.file.url}` : '';
 
     return {
       id: item.sys.id,
-      name: fields.name || '',
-      slug: fields.slug || '',
-      // Contentful description may be Rich Text. Convert to plain text for safe rendering.
+      name: (fields.name as unknown as string) || '',
+      slug: (fields.slug as unknown as string) || '',
       description: toPlainText(fields.description),
-      price: fields.price || 0,
-      // Ensure asset URL is absolute (Contentful returns protocol-less URLs sometimes)
-      image: fields.image?.fields?.file?.url ? `https:${fields.image.fields.file.url}` : '',
+      price: (fields.price as unknown as number) || 0,
+      image: imageUrl,
       category: categoryName,
-      categoryId,
+      categoryId: itemCategoryId,
     }
   });
+
+  return {
+    items,
+    total: entries.total,
+    limit,
+    skip,
+  };
 }
 
-export async function getCategories() {
+export async function getCategories(): Promise<Category[]> {
   try {
     const client = getClient();
     if (!client) return [];
 
-    const entries = await client.getEntries({
+    const entries = await client.getEntries<CategoryFields>({
       content_type: 'category',
     })
 
     return entries.items.map((item) => {
-      const fields = item.fields as {
-        name?: string;
-        slug?: string;
-        description?: unknown;
-        image?: { fields?: { file?: { url?: string } } };
-      };
+      const fields = item.fields;
+      const imageAsset = fields.image as unknown as Asset | undefined;
+      const imageUrl = imageAsset?.fields?.file?.url ? `https:${imageAsset.fields.file.url}` : '';
+
       return ({
         id: item.sys.id,
-        name: fields.name || '',
-        slug: fields.slug || '',
+        name: (fields.name as unknown as string) || '',
+        slug: (fields.slug as unknown as string) || '',
         description: toPlainText(fields.description),
-        image: fields.image?.fields?.file?.url ? `https:${fields.image.fields.file.url}` : '',
+        image: imageUrl,
       });
     })
   } catch (err: unknown) {

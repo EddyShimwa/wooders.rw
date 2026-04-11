@@ -1,9 +1,7 @@
 'use client'
 
-import { Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
+import { memo } from 'react'
+import { Heart, ArrowUpRight } from "lucide-react";
 import { Product } from "@/types/product";
 import Image from "next/image";
 
@@ -14,50 +12,55 @@ interface ProductCardProps {
   onProductClick: (product: Product) => void;
 }
 
-export const ProductCard = ({ product, isInWishlist, onToggleWishlist, onProductClick }: ProductCardProps) => {
+export const ProductCard = memo(({ product, isInWishlist, onToggleWishlist, onProductClick }: ProductCardProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -8 }}
-      className="h-full cursor-pointer group"
+    <div
+      className="group cursor-pointer relative flex flex-col gap-2"
       onClick={() => onProductClick(product)}
     >
-      <Card className="h-full flex flex-col overflow-hidden border-border hover:shadow-lg transition-all duration-300">
-        <div className="relative aspect-square overflow-hidden bg-muted">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleWishlist(product.id);
-            }}
-            className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-200 shadow-sm"
-          >
-            <Heart
-              className={`h-4 w-4 transition-colors ${isInWishlist ? "fill-red-500 text-red-500" : "text-gray-700"}`}
-            />
-          </Button>
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-muted/20">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.2,1,0.3,1)] group-hover:scale-105"
+          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
+        />
+        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleWishlist(product.id);
+          }}
+          aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+          className="absolute top-4 right-4 z-10 p-2.5 bg-white/5 backdrop-blur-xl hover:bg-white/20 border border-white/10 transition-all duration-500 rounded-full opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0"
+        >
+          <Heart className={`h-3.5 w-3.5 transition-all duration-500 ${isInWishlist ? "fill-red-500 text-red-500" : "text-white"}`} />
+        </button>
+
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out scale-90 group-hover:scale-100">
+           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-2xl text-white py-2.5 px-5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase border border-white/20 shadow-2xl">
+              Details <ArrowUpRight className="h-3 w-3" />
+           </div>
         </div>
+      </div>
 
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-semibold line-clamp-1 group-hover:text-primary transition-colors">{product.name}</CardTitle>
-          <CardDescription className="line-clamp-2 text-sm">{product.description}</CardDescription>
-        </CardHeader>
-
-        <CardContent className="flex-1 pt-0">
-          <p className="text-xl font-bold">RWF {product.price?.toLocaleString()}</p>
-        </CardContent>
-      </Card>
-    </motion.div>
+      <div className="flex flex-col gap-1.5 px-1">
+        <div className="flex items-center justify-between">
+          <span className="text-[8px] font-black tracking-[0.25em] uppercase text-wood-light/80">{product.category}</span>
+          <span className="text-[12px] font-bold text-wood-dark">
+            <span className="text-[8px] text-wood-medium/50 mr-0.5">RWF</span>
+            {product.price?.toLocaleString()}
+          </span>
+        </div>
+        <div>
+          <h3 className="text-sm md:text-base font-black tracking-tight text-wood-dark group-hover:text-wood-light transition-colors duration-500 leading-tight">{product.name}</h3>
+          <p className="text-[11px] text-wood-dark/50 mt-1 line-clamp-2 font-medium leading-relaxed">{product.description}</p>
+        </div>
+      </div>
+    </div>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
