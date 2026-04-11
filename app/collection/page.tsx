@@ -1,15 +1,16 @@
 'use client'
 
 import { useMemo, useState, useCallback, useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Header } from '@/components/Header'
 import { ProductCard } from '@/components/ProductCard'
 import { Product, PaginatedResponse } from '@/types/product'
 import { Category } from '@/types/category'
-import { Search, X } from 'lucide-react'
+import { Search, X, Play } from 'lucide-react'
 import { LoadingLogo } from '@/components/ui/LoadingLogo'
+import { ProductCardSkeleton } from '@/components/ui/ProductCardSkeleton'
 import { HandSawIcon } from '@/components/icons/WoodworkingIcons'
 import dynamic from 'next/dynamic'
 import {
@@ -59,6 +60,7 @@ const fetchProducts = async ({
 }
 
 export default function Collection() {
+  const queryClient = useQueryClient()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [searchInput, setSearchInput] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
@@ -112,6 +114,20 @@ export default function Collection() {
   const products = productsResponse?.items || []
   const totalItems = productsResponse?.total || 0
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
+
+  const prefetchPage = (pageToPrefetch: number) => {
+    if (pageToPrefetch < 1 || pageToPrefetch > totalPages) return
+    queryClient.prefetchQuery({
+      queryKey: ['products', selectedCategoryId, pageToPrefetch, debouncedQuery],
+      queryFn: () => fetchProducts({ 
+        page: pageToPrefetch, 
+        categoryId: selectedCategoryId, 
+        query: debouncedQuery,
+        limit: ITEMS_PER_PAGE 
+      }),
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    })
+  }
 
   const categoryNames = useMemo(() => {
     const names = categoriesData.map((c) => c.name)
@@ -209,11 +225,11 @@ export default function Collection() {
               transition={{ duration: 1 }}
               className="max-w-xl"
             >
-              <p className="text-wood-light font-black tracking-[0.3em] uppercase text-[9px] mb-4">Full Collection</p>
-              <h1 className="text-2xl md:text-4xl font-black tracking-tighter leading-[0.85] mb-6 text-wood-dark">
-                The <span className="text-wood-medium/40 font-serif">Collection</span>
+              <p className="text-wood-light font-normal tracking-[0.3em] uppercase text-[9px] mb-4">Full Collection</p>
+              <h1 className="text-2xl md:text-4xl font-normal tracking-tighter leading-[0.85] mb-6 text-wood-dark">
+                The <span className="text-wood-medium/40 font-brand">Collection</span>
               </h1>
-              <p className="text-muted-foreground text-lg leading-relaxed font-medium">
+              <p className="text-muted-foreground text-lg leading-relaxed font-normal">
                 Browse our full range of handcrafted wood products. Filter by category or search by product name.
               </p>
             </motion.div>
@@ -249,7 +265,7 @@ export default function Collection() {
                   <button
                     key={cat}
                     onClick={() => handleCategoryChange(cat)}
-                    className={`whitespace-nowrap text-[9px] font-black tracking-[0.2em] uppercase transition-all duration-500 relative py-1 ${
+                    className={`whitespace-nowrap text-[9px] font-normal tracking-[0.2em] uppercase transition-all duration-500 relative py-1 ${
                       activeCategory === cat
                         ? 'text-wood-dark'
                         : 'text-wood-dark/40 hover:text-wood-dark/80'
@@ -271,27 +287,34 @@ export default function Collection() {
           {/* Product grid */}
           <div className={cn(
             "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6 pt-12 transition-opacity duration-300",
-            isPlaceholderData ? "opacity-50" : "opacity-100"
+            (isLoading && products.length === 0) || isPlaceholderData ? "opacity-50" : "opacity-100"
           )}>
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                isInWishlist={wishlistSet.has(product.id)}
-                onToggleWishlist={toggleWishlist}
-                onProductClick={setSelectedProduct}
-              />
-            ))}
+            {isLoading && products.length === 0 ? (
+              Array.from({ length: 12 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
+              ))
+            ) : (
+              products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  isInWishlist={wishlistSet.has(product.id)}
+                  onToggleWishlist={toggleWishlist}
+                  onProductClick={setSelectedProduct}
+                />
+              ))
+            )}
           </div>
 
           {/* Proper Pagination UI */}
-          {totalPages > 1 && (
+          {totalPages > 1 && !isLoading && (
             <div className="mt-20">
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious 
                       onClick={() => handlePageChange(page - 1)}
+                      onMouseEnter={() => prefetchPage(page - 1)}
                       className={cn(
                         "cursor-pointer",
                         page === 1 && "pointer-events-none opacity-50"
@@ -304,6 +327,7 @@ export default function Collection() {
                   <PaginationItem>
                     <PaginationNext 
                       onClick={() => handlePageChange(page + 1)}
+                      onMouseEnter={() => prefetchPage(page + 1)}
                       className={cn(
                         "cursor-pointer",
                         page === totalPages && "pointer-events-none opacity-50"
@@ -316,8 +340,8 @@ export default function Collection() {
           )}
 
           {isLoading && products.length === 0 && (
-            <div className="flex justify-center py-40">
-              <LoadingLogo text="Loading our collection..." />
+            <div className="flex justify-center py-20">
+              <LoadingLogo text="Gathering our collection..." />
             </div>
           )}
 
@@ -328,11 +352,11 @@ export default function Collection() {
               className="text-center py-40"
             >
               <HandSawIcon className="h-12 w-12 mx-auto mb-6 text-wood-dark/20" />
-              <h3 className="text-3xl font-black tracking-tighter mb-4 text-wood-dark">No Products Found</h3>
-              <p className="text-wood-dark/50 mb-10 max-w-sm mx-auto font-medium">We couldn&apos;t find products matching your filters. Try a different keyword or category.</p>
+              <h3 className="text-3xl font-normal tracking-tighter mb-4 text-wood-dark">No Products Found</h3>
+              <p className="text-wood-dark/50 mb-10 max-w-sm mx-auto font-normal">We couldn&apos;t find products matching your filters. Try a different keyword or category.</p>
               <button
                 onClick={() => { setSearchInput(''); handleCategoryChange('All') }}
-                className="text-[10px] font-black tracking-[0.2em] uppercase border-b border-wood-dark pb-1 hover:text-wood-light hover:border-wood-light transition-colors"
+                className="text-[10px] font-normal tracking-[0.2em] uppercase border-b border-wood-dark pb-1 hover:text-wood-light hover:border-wood-light transition-colors"
               >
                 Reset Filters
               </button>

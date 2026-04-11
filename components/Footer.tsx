@@ -19,9 +19,9 @@ export function Footer() {
             <Image
               src="/images/logo.png"
               alt="Wooders"
-              width={80}
-              height={60}
-              className="h-12 w-auto brightness-0 invert"
+              width={120}
+              height={80}
+              className="h-12 lg:h-14 w-auto object-contain"
             />
             <p className="text-white/50 text-sm leading-relaxed max-w-xs font-medium">
               Handcrafted wood products for homes and businesses across Rwanda.
@@ -35,31 +35,31 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h4 className="text-[9px] font-black tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
+            <h4 className="text-[9px] font-normal tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
             <nav className="flex flex-col gap-4">
-              <Link href="/collection" className="text-[13px] font-bold text-white/70 hover:text-white transition-colors">Collection</Link>
-              <Link href="/#about" className="text-[13px] font-bold text-white/70 hover:text-white transition-colors">About</Link>
-              <Link href="/#testimonials" className="text-[13px] font-bold text-white/70 hover:text-white transition-colors">Customer Reviews</Link>
+              <Link href="/collection" className="text-[13px] font-normal text-white/70 hover:text-white transition-colors">Collection</Link>
+              <Link href="/#about" className="text-[13px] font-normal text-white/70 hover:text-white transition-colors">About</Link>
+              <Link href="/#testimonials" className="text-[13px] font-normal text-white/70 hover:text-white transition-colors">Customer Reviews</Link>
             </nav>
           </div>
 
           {/* Contact Information */}
           <div className="space-y-6">
-            <h4 className="text-[9px] font-black tracking-[0.2em] uppercase text-wood-light">Contact</h4>
+            <h4 className="text-[9px] font-normal tracking-[0.2em] uppercase text-wood-light">Contact</h4>
             <div className="flex flex-col gap-4">
-              <a href="mailto:woodersrwanda@gmail.com" className="group flex items-center gap-3 text-[13px] font-bold text-white/70 hover:text-white transition-colors">
+              <a href="mailto:woodersrwanda@gmail.com" className="group flex items-center gap-3 text-[13px] font-normal text-white/70 hover:text-white transition-colors">
                 <div className="h-7 w-7 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
                   <Mail className="h-3 w-3" />
                 </div>
                 woodersrwanda@gmail.com
               </a>
-              <a href="tel:+250780609878" className="group flex items-center gap-3 text-[13px] font-bold text-white/70 hover:text-white transition-colors">
+              <a href="tel:+250780609878" className="group flex items-center gap-3 text-[13px] font-normal text-white/70 hover:text-white transition-colors">
                 <div className="h-7 w-7 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
                   <Phone className="h-3 w-3" />
                 </div>
                 +250 780 609 878
               </a>
-              <div className="flex items-center gap-3 text-[13px] font-bold text-white/70">
+              <div className="flex items-center gap-3 text-[13px] font-normal text-white/70">
                 <div className="h-7 w-7 rounded-lg bg-white/5 flex items-center justify-center">
                   <MapPin className="h-3 w-3" />
                 </div>
@@ -70,11 +70,11 @@ export function Footer() {
 
           {/* Newsletter / Call to Action */}
           <div className="space-y-6">
-            <h4 className="text-[9px] font-black tracking-[0.2em] uppercase text-wood-light">Need Help Choosing?</h4>
-            <p className="text-[13px] text-white/50 font-medium">Message us and we&apos;ll help you pick the right piece for your space.</p>
+            <h4 className="text-[9px] font-normal tracking-[0.2em] uppercase text-wood-light">Need Help Choosing?</h4>
+            <p className="text-[13px] text-white/50 font-normal">Message us and we&apos;ll help you pick the right piece for your space.</p>
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-2 group text-[11px] font-black tracking-widest uppercase text-wood-light hover:text-white transition-colors"
+              className="flex items-center gap-2 group text-[11px] font-normal tracking-widest uppercase text-wood-light hover:text-white transition-colors"
             >
               Back to top
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -84,10 +84,10 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-white/30 text-[11px] font-bold tracking-widest uppercase">
+          <p className="text-white/30 text-[11px] font-normal tracking-widest uppercase">
             &copy; {new Date().getFullYear()} Wooders Rwanda. Made by local artisans.
           </p>
-          <div className="flex items-center gap-8 text-white/20 text-[10px] font-black tracking-[0.2em] uppercase">
+          <div className="flex items-center gap-8 text-white/20 text-[10px] font-normal tracking-[0.2em] uppercase">
             <span>Made in Rwanda</span>
             <span>Built to Last</span>
           </div>

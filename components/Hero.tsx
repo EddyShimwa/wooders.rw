@@ -42,7 +42,7 @@ export const Hero = ({ categories, hero }: HeroProps) => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-center space-y-6 max-w-4xl mx-auto"
             >
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal text-white leading-tight">
                 {hero?.title ?? 'Custom Woodwork for Homes and Businesses'}
               </h1>
 
@@ -92,7 +92,7 @@ export const Hero = ({ categories, hero }: HeroProps) => {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-5xl font-normal text-foreground mb-4">
             Browse Our Collection
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

@@ -90,7 +90,7 @@ export const ProductDetailsModal = ({
             >
               <div className="bg-white/90 dark:bg-charcoal/90 backdrop-blur-md px-5 py-2.5 rounded-full border border-wood-light/20 shadow-xl flex items-center gap-2.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-forest animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-wood-dark">
+                <span className="text-[10px] font-normal uppercase tracking-[0.2em] text-wood-dark">
                   Artisanal Piece
                 </span>
               </div>
@@ -107,7 +107,7 @@ export const ProductDetailsModal = ({
                   animate="visible"
                   variants={fadeInUp}
                 >
-                  <span className="text-[10px] font-black tracking-[0.4em] uppercase text-wood-light">
+                  <span className="text-[10px] font-normal tracking-[0.4em] uppercase text-wood-light">
                     {product.category}
                   </span>
                 </motion.div>
@@ -118,7 +118,7 @@ export const ProductDetailsModal = ({
                   animate="visible"
                   variants={fadeInUp}
                 >
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.85] text-wood-dark">
+                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal tracking-tighter leading-[0.85] text-wood-dark">
                     {product.name} <br />
                     <span className="text-wood-medium/20 font-serif italic font-normal">Details</span>
                   </h2>
@@ -131,8 +131,8 @@ export const ProductDetailsModal = ({
                   variants={fadeInUp}
                   className="pt-6 flex items-baseline gap-3"
                 >
-                  <span className="text-xs font-black text-wood-light/60 tracking-widest uppercase">Price</span>
-                  <span className="text-4xl font-black tracking-tighter text-wood-dark dark:text-cream">
+                  <span className="text-xs font-normal text-wood-light/60 tracking-widest uppercase">Price</span>
+                  <span className="text-4xl font-normal tracking-tighter text-wood-dark dark:text-cream">
                     RWF {product.price?.toLocaleString()}
                   </span>
                 </motion.div>
@@ -147,10 +147,10 @@ export const ProductDetailsModal = ({
               >
                 <div className="p-6 rounded-2xl bg-wood-light/5 border-l-4 border-wood-light relative overflow-hidden group">
                   <div className="absolute top-4 right-6 text-wood-light/10 font-serif text-6xl select-none">&quot;</div>
-                  <h3 className="text-[10px] font-black tracking-[0.2em] uppercase text-wood-medium/40 mb-3">
+                  <h3 className="text-[10px] font-normal tracking-[0.2em] uppercase text-wood-medium/40 mb-3">
                     Artisan&apos;s Perspective
                   </h3>
-                  <p className="text-base text-wood-dark/80 dark:text-cream/80 leading-relaxed font-medium italic relative z-10">
+                  <p className="text-base text-wood-dark/80 dark:text-cream/80 leading-relaxed font-normal italic relative z-10">
                     &quot;{product.description}&quot;
                   </p>
                 </div>
@@ -158,15 +158,15 @@ export const ProductDetailsModal = ({
                 <div className="grid grid-cols-3 gap-6 py-6 border-y border-wood-light/10">
                   <div className="flex flex-col items-center text-center space-y-2">
                     <Package className="h-5 w-5 text-wood-medium" />
-                    <span className="text-[9px] font-black uppercase tracking-wider text-wood-dark/40">Premium Wood</span>
+                    <span className="text-[9px] font-normal uppercase tracking-wider text-wood-dark/40">Premium Wood</span>
                   </div>
                   <div className="flex flex-col items-center text-center space-y-2">
                     <ShieldCheck className="h-5 w-5 text-wood-medium" />
-                    <span className="text-[9px] font-black uppercase tracking-wider text-wood-dark/40">Lifetime Craft</span>
+                    <span className="text-[9px] font-normal uppercase tracking-wider text-wood-dark/40">Lifetime Craft</span>
                   </div>
                   <div className="flex flex-col items-center text-center space-y-2">
                     <Truck className="h-5 w-5 text-wood-medium" />
-                    <span className="text-[9px] font-black uppercase tracking-wider text-wood-dark/40">Kigali Delivery</span>
+                    <span className="text-[9px] font-normal uppercase tracking-wider text-wood-dark/40">Kigali Delivery</span>
                   </div>
                 </div>
               </motion.div>
@@ -199,7 +199,7 @@ export const ProductDetailsModal = ({
                       isInWishlist ? "fill-destructive text-destructive border-none" : "text-wood-dark/40"
                     }`}
                   />
-                  <span className="font-bold text-wood-dark tracking-widest uppercase text-xs">
+                  <span className="font-normal text-wood-dark tracking-widest uppercase text-xs">
                     {isInWishlist ? "Saved in Wishlist" : "Save Piece"}
                   </span>
                 </Button>

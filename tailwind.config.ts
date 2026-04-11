@@ -19,9 +19,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Fraunces', 'Georgia', 'serif'],
-        display: ['Fraunces', 'Georgia', 'serif'],
+        sans: ['var(--font-sniglet)', 'Sniglet', 'var(--font-inter)', 'Inter', 'sans-serif'],
+        serif: ['var(--font-sniglet)', 'Sniglet', 'serif'],
+        display: ['var(--font-sniglet)', 'Sniglet', 'serif'],
+        brand: ['var(--font-sniglet)', 'Sniglet', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",

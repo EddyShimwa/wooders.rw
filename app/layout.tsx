@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Fraunces } from 'next/font/google'
+import { Inter, Sniglet } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from '@/components/ui/toaster'
@@ -15,11 +15,11 @@ const inter = Inter({
   display: 'swap',
 })
 
-const fraunces = Fraunces({ 
+const sniglet = Sniglet({
   subsets: ['latin'],
-  variable: '--font-fraunces',
+  variable: '--font-sniglet',
   display: 'swap',
-  weight: ['400', '600', '700', '800'],
+  weight: ['400', '800'],
 })
 
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sniglet.variable}`}>
       <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"

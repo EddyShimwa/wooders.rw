@@ -89,7 +89,7 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
           <Quote className="h-10 w-10 text-muted-foreground/40" />
         </div>
         <div className="space-y-2">
-          <h3 className="text-2xl font-serif font-medium text-wood-dark">No reviews yet</h3>
+          <h3 className="text-2xl font-brand font-medium text-wood-dark">No reviews yet</h3>
           <p className="text-muted-foreground text-sm">We are actively gathering beautiful feedback from our customers. Check back soon for their stories!</p>
         </div>
       </div>
@@ -134,7 +134,7 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                 key={testimonial._id || testimonial.id || actualIdx}
                 onClick={() => setActiveIndex(actualIdx)}
                 style={{ transform: `translateX(${curveOffset}px)` }}
-                className="flex items-center gap-6 cursor-pointer group transition-all duration-300"
+                className="flex items-center gap-6 cursor-pointer group transition-all duration-300 will-change-transform"
               >
                 <div
                   className={`relative shrink-0 rounded-full transition-all duration-500 overflow-visible bg-background ${
@@ -155,7 +155,7 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                          />
                       </div>
                     )}
-                    <AvatarFallback className="bg-wood-dark text-white font-bold text-sm">
+                    <AvatarFallback className="bg-wood-dark text-white font-normal text-sm">
                       {testimonial.name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
@@ -172,20 +172,20 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                 <div className={`flex flex-col transform transition-all duration-300 group-hover:translate-x-2 ${
                   isActive ? 'opacity-100' : 'opacity-40 group-hover:opacity-75'
                 }`}>
-                  <span className="font-bold text-sm tracking-wide text-wood-dark">
+                  <span className="font-normal text-sm tracking-wide text-wood-dark">
                     {testimonial.name}
                   </span>
                   <div className="flex items-center gap-2 mt-1">
                      <div className="flex gap-0.5">
                       <Star className="h-3 w-3 fill-green-600 text-green-600" />
-                      <span className="text-xs font-semibold text-green-600/80">{(testimonial.rating || 5).toFixed(1)}</span>
+                      <span className="text-xs font-normal text-green-600/80">{(testimonial.rating || 5).toFixed(1)}</span>
                      </div>
-                     <span className="text-[10px] text-wood-dark/50 font-medium">
+                     <span className="text-[10px] text-wood-dark/50 font-normal">
                        {new Date(testimonial.createdAt || Date.now()).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}
                      </span>
                   </div>
                   {testimonial.product && (
-                    <span className="text-[10px] font-semibold text-wood-dark/40 mt-1 truncate max-w-[120px] block">
+                    <span className="text-[10px] font-normal text-wood-dark/40 mt-1 truncate max-w-[120px] block">
                       {testimonial.product} 
                     </span>
                   )}
@@ -210,17 +210,17 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
             className="flex flex-col lg:flex-row gap-12 items-center w-full"
           >
             <div className="space-y-2 flex-1">
-              <p className="font-serif italic text-xl md:text-2xl lg:text-3xl text-wood-dark leading-tight tracking-tight">
+              <p className="font-brand italic text-xl md:text-2xl lg:text-3xl text-wood-dark leading-tight tracking-tight">
                 &ldquo;{activeTestimonial.feedback}&rdquo;
               </p>
               
               <div className="pt-2 border-t border-wood-light/20 flex items-center justify-between">
                 <div>
-                   <span className="block font-black text-sm tracking-[0.2em] uppercase text-wood-dark">
+                   <span className="block font-normal text-sm tracking-[0.2em] uppercase text-wood-dark">
                      {activeTestimonial.name}
                    </span>
                    {activeTestimonial.product && (
-                     <span className="block text-[10px] font-bold tracking-[0.2em] uppercase text-wood-dark/40 mt-1">
+                     <span className="block text-[10px] font-normal tracking-[0.2em] uppercase text-wood-dark/40 mt-1">
                        Purchased: {activeTestimonial.product}
                      </span>
                    )}
@@ -252,7 +252,7 @@ export function TestimonialsCarousel({ testimonials, isLoading = false }: Testim
                   />
                 </div>
                 {activeTestimonial.product && (
-                   <span className="text-xs font-bold tracking-[0.2em] uppercase text-wood-dark/60 text-center">
+                   <span className="text-xs font-normal tracking-[0.2em] uppercase text-wood-dark/60 text-center">
                      {activeTestimonial.product}
                    </span>
                 )}

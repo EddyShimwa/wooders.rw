@@ -132,7 +132,7 @@ export const Header = () => {
                 <button
                   key={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  className={`px-4 py-2 text-[13px] font-bold tracking-tight rounded-full transition-all duration-200 ${
+                  className={`px-4 py-2 text-[13px] font-normal tracking-tight rounded-full transition-all duration-200 ${
                     isItemActive(item.href)
                       ? hasSolidHeader
                         ? "bg-[hsl(var(--wood-medium))]/10 text-[hsl(var(--wood-dark))]"

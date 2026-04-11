@@ -1,4 +1,4 @@
-import { createClient, EntryFieldTypes, Asset } from 'contentful';
+import { createClient, EntryFieldTypes, Asset, EntrySkeletonType } from 'contentful';
 import { Product, PaginatedResponse } from '@/types/product';
 import { Category } from '@/types/category';
 
@@ -22,20 +22,26 @@ export async function getProducts(): Promise<Product[]> {
   return res.items;
 }
 
-interface CategoryFields {
-  name: EntryFieldTypes.Symbol;
-  slug: EntryFieldTypes.Symbol;
-  description: EntryFieldTypes.RichText;
-  image: EntryFieldTypes.AssetLink;
+interface CategoryFields extends EntrySkeletonType {
+  contentTypeId: 'category';
+  fields: {
+    name: EntryFieldTypes.Symbol;
+    slug: EntryFieldTypes.Symbol;
+    description: EntryFieldTypes.RichText;
+    image: EntryFieldTypes.AssetLink;
+  }
 }
 
-interface ProductFields {
-  name: EntryFieldTypes.Symbol;
-  slug: EntryFieldTypes.Symbol;
-  description: EntryFieldTypes.RichText;
-  price: EntryFieldTypes.Number;
-  image: EntryFieldTypes.AssetLink;
-  category: EntryFieldTypes.EntryLink<CategoryFields>;
+interface ProductFields extends EntrySkeletonType {
+  contentTypeId: 'product';
+  fields: {
+    name: EntryFieldTypes.Symbol;
+    slug: EntryFieldTypes.Symbol;
+    description: EntryFieldTypes.RichText;
+    price: EntryFieldTypes.Number;
+    image: EntryFieldTypes.AssetLink;
+    category: EntryFieldTypes.EntryLink<CategoryFields>;
+  }
 }
 
 export async function getPaginatedProducts({ 
