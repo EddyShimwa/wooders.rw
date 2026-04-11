@@ -56,14 +56,14 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
         totalAmount: product.price * formData.quantity,
       });
       
-      toast.success(`Order placed successfully!`, {
-        description: `Your order number is ${order.orderNumber}. We'll contact you soon to confirm your order.`,
+      toast.success(`Order request submitted!`, {
+        description: `Your order number is ${order.orderNumber}. We will contact you shortly to confirm details.`,
       });
 
       setFormData({ name: "", email: "", phone: "", address: "", quantity: 1 });
       onClose();
     } catch (error) {
-      toast.error("Failed to place order", {
+      toast.error("Could not submit your order", {
         description: error instanceof Error ? error.message : "Please try again later.",
       });
     }
@@ -75,9 +75,9 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
     <Dialog open={isOpen} onOpenChange={onClose} >
       <DialogContent className="sm:max-w-[500px] px-20">
   <DialogHeader>
-          <DialogTitle>Order: {product.name}</DialogTitle>
+          <DialogTitle>Order Request: {product.name}</DialogTitle>
           <DialogDescription>
-            Fill in your details and we&apos;ll get back to you to complete your order.
+            Fill in your details and we&apos;ll contact you to confirm your order.
           </DialogDescription>
         </DialogHeader>
 
@@ -89,6 +89,7 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="Your full name"
                 required
               />
             </div>
@@ -100,6 +101,7 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="name@example.com"
                 required
               />
             </div>
@@ -111,6 +113,7 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="+250..."
                 required
               />
             </div>
@@ -121,6 +124,7 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
                 id="address"
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                placeholder="District, sector, street, and nearby landmark"
                 required
                 rows={3}
               />
@@ -142,7 +146,9 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
               <p className="text-sm font-medium">Order Summary</p>
               <p className="text-sm text-muted-foreground mt-1">{product.name}</p>
               <p className="text-sm text-muted-foreground">Quantity: {formData.quantity}</p>
-              <p className="text-lg font-bold text-primary mt-2">RWF {(product.price * formData.quantity).toFixed(2)}</p>
+              <p className="text-lg font-bold text-primary mt-2">
+                RWF {(product.price * formData.quantity).toLocaleString()}
+              </p>
             </div>
           </div>
 
@@ -151,7 +157,7 @@ export const OrderModal = ({ isOpen, onClose, product }: OrderModalProps) => {
               Cancel
             </Button>
             <Button type="submit" className="bg-gradient-wood" disabled={mutation.isPending}>
-              {mutation.isPending ? "Placing Order..." : "Place Order"}
+              {mutation.isPending ? "Submitting..." : "Submit Order Request"}
             </Button>
           </DialogFooter>
         </form>

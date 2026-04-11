@@ -43,6 +43,7 @@ import {
   updateOrderStatus,
 } from '@/lib/api/orderService'
 import { Trash2, RefreshCw } from 'lucide-react'
+import { LoadingLogo } from '@/components/ui/LoadingLogo'
 
 const ORDER_STATUS_OPTIONS: Order['status'][] = [
   'pending',
@@ -74,12 +75,12 @@ export function AdminOrdersPage() {
     mutationFn: ({ orderId, status }: { orderId: string; status: Order['status'] }) =>
       updateOrderStatus(orderId, status),
     onSuccess: () => {
-      toast.success('Order status updated')
+      toast.success('Order status updated.')
       queryClient.invalidateQueries({ queryKey: ['orders'] })
     },
     onError: (error: unknown) => {
       const errorMessage = error instanceof Error ? error.message : 'Please try again.'
-      toast.error('Failed to update order status', {
+      toast.error('Could not update order status', {
         description: errorMessage,
       })
     },
@@ -88,13 +89,13 @@ export function AdminOrdersPage() {
   const deleteOrderMutation = useMutation({
     mutationFn: (orderId: string) => deleteOrder(orderId),
     onSuccess: () => {
-      toast.success('Order deleted')
+      toast.success('Order deleted.')
       queryClient.invalidateQueries({ queryKey: ['orders'] })
       setCurrentPage(1)
     },
     onError: (error: unknown) => {
       const errorMessage = error instanceof Error ? error.message : 'Please try again.'
-      toast.error('Failed to delete order', {
+      toast.error('Could not delete order', {
         description: errorMessage,
       })
     },
@@ -134,8 +135,8 @@ export function AdminOrdersPage() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle>Order Management</CardTitle>
-            <CardDescription>Review incoming orders and update their status.</CardDescription>
+            <CardTitle>Orders</CardTitle>
+            <CardDescription>Review incoming orders and update status.</CardDescription>
           </div>
           <Button
             onClick={() => ordersQuery.refetch()}
@@ -151,9 +152,11 @@ export function AdminOrdersPage() {
       </CardHeader>
       <CardContent className="space-y-6">
         {ordersQuery.isLoading ? (
-          <div className="text-center py-8 text-muted-foreground">Loading orders...</div>
+          <div className="flex justify-center py-20">
+            <LoadingLogo text="Retrieving orders..." size={80} />
+          </div>
         ) : orders.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">No orders found</div>
+          <div className="text-center py-8 text-muted-foreground">No orders yet.</div>
         ) : (
           <>
             <div className="overflow-x-auto">
@@ -177,7 +180,7 @@ export function AdminOrdersPage() {
                       <TableCell>{order.customerName}</TableCell>
                       <TableCell>{order.customerEmail}</TableCell>
                       <TableCell>{order.customerPhone}</TableCell>
-                      <TableCell>${order.totalAmount.toFixed(2)}</TableCell>
+                      <TableCell>RWF {order.totalAmount.toLocaleString()}</TableCell>
                       <TableCell>
                         <Badge
                           className={`${ORDER_STATUS_COLORS[order.status]} capitalize text-white transition-all duration-200`}
@@ -214,7 +217,7 @@ export function AdminOrdersPage() {
                             variant="destructive"
                             size="icon"
                             onClick={() => {
-                              if (window.confirm('Delete this order?')) {
+                              if (window.confirm('Delete this order permanently?')) {
                                 deleteOrderMutation.mutate(order._id!)
                               }
                             }}
@@ -237,9 +240,7 @@ export function AdminOrdersPage() {
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
+                      onClick={() => {
                         if (currentPage > 1) setCurrentPage(currentPage - 1)
                       }}
                       className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer transition-all duration-200 hover:bg-accent'}
@@ -252,9 +253,7 @@ export function AdminOrdersPage() {
                         <PaginationEllipsis />
                       ) : (
                         <PaginationLink
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault()
+                          onClick={() => {
                             setCurrentPage(page as number)
                           }}
                           isActive={page === currentPage}
@@ -268,9 +267,7 @@ export function AdminOrdersPage() {
 
                   <PaginationItem>
                     <PaginationNext
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault()
+                      onClick={() => {
                         if (currentPage < totalPages) setCurrentPage(currentPage + 1)
                       }}
                       className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer transition-all duration-200 hover:bg-accent'}

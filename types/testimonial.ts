@@ -4,8 +4,9 @@ export interface Testimonial {
   name: string;
   email: string;
   feedback: string;
-  rating: number; // 1-5 stars
-  photo?: string; // Base64 or URL
+  rating: number; 
+  product?: string;
+  photo?: string; 
   status: 'pending' | 'approved' | 'rejected';
   createdAt?: Date;
   updatedAt?: Date;

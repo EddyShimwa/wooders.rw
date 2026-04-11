@@ -11,14 +11,16 @@ interface TestimonialModalProps {
 export function TestimonialModal({ isOpen, onClose }: TestimonialModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto border-[hsl(var(--wood-light))]">
-        <DialogHeader>
-          <DialogTitle className="text-[hsl(var(--wood-dark))] text-xl">Share Your Feedback</DialogTitle>
-          <DialogDescription className="text-muted-foreground">
-            We would love to hear about your experience with our products. Your feedback helps us improve!
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto border-none bg-background rounded-[3rem] p-10 shadow-2xl">
+        <DialogHeader className="space-y-4 mb-8">
+          <DialogTitle className="text-wood-dark text-4xl font-black tracking-tighter leading-none">
+            Share Your <br /><span className="text-wood-medium/40 font-serif italic text-3xl">Experience</span>
+          </DialogTitle>
+          <DialogDescription className="text-muted-foreground text-lg font-medium leading-relaxed">
+            Tell us what you loved, what we can improve, and how your piece fits your space.
           </DialogDescription>
         </DialogHeader>
-        <TestimonialForm onSuccess={onClose} isModal={true} />
+        <TestimonialForm onSuccess={onClose} />
       </DialogContent>
     </Dialog>
   )

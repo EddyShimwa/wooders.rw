@@ -2,28 +2,42 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db/mongodb';
 import { Testimonial } from '@/lib/db/models/Testimonial';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     await dbConnect();
 
+    const { searchParams } = new URL(request.url);
+    const limit = parseInt(searchParams.get('limit') || '10');
+    const skip = parseInt(searchParams.get('skip') || '0');
+
+    const total = await Testimonial.countDocuments({ status: 'approved' });
     const testimonials = await Testimonial.find({ status: 'approved' })
       .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
       .lean();
+
+    const items = testimonials.map(t => ({
+      _id: t._id,
+      id: t._id?.toString(),
+      name: t.name,
+      email: t.email,
+      feedback: t.feedback,
+      rating: t.rating,
+      photo: t.photo,
+      status: t.status,
+      createdAt: t.createdAt,
+      updatedAt: t.updatedAt
+    }));
 
     return NextResponse.json({
       success: true,
-      testimonials: testimonials.map(t => ({
-        _id: t._id,
-        id: t._id?.toString(),
-        name: t.name,
-        email: t.email,
-        feedback: t.feedback,
-        rating: t.rating,
-        photo: t.photo,
-        status: t.status,
-        createdAt: t.createdAt,
-        updatedAt: t.updatedAt
-      }))
+      testimonials: items,
+      pagination: {
+        total,
+        limit,
+        skip,
+      }
     });
   } catch (error) {
     console.error('Error fetching testimonials:', error);
