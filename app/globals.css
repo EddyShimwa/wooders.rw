@@ -40,7 +40,7 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Custom Wooders tokens - Fine Woodworking Palette */
-    --wood-light: 35 45% 65% ;   /* Teak */
+    --wood-light: 37 69% 55%;   /* Teak */
     --wood-medium: 25 40% 45%;  /* Mahogany */
     --wood-dark: 20 30% 25%;    /* Walnut */
     --ebony: 0 0% 8%;           /* Polished Ebony */

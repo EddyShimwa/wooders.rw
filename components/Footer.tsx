@@ -35,7 +35,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-6">
-            <h4 className="text-[9px] font-normal tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
+            <h4 className="text-[9px] font-bold tracking-[0.2em] uppercase text-wood-light">Navigation</h4>
             <nav className="flex flex-col gap-4">
               <Link href="/collection" className="text-[13px] font-normal text-white/70 hover:text-white transition-colors">Collection</Link>
               <Link href="/#about" className="text-[13px] font-normal text-white/70 hover:text-white transition-colors">About</Link>
@@ -45,7 +45,7 @@ export function Footer() {
 
           {/* Contact Information */}
           <div className="space-y-6">
-            <h4 className="text-[9px] font-normal tracking-[0.2em] uppercase text-wood-light">Contact</h4>
+            <h4 className="text-[9px] font-bold tracking-[0.2em] uppercase text-wood-light">Contact</h4>
             <div className="flex flex-col gap-4">
               <a href="mailto:woodersrwanda@gmail.com" className="group flex items-center gap-3 text-[13px] font-normal text-white/70 hover:text-white transition-colors">
                 <div className="h-7 w-7 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-wood-light/20 transition-colors">
@@ -70,7 +70,7 @@ export function Footer() {
 
           {/* Newsletter / Call to Action */}
           <div className="space-y-6">
-            <h4 className="text-[9px] font-normal tracking-[0.2em] uppercase text-wood-light">Need Help Choosing?</h4>
+            <h4 className="text-[9px] font-bold tracking-[0.2em] uppercase text-wood-light">Need Help Choosing?</h4>
             <p className="text-[13px] text-white/50 font-normal">Message us and we&apos;ll help you pick the right piece for your space.</p>
             <button
               onClick={scrollToTop}

@@ -138,7 +138,7 @@ export default function HomeClient({ initialCategories, initialHero, initialTest
                 {initialHero?.title ? (
                   <>
                     {initialHero.title.split(' ').slice(0, -1).join(' ')} <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-wood-light via-wood-medium to-wood-light italic font-normal lowercase tracking-normal">
+                    <span className="text-wood-light bg-clip-text bg-gradient-to-r from-wood-light via-wood-medium to-wood-light italic font-normal lowercase tracking-normal">
                       {initialHero.title.split(' ').pop()}
                     </span>
                   </>
@@ -195,7 +195,7 @@ export default function HomeClient({ initialCategories, initialHero, initialTest
               transition={{ duration: 1 }}
               className="max-w-xl"
             >
-              <p className="text-wood-light font-normal tracking-[0.3em] uppercase text-[9px] mb-4">
+              <p className="text-wood-light font-bold tracking-[0.3em] uppercase text-[9px] mb-4">
                 Featured Pieces
               </p>
               <h2 className="text-2xl mr-2 flex md:text-4xl font-brand font-normal tracking-tighter leading-[0.85] mb-6">
